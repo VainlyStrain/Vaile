@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+#-:-:-:-:-:-:-:-:-:-:-:-:#
+#    Vaile Framework     #
+#-:-:-:-:-:-:-:-:-:-:-:-:#
+
+#This module requires Vaile Framework
+#https://github.com/VainlyStrain/Vaile
+
+
+import urllib.request
+import time
+import sys
+from time import sleep
+from core.Core.colors import *
+
+info = "HTTP Header Grabber."
+searchinfo = "HTTP Header Grabber"
+properties = {}
+
+def grabhead(web):
+    time.sleep(0.4)
+    print(R+'\n      ==================================')
+    print(R+'      G R A B   H T T P   H E A D E R S')
+    print(R+'     ===================================\n')
+    print(GR + color.BOLD + ' [*] Grabbing HTTP Headers...')
+    time.sleep(0.4)
+    web = web.rstrip()
+    try:
+        header = str(urllib.request.urlopen(web).info()).splitlines()
+        print('')
+        for m in header:
+            n = m.split(':')
+            print('  '+C+n[0]+': '+O+n[1])
+        print('')
+    except urllib.error.HTTPError as e:
+        print(R+' [-] '+e.__str__())
+
+def attack(web):
+    grabhead(web)
