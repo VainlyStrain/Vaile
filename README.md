@@ -1,5 +1,5 @@
 <h1 align="center">
-  —–-·Vaile·-–—
+  —-·Vaile·-—
   <br>
 </h1>
 
@@ -271,11 +271,11 @@ Vaile Attack presently supports the following: `and more modules are under activ
 Lets see some screenshots of Vaile in action:
 
 <img src='files/screenshots/VaileAt1.png'></img>
-<img src='files/screenshots/VaileAt2.png' width='30%'>  </img><img src='files/screenshots/VaileAt5.png' width='30%'>  </img><img src='files/screenshots/VaileLoad.png' width='30%'></img>
+<img src='files/screenshots/VaileAt2.png' width='32%'>  </img><img src='files/screenshots/VaileAt5.png' width='32%'>  </img><img src='files/screenshots/VaileLoad.png' width='32%'></img>
 
 <img src='files/screenshots/VaileAt3.png'></img>
-<img src='files/screenshots/VaileAt4.png' width='48%'>  </img>
-<img src='files/screenshots/VaileModule.png' width='48%'>  </img>
+<img src='files/screenshots/VaileAt4.png' width='49%'>  </img>
+<img src='files/screenshots/VaileModule.png' width='49%'>  </img>
 
 
 ### Version:
