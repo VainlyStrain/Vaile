@@ -111,7 +111,7 @@ def opts(mod):
         print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Incorrect module: 'properties' dictionary missing.")
 
 
-def list(arg):
+def list(arg,display):
     names = []
     descs = []
     dir = ""
@@ -154,15 +154,16 @@ def list(arg):
                 descs.append(i)
         except ImportError:
             pass
-
-    t = table.Texttable()
-    headings = ["Modvle", "Desc."]
-    t.header(headings)
-    t.set_deco(table.Texttable.BORDER)
-    for row in zip(names, descs):
-        t.add_row(row)
-    s = t.draw()
-    print("\n" + s + "\n")
+    if display:
+        t = table.Texttable()
+        headings = ["Modvle", "Desc."]
+        t.header(headings)
+        t.set_deco(table.Texttable.BORDER)
+        for row in zip(names, descs):
+            t.add_row(row)
+        s = t.draw()
+        print("\n" + s + "\n")
+    return names
 
 
 def search(inp):

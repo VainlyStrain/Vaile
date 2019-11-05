@@ -30,6 +30,10 @@ Here is some light on what the framework is all about:
 
 ### Installation :-
 
+#### Installation Script (Globally) :
+
+To install the framework globally in /opt, run the provided `srcinstall.py` script as root. After this, you can launch Vaile simply by typing `Vaile` on the command line.
+
 #### Manual Installation (Locally) :
 
 * Clone the repository locally and navigate there:
@@ -40,7 +44,7 @@ cd Vaile
 
 Vaile needs some libraries to run, which can be installed via `aptitude` or `dnf` Package Managers.
 ```
-sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python-pip python-xmpp
+sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18
 ```
 Now after these dependencies are finished installing, we need to install the remaining Python Package dependencies, hence run:
 ```
@@ -80,8 +84,6 @@ To get started, you need to set your own `API KEYS` for various OSINT & Scanning
     set       Set option value of module.            [M]
     vicadd    Add Target to list.                     :
     vicdel    Delete Target from list.                :
-    viclist   List all targets.                       :
-
     viclist   List all targets.                       :
 ```
 
@@ -209,7 +211,7 @@ Vaile Attack presently supports the following: `and more modules are under activ
 	    	- Parameter Based
 		     - Pre-loaded Path Based
 	+ OS Command Injection `Linux & Windows (RCE)`
-	+ Path Traversal `(Sensitive Paths)`
+	+ Path Traversal `ENHANCED`
 	+ Cross-Site Request Forgery `Absolute`
 	+ SQL Injection 
 	    + Error Based Injection

@@ -187,7 +187,7 @@ class VainShell(Cmd):
 """)
 
     def do_list(self, inp):
-        select.list(inp)
+        select.list(inp,True)
 
     def help_list(self):
         print("""
@@ -216,12 +216,11 @@ class VainShell(Cmd):
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No target(s) set.")
             return None
         else:
-            # sanint=randint(1,15)
-            # if sanint == 10:
-            #    prnt.printLegal()
+            print("\n Attack")
+            print(" --------")
             for i in vars.targets:
                 if len(vars.targets) > 1:
-                    print( "[+] Attacking {}".format(i))
+                    print( "\n [i] Target: {}\n".format(i))
                 select.attack(i)
 
     def help_attack(self):
@@ -394,7 +393,7 @@ class VainShell(Cmd):
                 imp.import_module(impmod)
             if success:
                 vars.module = impmod
-                self.prompt = '\033[0m\033[1m vaile(\033[1;31m{}\033[0m\033[1m) > '.format(vars.module)
+                self.prompt = '\033[0m\033[1m vaile(\033[1;31m{}\033[0m\033[1m) > '.format(vars.module.split(".")[-1])
         except ImportError:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Not a valid module: {}".format(inp))
         except ValueError:

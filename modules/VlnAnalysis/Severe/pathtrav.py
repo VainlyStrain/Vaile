@@ -34,20 +34,26 @@ query = [False]
 siteinput = [""]
 sitecontent = [None]
 
-info = "This module tries to find path traversal vulnerabilities on the target webpage. By default, it only supports \%00 evasion, for additional tests (encodings, ....// etc.) you can provide your own dictionary."
+info = "This module tries to find path traversal vulnerabilities on the target webpage. It is capable of in-path, as well as query attacks, and features two modes: a simple mode, recovering all possible paths, and a powerful evasion engine, attacking a specific path. Also, the user can provide cookies and his own dictionary."
 searchinfo = "Path Traversal Finder"
 properties = {}
 
 def check0x00(website0, gen_headers):
     #print(query)
     #print(siteinput)
-    print(O+' [!] Enter the filename containing paths '+R+'(Default: files/pathtrav_paths.lst)')
-    fi = input(O+" [*] Custom filepath (press Enter for default) :> ")
-    if fi == '':
-        print(GR+' [*] Using default filepath...')
-        fi = getFile0x00('files/fuzz-db/pathtrav_paths.lst')
+    ev = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
+    evasion = ev != ""
+    if not evasion:
+        print(O+' [!] Enter the filename containing paths '+R+'(Default: files/pathtrav_paths.lst)')
+        fi = input(O+" [*] Custom filepath (press Enter for default) :> ")
+        if fi == '':
+            print(GR+' [*] Using default filepath...')
+            fi = getFile0x00('files/fuzz-db/pathtrav_paths.lst')
+        else:
+            fi = getFile0x00(fi)
     else:
-        fi = getFile0x00(fi)
+        fi = getFile0x00('files/fuzz-db/pathtrav_evasion.lst')
+        filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
 
     if(active0 is False):
         owebsite = website0
@@ -57,6 +63,8 @@ def check0x00(website0, gen_headers):
     print("")
     for line in open(fi):
         c = line.strip('\n')
+        if evasion and filepath != "":
+            c = c.replace("etc/shadow", filepath)
         if not c.startswith('/'):
             website = owebsite + '/' + c
         else:
@@ -127,7 +135,7 @@ def check0x00(website0, gen_headers):
         elif req.status_code == 404:
             pass
         elif req.status_code == 403:
-            print(G+" [+] '%s' "+O+"[Vulnerable]" % str(website))
+            print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
         elif req.status_code == 401:
             print(R+" [-] Missing authentication.\n")
         else:
