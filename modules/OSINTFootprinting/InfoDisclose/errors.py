@@ -12,13 +12,13 @@
 
 import re
 import sys
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 import time
 import requests
 from core.Core.colors import *
 from re import search
 from bs4 import BeautifulSoup
-from commonerror_signatures import patterns
+from files.signaturedb.commonerror_signatures import patterns
 urls = []
 links = []
 found = 0x00

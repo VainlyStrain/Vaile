@@ -14,10 +14,10 @@ import os
 import sys
 import requests
 import time
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 from re import search
 from core.Core.colors import *
-from lfierror_signatures import errorsig
+from files.signaturedb.lfierror_signatures import errorsig
 from random import choice
 from string import ascii_uppercase, ascii_lowercase
 from requests.packages.urllib3.exceptions import InsecureRequestWarning

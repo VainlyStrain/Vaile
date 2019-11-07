@@ -32,7 +32,7 @@ def revdns(web):
     print(""+ GR + color.BOLD + " [~] Result: \n"+ color.END)
     text = requests.get('http://api.hackertarget.com/reversedns/?q=' + web)
     result = text.text
-    if 'error' not in result and 'no results' not in result.lower():
+    if 'null' not in result and 'no results' not in result.lower():
         res = result.splitlines()
         for r in res:
             print(B+' [+] Received : '+O+r.split(',')[0].strip()+' => '+C+'('+r.split(',')[1].strip()+')')

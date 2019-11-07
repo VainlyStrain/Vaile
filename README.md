@@ -68,6 +68,7 @@ To get started, you need to set your own `API KEYS` for various OSINT & Scanning
 ```
     attack    Attack specified target(s)             [M]
     clear     Clear terminal.                         :
+    creds     Handle target credentials.
     find      Search a module.                        :
     help      Show help message.                      :
     info      Show description of current module.    [M]
@@ -283,7 +284,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.0 [latest release] [#stable]
+v2.0.1-1 [latest release] [#stable]
 ```
 
 ### Disclaimer:

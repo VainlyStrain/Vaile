@@ -14,9 +14,9 @@ import os
 import sys
 import time
 import requests
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 from core.Core.colors import *
-from ldaperror_signatures import ldap_errors
+from files.signaturedb.ldaperror_signatures import ldap_errors
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)

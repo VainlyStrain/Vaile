@@ -121,6 +121,7 @@ def info():
 
     attack    Attack specified target(s)             [M]
     clear     Clear terminal.                         :
+    creds     Handle target credentials.              
     find      Search a module.                        :
     help      Show help message.                      :
     info      Show description of current module.    [M]

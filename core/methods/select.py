@@ -21,6 +21,7 @@ import importlib as imp
 import os
 import re
 from pathlib import Path
+from socket import gaierror
 
 import texttable as table
 
@@ -52,6 +53,8 @@ def attack(target):
         print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Invalid module: {}".format(vars.module))
     except SystemExit:
         pass
+    except gaierror:
+        print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Socket Error received. This may be caused by credentials. Try creds del {}".format(target))
 
 
 def set(mod, param, value):

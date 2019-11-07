@@ -12,7 +12,7 @@
 
 import re
 import sys
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 import lxml
 import time
 import requests
@@ -21,10 +21,10 @@ urls = []
 links = []
 found = 0x00
 from bs4 import BeautifulSoup
-from infodisc_signatures import EXPRESS_CARD_SIGNATURE
-from infodisc_signatures import VISA_MASTERCARD_SIGNATURE
-from infodisc_signatures import MASTERCARD_SIGNATURE, DISCOVER_CARD_SIGNATURE
-from infodisc_signatures import VISA_SIGNATURE, AMEX_CARD_SIGNATURE
+from files.signaturedb.infodisc_signatures import EXPRESS_CARD_SIGNATURE
+from files.signaturedb.infodisc_signatures import VISA_MASTERCARD_SIGNATURE
+from files.signaturedb.infodisc_signatures import MASTERCARD_SIGNATURE, DISCOVER_CARD_SIGNATURE
+from files.signaturedb.infodisc_signatures import VISA_SIGNATURE, AMEX_CARD_SIGNATURE
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 

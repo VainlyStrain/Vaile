@@ -15,9 +15,9 @@ import sys
 import time
 import requests
 from core.Core.colors import *
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 from bs4 import BeautifulSoup
-from infodisc_signatures import INTERNAL_IP_SIGNATURE as signature
+from files.signaturedb.infodisc_signatures import INTERNAL_IP_SIGNATURE as signature
 links = []
 urls = []
 found = 0x00

@@ -15,9 +15,9 @@ import os
 import sys
 import requests
 import time
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 from core.Core.colors import *
-from xpatherror_signatures import xpath_errors
+from files.signaturedb.xpatherror_signatures import xpath_errors
 from random import choice
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 

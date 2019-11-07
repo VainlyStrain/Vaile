@@ -12,7 +12,7 @@
 
 import re
 import sys
-sys.path.append('files/signature-db/')
+sys.path.append('files/signaturedb/')
 import time
 import requests
 from core.Core.colors import *
@@ -20,7 +20,7 @@ links = []
 urls = []
 found = 0x00
 from bs4 import BeautifulSoup
-from infodisc_signatures import EMAIL_HARVESTER_SIGNATURE as signature
+from files.signaturedb.infodisc_signatures import EMAIL_HARVESTER_SIGNATURE as signature
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 

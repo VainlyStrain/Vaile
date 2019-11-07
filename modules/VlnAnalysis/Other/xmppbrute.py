@@ -15,7 +15,7 @@ import sys
 import time
 import socket
 from time import sleep
-#from xmpp import Client
+#from core.lib.xmpp.client import Client
 from core.Core.colors import *
 
 xmppuser = []
@@ -44,8 +44,9 @@ def xmppBrute0x00(ip, usernames, passwords, port, delay):
             except:
                 print(GR+ " [*] Checking : "+C+"Username: %s | "+B+"Password: %s "+R+"| Incorrect!\n" % (username, password))
                 sleep(delay)
-'''
-    print("TODO: Fix xmpp import")
+    '''
+    print("broken xmpp lib")
+                
 def xmppbrute(web):
 
     print(GR+' [*] Loading module...\n')

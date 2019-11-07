@@ -16,7 +16,7 @@ import sys
 import urllib
 import requests
 import time
-from core.Core.colors import *
+from core.Core.colors import O, GR, R, G, B, C
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -58,7 +58,8 @@ def check0x00(website0, gen_headers):
     if(active0 is False):
         owebsite = website0
     else:
-        owebsite = ahurl
+        #owebsite = ahurl
+        owebsite = website0
 
     print("")
     for line in open(fi):
@@ -69,7 +70,7 @@ def check0x00(website0, gen_headers):
             website = owebsite + '/' + c
         else:
             website = owebsite + c
-        status_code = 500
+        #status_code = 500
         print(B+' [+] Testing Url : '+C+website)
         req = requests.get(website, headers=gen_headers, allow_redirects=False, timeout=7, verify=False)
         content = str(req.content)
@@ -174,7 +175,7 @@ def getFile0x00(filename):
 def pathtrav(web):
 
     #global gotcha
-    print(GR+' [*] Loading module...')
+    print(GR+'\n  ·› Loading module...')
     time.sleep(0.5)
     print(R+'\n     ================================================')
     print(R+'      P A T H   T R A V E R S A L  (Sensitive Paths)')

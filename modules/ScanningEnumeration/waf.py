@@ -15,7 +15,7 @@ import re
 import sys
 import time
 import requests
-sys.path.append('files/signature-db/waf-signatures/')
+sys.path.append('files/signaturedb/waf/')
 from core.Core.colors import *
 from modules.ScanningEnumeration.wafimpo import *
 
