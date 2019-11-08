@@ -28,6 +28,7 @@ import texttable as table
 import core.variables as vars
 
 from core.Core.colors import R, B, C, color
+from core.methods.creds import attackdrop
 
 info = "Core methods for module handling."
 searchinfo = ""
@@ -54,7 +55,13 @@ def attack(target):
     except SystemExit:
         pass
     except gaierror:
-        print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Socket Error received. This may be caused by credentials. Try creds del {}".format(target))
+        delcred = input(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Socket Error received. This may be caused by credentials. \n" +"\033[0m"+ color.CURSIVE + "Temporarily remove creds from {}?".format(target) + C + " (enter for not) :> ")
+        if delcred != "":
+            newtarget = attackdrop(target)
+            try:
+                j.attack(newtarget)
+            except Exception as e:
+                print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Module {} failed on target {}:".format(mod,target)+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
     except Exception as e:
         mod = vars.module.split(".")[-1]
         print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Module {} failed on target {}:".format(mod,target)+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
