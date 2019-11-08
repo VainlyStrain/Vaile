@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import mechanize
+import core.lib.mechanize as mechanize
 from re import search, sub
 import http.cookiejar
 import requests

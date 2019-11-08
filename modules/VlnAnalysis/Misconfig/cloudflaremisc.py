@@ -13,7 +13,7 @@ import requests
 import time
 import re
 import socket
-import mechanize
+import core.lib.mechanize as mechanize
 import http.cookiejar
 from urllib.parse import urlencode
 from re import search

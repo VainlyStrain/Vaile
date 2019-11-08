@@ -76,7 +76,8 @@ def auto0x00(web):
             user_agent['User-agent'] += i
             req = requests.get(web, headers=user_agent)
             print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['User-agent'])
-            flag = u' '.join(req.text).encode('utf-8').strip()
+            #flag = u' '.join(req.text).encode('utf-8').strip()
+            flag = " ".join(req.text).strip()
             if 'error' in flag or 'syntax' in flag or 'MySQL'.lower() in flag.lower():
                 print(G+'\n [!] Error based SQLi (User-Agent Based) Detected!')
                 print(R+' [!] User-Agent : '+O+user_agent['User-agent'])

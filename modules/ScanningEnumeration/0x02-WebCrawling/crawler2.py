@@ -14,7 +14,7 @@ import os
 import re
 import time
 import requests
-import mechanize
+import core.lib.mechanize as mechanize
 import http.cookiejar
 from bs4 import BeautifulSoup
 from core.Core.colors import *

@@ -55,7 +55,7 @@ def altsites(web):
         md5s[name] = hashlib.md5(response.text.encode('utf-8')).hexdigest()
 
     print(O+'\n [!] Matching hexdigest signatures...')
-    for name, md5 in md5s.iteritems():
+    for name, md5 in md5s.items():
         print(B+'\n [+] User-Agent : '+C+name)
         print(GR+' [+] Hex-Digest : '+O+str(md5))
         if name != 'Chrome on Windows 8.1':

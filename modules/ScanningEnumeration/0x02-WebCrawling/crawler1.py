@@ -12,7 +12,7 @@
 
 import os
 import requests
-import mechanize
+import core.lib.mechanize as mechanize
 import http.cookiejar
 from urllib.request import urlparse
 import time

@@ -252,7 +252,7 @@ Vaile Attack presently supports the following: `and more modules are under activ
 	    - SSH Protocol Bruteforce
 	    - POP 2/3 Protocol Bruteforce
 	    - SQL Protocol Bruteforce
-	    - XMPP Protocol Bruteforce
+	    - (XMPP Protocol Bruteforce) `BROKEN:DEP`
 	    - SMTP Protocol Bruteforce
 	    - TELNET Protocol Bruteforce
 
@@ -284,7 +284,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.0.1-1 [latest release] [#stable]
+v2.0.1-2 [latest release] [#stable]
 ```
 
 ### Disclaimer:
