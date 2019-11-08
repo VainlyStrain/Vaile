@@ -1,0 +1,7 @@
+tmp/logs/ 
+/.idea/
+/venv/
+/Pipfile
+/Pipfile.lock
+core/sessioncache/
+*.pyc

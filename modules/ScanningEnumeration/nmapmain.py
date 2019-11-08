@@ -37,10 +37,10 @@ def nmapmain(web):
     time.sleep(0.2)
     print("")
     time.sleep(0.1)
-    print(''+C+'                      +======================================================+')
-    time.sleep(0.4)
-    print(R+"                               Target set :> %s" % web)
-    print(''+GR+'                      +=====================================================+')
+    #print(''+C+'                      +======================================================+')
+    #time.sleep(0.4)
+    #print(R+"                               Target set :> %s" % web)
+    #print(''+GR+'                      +=====================================================+')
     def nmapsx(web):
         try:
             q=input(''+G+'                     [?] Do you want a verbose output of the Scan? (y/n) :> ')

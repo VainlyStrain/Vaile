@@ -269,9 +269,13 @@ class VainShell(Cmd):
 
     def do_phpsploit(self, inp):
         try:
-            # print(" [!] phpsploit is an external toolkit we cannot guarantee the benignity of.")
-            # choice = input(" [?] Do you want to run phpsploit with restricted privileges? :> ")
-            # if (choice.lower().startswith("n")):
+            def filecheck():
+                if not os.path.exists(vars.phpsploit):
+                    print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No phpsploit installation under {}".format(vars.phpsploit) + color.END)
+                    phpsplt = input(" [#] Enter path to phpsploit script :> ")
+                    vars.phpsploit = phpsplt
+                    filecheck()
+            filecheck()
             if inp == "":
                 os.system("python3 {}".format(vars.phpsploit))
             else:
@@ -470,7 +474,7 @@ if __name__ == '__main__':
             FILE.close()
 
         else:
-            print(R + ' [!] ' + B + 'You have to agree!')
+            print(R + ' [!] ' + "\033[0m" + color.UNDERLINE + "\033[1m" + 'You have to agree!' + color.END)
             time.sleep(1)
             sys.exit(0)
    
@@ -478,4 +482,4 @@ if __name__ == '__main__':
     prnt.banner()
     #prnt.bannerbelow()
     VainShell().cmdloop()
-    print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Session finished." + color.END)
+    print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
