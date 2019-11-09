@@ -115,7 +115,7 @@ def printLegal():
 
 def info():
     print('''
- \033[4mVaile\033[4;1m Attack \033[0m\033[1m
+ \033[4mVaile\033[4;1m {} \033[0m\033[1m
 
   Avail. Cmds (M needs loaded modvle):
 
@@ -139,7 +139,7 @@ def info():
     vicadd    Add Target to list.                     :
     vicdel    Delete Target from list.                :
     viclist   List all targets.                       :
-''')
+'''.format(vars.e_version))
 
 
 def disclaimer():
