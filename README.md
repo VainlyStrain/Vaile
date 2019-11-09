@@ -55,6 +55,10 @@ Thats it. You now have Vaile at your service. Fire it up using:
 python3 Vaile.py
 ```
 
+#### Updating Vaile :
+
+To get the current version of Vaile, move into the installation folder and perform `(sudo) git pull  #sudo if installed by srcinstall.py`.
+
 ### Getting Started :-
 
 To get started, you need to set your own `API KEYS` for various OSINT & Scanning and Enumeration purposes. To do so, open up `API_KEYS.py` under `files/` directory and set your own keys and access tokens for `SHODAN`, `CENSYS`, `FULL CONTACT`, `GOOGLE` and `WHATCMS`.
@@ -284,7 +288,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.0.1-2 [latest release] [#stable]
+v2.0.1-5 [latest release] [#stable]
 ```
 
 ### Disclaimer:
