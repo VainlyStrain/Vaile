@@ -19,7 +19,13 @@ searchinfo = "Domain Contact Info"
 properties = {}
 
 def getconinfo(domain):
-
+    web = domain
+    if "@" in web:
+        domain = domain.split("@")[1]
+        if "https" in web:
+            domain = "https://" + domain
+        else:
+            domain = "http://" + domain
     print(R+'\n    =======================================')
     print(R+'     D O M A I N   C O N T A C T   I N F O')
     print(R+'    =======================================\n')

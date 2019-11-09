@@ -25,8 +25,10 @@ searchinfo = "LinkedIn Gathering"
 properties = {}
 
 def getposts(web):
-
-    site = str(web)
+    web0 = web
+    if "@" in web0:
+        web0 = web0.split("@")[1]
+    site = str(web0)
     def clear_cookie():
         fo = open(".google-cookie", "w")
         fo.close()

@@ -21,6 +21,8 @@ properties = {}
 def piweb(web):
 
     dom = web.split('//')[1]
+    if "@" in dom:
+        dom = dom.split("@")[1]
     print(R+'\n   =====================')
     print(R+'    P I N G   C H E C K ')
     print(R+'   =====================\n')

@@ -22,6 +22,8 @@ def subnet(web):
 
     web = web.replace('http://','')
     web = web.replace('https://','')
+    if "@" in web:
+        web = web.split("@")[1]
     time.sleep(0.4)
     print(R+'\n   ====================================')
     print(R+'    S U B N E T  E N U M E R A T I O N')

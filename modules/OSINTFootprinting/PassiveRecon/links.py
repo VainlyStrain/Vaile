@@ -32,13 +32,24 @@ def links(web):
     print('' + GR + color.BOLD + ' [!] Fetching links to the website...')
     time.sleep(0.4)
     print(GR +" [~] Result: "+ color.END)
-    web0 = web.replace('http://','')
+
+
+    if "https://" in web:
+        web0 = web.replace('https://','')
+    else:
+        web0 = web.replace('http://','')
+    if "@" in web:
+        if "https" in web:
+            web = "https://" + web.split("@")[1]
+        else:
+            web = "http://" + web.split("@")[1]
+        web0 = web0.split("@")[1]
 
     domains = [web]
     for dom in domains:
         text = requests.get('http://api.hackertarget.com/pagelinks/?q=' + dom).text
         result = str(text)
-        if 'error' not in result and 'no links found' not in result:
+        if 'null' not in result and 'no links found' not in result:
 
             woo = result.splitlines()
             for w in woo:
@@ -54,6 +65,8 @@ def links(web):
                 po = web.replace('http://','')
             elif 'https://' in web:
                 po = web.replace('https://','')
+            if "@" in po:
+                po = po.split("@")[1]
             p = 'tmp/logs/'+po+'-logs/'+str(po)+'-links.lst'
             open(p, 'w+')
             print(B+' [!] Saving links...')

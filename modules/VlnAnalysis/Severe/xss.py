@@ -73,7 +73,7 @@ def auto0x00(web):
             user_agent['User-agent'] += i
             req = requests.get(web, headers=user_agent)
             print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['User-agent'])
-            flag = u' '.join(req.text).encode('utf-8').strip()
+            #flag = ' '.join(req.text).encode('utf-8').strip()
             if i in req.content:
                 print(G+'\n [!] Cross Site Scripting (User-Agent Based) Detected!')
                 print(R+' [!] User-Agent : '+O+user_agent['User-agent'])
@@ -94,7 +94,7 @@ def auto0x00(web):
             user_agent['Referer'] += i
             req = requests.get(web, headers=user_agent)
             print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['Referer'])
-            flag = u' '.join(req.text).encode('utf-8').strip()
+            #flag = ' '.join(req.text).encode('utf-8').strip()
             if i in req.content:
                 print(G+'\n [!] Cross Site Scripting (User-Agent Based) Detected!')
                 print(R+' [!] User-Agent : '+O+user_agent['Referer'])
@@ -145,7 +145,7 @@ def xsspoly0x00(li):
                         print(GR+' [*] Injecting payloads...')
                         print(B+' [!] PoC : ' + str(bugged))
                         print(R+" [!] Payload : " + O + p + '\033[0m')
-                        print("\033[1m [!] Code Snippet :\n \033[0m" + str(response) + '\n')
+                        print("\033[1m [!] Code Snippet :\n \033[0m" + str(resp) + '\n')
                     else:
                         print(R+' [-] No successful payload reflection...')
                         print(R+' [-] Payload '+O+p+R+' unsuccessful...')

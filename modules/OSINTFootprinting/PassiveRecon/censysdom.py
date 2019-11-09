@@ -34,6 +34,8 @@ def censysdom(web):
         print(R+' [-] Error while importing key...')
 
     web = web.split('//')[1]
+    if "@" in web:
+        web = web.split("@")[1]
     if CENSYS_SECRET != '' and CENSYS_UID != '':
         print(G+' [+] Found Censys UID Key : '+O+CENSYS_UID)
         print(G+' [+] Found Censys Secret Token : '+O+CENSYS_SECRET)

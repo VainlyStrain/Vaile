@@ -30,6 +30,8 @@ def iphistory(web):
         print(R+'    =====================\n')
         print(GR+' [*] Parsing Url...')
         web0 = web.split('//')[-1]
+        if "@" in web0:
+            web0 = web0.split("@")[1]
 
         print(web0)
 

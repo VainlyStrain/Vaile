@@ -86,6 +86,8 @@ def googlegroups(web):
     print(O+' [!] Parsing url...')
     web = web.replace('https://','')
     web = web.replace('http://','')
+    if "@" in web:
+        web = web.split("@")[1]
     getemails0x00(web)
     if flag == False:
         print(R+' [-] No results found via enumeration on Google Groups...')

@@ -1,7 +1,8 @@
-tmp/logs/ 
+
 /.idea/
 /venv/
 /Pipfile
 /Pipfile.lock
 core/sessioncache/
 *.pyc
+!tmp/logs/example.com-logs/DONOTDELETETHISFILE

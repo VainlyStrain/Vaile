@@ -35,6 +35,9 @@ def getRes0x00(web):
     if "://" in web:
         web = web.split('://')[1]
 
+    if "@" in web:
+        web = web.split("@")[1]
+
     print(GR+' [*] Setting headers... (behaving as a browser)...')
     time.sleep(0.7)
     headers =   {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',

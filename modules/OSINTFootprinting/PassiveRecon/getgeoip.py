@@ -23,6 +23,8 @@ def getgeoip(web):
 
     web = web.replace('http://','')
     web = web.replace('https://','')
+    if "@" in web:
+        web = web.split("@")[1]
     print(R+'\n   =========================')
     print(R+'    G E O I P   L O O K U P')
     print(R+'   =========================\n')

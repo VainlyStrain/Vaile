@@ -23,6 +23,8 @@ properties = {}
 def revdns(web):
 
     web = web.split('//')[1]
+    if "@" in web:
+        web = web.split("@")[1]
     print(R+'\n   =====================================')
     print(R+'    R E V E R S E   D N S   L O O K U P')
     print(R+'   =====================================\n')
@@ -32,9 +34,10 @@ def revdns(web):
     print(""+ GR + color.BOLD + " [~] Result: \n"+ color.END)
     text = requests.get('http://api.hackertarget.com/reversedns/?q=' + web)
     result = text.text
-    if 'null' not in result and 'no results' not in result.lower():
+    if 'error' not in result and 'no result' not in result.lower():
         res = result.splitlines()
         for r in res:
+            print(r)
             print(B+' [+] Received : '+O+r.split(',')[0].strip()+' => '+C+'('+r.split(',')[1].strip()+')')
             time.sleep(0.04)
             links.append(r)

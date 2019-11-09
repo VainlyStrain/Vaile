@@ -26,7 +26,13 @@ searchinfo = "Information Gathering with Google"
 properties = {}
 
 def googledorker(web):
-
+    webx = web
+    if "@" in webx:
+        web = web.split("@")[1]
+        if "https" in webx:
+            web = "https://" + web
+        else:
+            web = "http://" + web
     site = str(web)
     def clear_cookie():
         fo = open(".google-cookie", "w")

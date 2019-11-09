@@ -1,0 +1,1 @@
+This file (probably) fixes the "can't cd into tmp/log" issue of git being lazy

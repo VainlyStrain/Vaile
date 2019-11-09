@@ -36,6 +36,8 @@ def googlenum(web):
             time.sleep(0.6)
             web = web.replace('http://','')
             web = web.replace('https://','')
+            if "@" in web:
+                web = web.split("@")[1]
             print(GR+' [*] Making the request...')
             try:
                 resp = requests.get('https://www.googleapis.com/plus/v1/people?query='+web+'&key='

@@ -28,7 +28,7 @@ searchinfo = "PHP Injection Module"
 properties = {}
 
 def genRandStr0x00(n):
-    return ''.join([choice(ascii_uppercase+ascii_lowercase) for o in xrange(0,int(n))]) # fetch random string
+    return ''.join([choice(ascii_uppercase+ascii_lowercase) for o in range(0,int(n))]) # fetch random string
 
 def check0x00(web0x00, pay, gen_headers):
 

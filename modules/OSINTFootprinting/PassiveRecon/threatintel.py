@@ -441,6 +441,8 @@ def threatintel(web):
     time.sleep(0.7)
     web = web.replace('https://','')
     web = web.replace('http://','')
+    if "@" in web:
+        web = web.split("@")[1]
     print(O+' [!] Getting host information...')
     time.sleep(0.8)
     ip = socket.gethostbyname(web)

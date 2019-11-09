@@ -47,6 +47,8 @@ def check0x00(alias,web):
         po = web.replace('http://','')
     elif 'https://' in web.strip():
         po = web.replace('https://','')
+    if "@" in po:
+        po = po.split("@")[1]
     p = 'tmp/logs/'+po+'-logs/'+str(po)+'-usernames.lst'
     open(p,'w+')
     print(B+' [!] Saving links...')
