@@ -39,7 +39,7 @@ def check0x00(web0x00, pay, gen_headers):
         c = rq.content
         print(O+' [!] Analysing responses...')
         time.sleep(0.7)
-        if search(r"root\:\/bin\/bash|"+pay,c): # regex for vuln
+        if search(r"root\:\/bin\/bash|"+pay,str(c)): # regex for vuln
             hunt = 0x01
             print(G+' [+] Potential PHP Code Injection Flaw discovered!')
             print(GR+' [*] Injecting payloads...')

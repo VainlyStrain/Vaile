@@ -41,14 +41,14 @@ def auto0x00(web):
         if session.cookies:
             print(G+' [+] This website supports session cookies...')
             for j in pay:
-                i = r'%s' % j
+                i = '%s' % j
                 print(B+" [*] Trying Payload : "+C+ i)
                 time.sleep(0.7)
                 for cookie in session.cookies:
                     cookie.value += i
                     print(O+' [+] Using '+R+'!nfected'+O+' cookie : '+GR+cookie.value)
                     r = session.get(web)
-                    if i in r.text:
+                    if str(i) in str(r.text):
                         poc = C+" [+] PoC : " +O+ cookie.name + " : " +GR+ cookie.value
                         print(G+" [+] Cookie Based XSS Detected! ")
                         print(poc)
@@ -65,7 +65,7 @@ def auto0x00(web):
         print(R+'    ===========================\n')
 
         for j in pay:
-            i = r'%s' % j
+            i = '%s' % j
             print(B+' [*] Using payload : '+C+i)
             time.sleep(0.7)
             user_agent = {'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux ' +
@@ -74,7 +74,8 @@ def auto0x00(web):
             req = requests.get(web, headers=user_agent)
             print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['User-agent'])
             #flag = ' '.join(req.text).encode('utf-8').strip()
-            if i in req.content:
+            flag = req.text.encode('utf-8').strip()
+            if str(i) in str(flag):
                 print(G+'\n [!] Cross Site Scripting (User-Agent Based) Detected!')
                 print(R+' [!] User-Agent : '+O+user_agent['User-agent'])
                 print(W+color.BOLD+' [+] Code: '+W)
@@ -87,18 +88,22 @@ def auto0x00(web):
         print(R+'    ===========================\n')
 
         for j in pay:
-            i = r'%s' % j
+            i = '%s' % j
             print(B+' [*] Using payload : '+C+i)
             time.sleep(0.7)
             user_agent = {'Referer': 'http://' + 'xssing.pwn'}
             user_agent['Referer'] += i
             req = requests.get(web, headers=user_agent)
             print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['Referer'])
-            #flag = ' '.join(req.text).encode('utf-8').strip()
-            if i in req.content:
-                print(G+'\n [!] Cross Site Scripting (User-Agent Based) Detected!')
+            #flag = ' '.join(k for k in req.text).encode('utf-8').strip()
+            flag = req.text.encode("utf-8").strip()     
+            if str(i) in str(flag):
+                #print("1")
+                print(G+'\n [!] Cross Site Scripting (Referrer Based) Detected!')
+                #print("2")
                 print(R+' [!] User-Agent : '+O+user_agent['Referer'])
                 print(W+color.BOLD+' [+] Code: '+W)
+                #print("3")
                 print(str(req.content)+'\n')
 
     print(P+' [!] Enter an option :\n')
@@ -139,7 +144,7 @@ def xsspoly0x00(li):
                 resp = requests.get(bugged)
                 print(O+' [!] Matching payload signatures...')
                 try:
-                    if p in resp.text:
+                    if str(p) in str(resp.text):
                         yay = 0x01
                         print('\n'+G+' [+] Vulnerable link detected : ' + bugged)
                         print(GR+' [*] Injecting payloads...')
@@ -176,7 +181,7 @@ def manual0x00(web):
             response = requests.get(bugged)
             print(O+' [!] Matching payload signatures...')
             try:
-                if p in response.text:
+                if str(p) in str(response.text):
                     yay = 0x01
                     print(G+' [+] Vulnerable link detected : ' + bugged)
                     print(GR+' [*] Injecting payloads...')
