@@ -44,7 +44,7 @@ cd Vaile
 
 Vaile needs some libraries to run, which can be installed via `aptitude` or `dnf` Package Managers.
 ```
-sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18
+sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev
 ```
 Now after these dependencies are finished installing, we need to install the remaining Python Package dependencies, hence run:
 ```
@@ -295,5 +295,5 @@ v2.0.1-5 [latest release] [#stable]
 
 Vaile is provided as an offensive web application audit framework. It has built-in modules which can reveal potential misconfigurations and vulnerabilties in web applications which could possibly be exploited maliciously.
 
-__THEREFORE, THE AUTHOR AND NEITHER THE CONTRIBUTORS ARE NOT EXCLUSIVELY RESPONSIBLE FOR ANY MISUSE OR DAMAGE DUE TO THIS TOOLKIT.__
+__THEREFORE, NEITHER THE AUTHOR NOR THE CONTRIBUTORS ARE RESPONSIBLE FOR ANY MISUSE OR DAMAGE DUE TO THIS TOOLKIT.__
 
