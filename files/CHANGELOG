@@ -19,3 +19,10 @@ INTERMEDIATE
   improved: automatic dropping of credentials for OSINT-passive modules where they are not needed
   fixed: autocorrect strikes again in legal disclaimer ;)
   
+INTERMEDIATE
+
+  fixed: XPATHi
+  fixed: LFI
+  fixed: HTMLi
+  partially fixed: RCE
+  

@@ -37,8 +37,9 @@ def check0x00(web0x00, pay, gen_headers):
         c = rq.content
         print(O+' [!] Analysing responses...')
         time.sleep(0.7)
+        found = False
         for sign in xpath_errors:
-            if re.search(sign, c, re.I):
+            if re.search(sign, str(c), re.I):
                 hunt = 0x01
                 print(G+' [+] Potential XPATH Code Injection Flaw discovered!')
                 print(GR+' [*] Injecting payloads...')
@@ -47,9 +48,10 @@ def check0x00(web0x00, pay, gen_headers):
                 print(B+' [+] Payload : '+C+pay)
                 print(O+' [+] Response : \033[0m\n')
                 print(c)
-            else:
-                print(R+' [-] Payload '+O+pay+R+' unsuccessful...')
-                print(R+' [-] No successful code injection at : '+O+web0x00)
+                found = True
+        if not found:
+            print(R+' [-] Payload '+O+pay+R+' unsuccessful...')
+            print(R+' [-] No successful code injection at : '+O+web0x00)
 
     except Exception as e:
         print(R+' [-] Exception encountered!')

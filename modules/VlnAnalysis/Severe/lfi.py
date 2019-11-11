@@ -69,7 +69,7 @@ def check0x00(web0x00, pay, gen_headers):
                 website = str(web0x00)
                 print(G+" [+] "+O+web0x00+G+' seems Vulnerable!')
                 print(W+color.BOLD+' [+] Content Received : ')
-                print(W+rq.content)
+                print(W+content)
 
                 gotcha.append(website)
 
@@ -84,20 +84,21 @@ def check0x00(web0x00, pay, gen_headers):
                 else:
                     generic.append(website)
             else:
+                website = str(web0x00)
                 print(R+" [-] "+str(website)+O+" does not seem vulnerable...")
                 if len(rq.content) > 0:
                     print(W+color.BOLD+' [+] Content Received : ')
-                    print(W+rq.content)
+                    print(W+content)
         elif str(rq.status_code).startswith('3'):
             print(R+" [-] Redirection Response Received..."+O+' ('+str(rq.status_code)+')')
             if len(rq.content) > 0:
                 print(W+color.BOLD+' [+] Content Received : ')
-                print(W+rq.content)
+                print(W+content)
         else:
             print(R+" [-] Response Received : "+O+str(rq.status_code))
             if len(rq.content) > 0:
                 print(W+color.BOLD+' [+] Content Received : ')
-                print(W+rq.content)
+                print(W+content)
 
     except Exception as e:
         print(R+' [-] Exception encountered!')
@@ -125,15 +126,14 @@ def getFile0x00():
                     q = q.replace('\n','')
                     payloads.append(q)
         else:
-            while True:
-                fi = w
-                if os.path.exists(fi) == True:
-                    print(G+' [+] File '+fi+' found...')
-                    print(GR+' [*] Importing payloads...')
-                    with open(fi,'r') as q0:
-                        for q in q0:
-                            q = q.replace('\n','')
-                            payloads.append(q)
+            fi = w
+            if os.path.exists(fi) == True:
+                print(G+' [+] File '+fi+' found...')
+                print(GR+' [*] Importing payloads...')
+                with open(fi,'r') as q0:
+                    for q in q0:
+                        q = q.replace('\n','')
+                        payloads.append(q)
 
     except IOError:
         print(R+' [-] File path '+O+fi+R+' not found!')

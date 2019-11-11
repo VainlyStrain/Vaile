@@ -33,7 +33,7 @@ def check0x00(web0x00, pay, gen_headers):
         c = rq.content
         print(O+' [!] Analysing responses...')
         time.sleep(0.7)
-        if search(pay,c):
+        if search(pay,str(c)):
             hunt = 0x01
             print(G+' [+] Potential HTML Injection discovered!')
             print(GR+' [*] Injecting payloads...')

@@ -32,9 +32,16 @@ class HTTP_HEADER:
 
 def headread(url):
     print(GR+" [*] Testing site...\n")
-    opener = urllib.urlopen(url)
+    if "@" in url:
+        if "https" in url:
+            url2 = "https://" + url.split("@")[1]
+        else:
+            url2 = "http://" + url.split("@")[1]
+    opener = urllib.request.urlopen(url2)
     if (opener.code == 200):
         print(G+" [+] Status: (200 - OK)")
+    elif (opener.code == 401):
+        print(G+" [*] Status: (401 - Unauthorized) (may be caused by temporar removal of credentials)")
     if (opener.code == 404):
         print(R+" [-] Status: Server maybe down (404)")
         sys.exit()
@@ -46,7 +53,6 @@ def headread(url):
 
 def check0x00(url, payloads, check):
 
-    opener = urllib.urlopen(url)
     vuln = 0
 
     print(GR+' [*] Starting command injection testing...')
@@ -78,7 +84,7 @@ def check0x00(url, payloads, check):
 
 
     if (vuln == 0):
-        print(G+"\n [+] This web is damn secure. No vulnerabilities found. :)\n")
+        print(G+"\n [+] This website is damn secure. No vulnerabilities found. :)\n")
     else:
         print("\n [+] "+str(vuln)+" Bugs Found. Happy Hunting... :) \n")
 
