@@ -26,3 +26,6 @@ INTERMEDIATE
   fixed: HTMLi
   partially fixed: RCE
   
+INTERMEDIATE#2
+
+  added support for multiple parameters in various modules

@@ -121,7 +121,7 @@ def auto0x00(web):
         print(GR+' [*] Launching Cookie-Based Module...')
         xsscookie0x00(web)
 
-def xsspoly0x00(li):
+def xsspoly0x00(li, bug2):
 
     yay = 0x00
     print(R+'\n    ==========================')
@@ -137,7 +137,7 @@ def xsspoly0x00(li):
         sleep(0.7)
         if '?' in str(li) and '=' in str(li):
             for p in poly:
-                bugged = li + str(p)
+                bugged = li + str(p) + bug2
                 print(B+"\n [*] Trying : "+C+bugged)
                 time.sleep(0.7)
                 print(GR+' [*] Making the request...')
@@ -170,11 +170,24 @@ def manual0x00(web):
     print(R+'     X S S  (Manual Mode)')
     print(R+'    ======================\n')
     bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /xss/search.php?q=drake)'+O+' :> ')
-    bugs = web + bug.split('=')[0] + '='
-    print(O+' [!] Using Url : '+GR+bugs)
+    choice = ""
+    if "&" in bug:
+        ln = len(bug.split("&"))
+        choice = input(" [!] Discovered {} parameters. Which one to use? (enter name) :> ".format(ln))
+        if not choice in bug:
+            sys.exit(" [-] Param {} not found.".format(choice))
+    bugs = web + bug.split(choice + '=')[0] + choice + '='
+    bug2 = ""
+    if choice != "":
+        n = bug.split(choice + "=")[1]
+        if "&" in n:
+            bug2 = bug.split(choice)[1]
+            tmp = bug2.split("&")[0]
+            bug2 = bug2.replace(tmp,"")
+    print(O+' [!] Using Url : '+GR+bugs+"INJECT"+bug2)
     if '?' in str(bugs) and '=' in str(bugs):
         for p in pay:
-            bugged = bugs + str(p)
+            bugged = bugs + str(p) + bug2
             print(B+"\n [*] Trying : "+C+bugged)
             time.sleep(0.2)
             print(GR+' [*] Making the request...')
@@ -199,7 +212,7 @@ def manual0x00(web):
             x = input(O+' [#] Test Polyglots? (Y/n) :> ')
             if x == 'Y' or x == 'y':
                 print(GR+' [*] Proceeding fuzzing with polyglots...')
-                xsspoly0x00(bugs)
+                xsspoly0x00(bugs, bug2)
             elif x == 'n' or x == 'N':
                 print(C+' [+] Okay!')
             else:

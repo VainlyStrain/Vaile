@@ -95,13 +95,28 @@ def htmli(web):
     param = input(O+' [#] Scope parameter (eg. /vuln/page.php?q=lmao) :> ')
     if param.startswith('/') == False:
         param = '/' + param
+
+    choice = ""
+    if "&" in param:
+        ln = len(param.split("&"))
+        choice = input(" [!] Discovered {} parameters. Which one to use? (enter name) :> ".format(ln))
+        if not choice in param:
+            sys.exit(" [-] Param {} not found.".format(choice))
+
+    bug2 = ""
+    if choice != "":
+        n = param.split(choice + "=")[1]
+        if "&" in n:
+            bug2 = param.split(choice)[1]
+            tmp = bug2.split("&")[0]
+            bug2 = bug2.replace(tmp,"")
+            
     e = getFile0x00()
-    web0 = web + param
-    web00 = web0.split('=')[0] + '='
+    web00 = web + param.split(choice + '=')[0] + choice + '='
     try:
         for pay in payloads:
             print(GR+'\n [*] Setting parameters...')
-            web0x00 = web00 + pay
+            web0x00 = web00 + pay + bug2
             print(C+' [+] Using payload : '+B+str(pay))
             print(B+' [+] Using !nfected Url : '+GR+str(web0x00))
             check0x00(web0x00, pay, gen_headers)
