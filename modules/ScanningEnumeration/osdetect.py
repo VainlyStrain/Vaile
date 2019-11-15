@@ -37,20 +37,25 @@ def port0x00(web):
         print(R+' [-] Exception : '+str(e))
     print(GR+' [*] Initiating OS detection response analysis...')
     response = subprocess.check_output(['nmap','-Pn','-O','-sSU','-F','--osscan-guess','-T4', web])
-    if "No OS matches for host".lower() not in response.lower():
-        if 'running:' in response.lower():
+    print(1)
+    if "No OS matches for host".lower() not in str(response.lower()):
+        print(2)
+        if 'running:' in str(response.lower()):
+            print(3)
             regex = re.compile("Running:(.*)")
-            result = regex.findall(response)
+            result = regex.findall(str(response))
             print(C+' [+] OS Running Matched : '+B+result[0].strip())
 
-        if 'os cpe:' in response.lower():
+        if 'os cpe:' in str(response.lower()):
+            print(4)
             regex = re.compile("OS CPE:(.*)")
-            result = regex.findall(response)
+            result = regex.findall(str(response))
             print(C+' [+] OS CPE Detected : '+B+result[0].strip())
 
-        if 'os details:' in response.lower():
+        if 'os details:' in str(response.lower()):
+            print(5)
             regex = re.compile("OS details:(.*)")
-            result = regex.findall(response)
+            result = regex.findall(str(response))
             print(C+' [+] Operating System Details : '+B+result[0].strip())
     else:
         print(R+' [-] No exact matches for OS via port scan...')

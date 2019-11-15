@@ -23,7 +23,7 @@ INTERMEDIATE
 2.0.1-5 > 2.0.1-15
 --------------------
 
-  fixed: CLRF
+  fixed: CRLF
   fixed: Exploit invalid module error
   fixed: xrange in some modules
   fixed: string.ascii_letters in some modules
@@ -39,3 +39,6 @@ INTERMEDIATE
   improved: added support for multiple parameters in various modules
   improved: pathtrav evasion implemented in LFI, too
   
+INTERMEDIATE
+
+  fixed: osdetect bytes -> string error
