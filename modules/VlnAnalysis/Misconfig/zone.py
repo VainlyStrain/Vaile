@@ -24,9 +24,12 @@ def zone(web):
     web = web.replace('http://','')
     web = web.replace('https://','')
     try:
-        print(R+'\n   ===========================')
-        print(R+'    Z O N E   T R A N S F E R')
-        print(R+'   ===========================\n')
+        #print(R+'\n   ===========================')
+        #print(R+'\n    Z O N E   T R A N S F E R')
+        #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·\n')
+        from core.methods.print import pvln
+        pvln("zone transfer") 
+                    
         time.sleep(0.4)
         print(O+' [!] Looking up for name servers on which website is hosted...\n'+G)
         time.sleep(0.7)

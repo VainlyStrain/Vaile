@@ -225,9 +225,11 @@ def mailspoof(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n     =========================')
-    print(R+'      M A I L   S P O O F E R ')
-    print(R+'     =========================\n')
+    #print(R+'\n     =========================')
+    #print(R+'\n      M A I L   S P O O F E R ')
+    #print(R+'     ——·‹›·––·‹›·——·‹›·——·‹›·–\n')
+    from core.methods.print import pvln
+    pvln("mail spoofer")            
 
     print(GR+' [*] Setting inital value '+R+'"False"...')
     spoofable = False

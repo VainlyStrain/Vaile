@@ -82,7 +82,7 @@ class Form():
         return input
 
 def randString():
-    return ''.join( Random().sample(string.letters, 6))
+    return ''.join( Random().sample(string.ascii_letters, 6))
 
 def getAllForms(soup):
     return soup.findAll('form',action=True,method=re.compile("post", re.IGNORECASE))

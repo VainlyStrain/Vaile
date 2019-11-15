@@ -29,9 +29,10 @@ def googleSearch():
 
     try:
         time.sleep(0.4)
-        print(R+'\n   ===========================')
-        print(R+'    G O O G L E   S E A R C H')
-        print(R+'   ===========================\n')
+        #print(R+'\n   ===========================')
+        print(R+'\n    G O O G L E   S E A R C H')
+        print(R+'   ––·‹›·––·‹›·––·‹›·––·‹›·––·\n')
+                    
         lol = input(O+ " [#] QUERY :> " + color.END)
         time.sleep(0.8)
         m = input(O+' [#] Search limit (not recommended above 30) :> ')

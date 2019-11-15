@@ -32,9 +32,11 @@ def filebrute(web):
     print(GR+' [*] Loading module...')
     print(B+" [!] Module Selected : "+C+"Bruteforce Modules\n\n")
     time.sleep(0.7)
-    print(R+'\n    ==================================')
-    print(R+'     B R U T E F O R C E   R E C O N.')
-    print(R+'    ==================================\n')
+    #print(R+'\n    ==================================')
+    #print(R+'     B R U T E F O R C E   R E C O N.')
+    #print(R+'    ==================================\n')
+    from core.methods.print import posintact
+    posintact("bruteforce recon") 
 
     print(O+' Choose from the following options :\n')
     print(B+'  [1]'+C+' Common Backdoor Paths '+W+' (.shell, c99.php, etc)')

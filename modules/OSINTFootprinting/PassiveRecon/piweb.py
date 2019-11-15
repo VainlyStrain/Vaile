@@ -23,9 +23,11 @@ def piweb(web):
     dom = web.split('//')[1]
     if "@" in dom:
         dom = dom.split("@")[1]
-    print(R+'\n   =====================')
-    print(R+'    P I N G   C H E C K ')
-    print(R+'   =====================\n')
+    #print(R+'\n   =====================')
+    #print(R+'    P I N G   C H E C K ')
+    #print(R+'   =====================\n')
+    from core.methods.print import posintpas
+    posintpas("ping check")
     time.sleep(0.4)
     print(GR + color.BOLD + ' [!] Pinging website using external APi...')
     time.sleep(0.4)

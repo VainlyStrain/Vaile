@@ -24,9 +24,12 @@ properties = {}
 
 def sshbrute(web):
 
-    print(R+'\n   ===============================')
-    print(R+'    S S H   B R U T E F O R C E R')
-    print(R+'   ===============================\n')
+    #print(R+'\n   ===============================')
+    #print(R+'\n    S S H   B R U T E F O R C E R')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·–\n')
+    from core.methods.print import pbrute
+    pbrute("ssh")
+             
     try:
         print(GR+' [*] Testing target...')
         ip = socket.gethostbyname(web)

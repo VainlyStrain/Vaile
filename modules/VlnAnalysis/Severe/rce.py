@@ -108,9 +108,13 @@ def getPayloads(url):
 
 def rce(web):
 
-    print(R+'\n    =========================================')
-    print(R+'     O S   C O M M A N D   I N J E C T I O N ')
-    print(R+'    =========================================\n')
+    #print(R+'\n    =========================================')
+    #print(R+'\n     O S   C O M M A N D   I N J E C T I O N ')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·——·‹›\n')
+
+    from core.methods.print import pvln
+    pvln("os command Injection") 
+                 
     web0 = input(O+' [#] Path Parameter '+R+'(eg. /ping.php?site=foo)'+O+' :> ')
     if "?" in web0 and '=' in web0:
         if web0.startswith('/'):

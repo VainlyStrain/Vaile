@@ -56,9 +56,13 @@ def netmisc0x00(web):
 def netmisc(web):
 
     print(GR+' [*] Loading module...')
-    print(R+'\n    ===================================')
-    print(R+'     TELNET ENABLED (Network Misconf.)')
-    print(R+'    ===================================\n')
+    #print(R+'\n    ===================================')
+    #print(R+'\n     TELNET ENABLED (Network Misconf.)')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›\n')
+
+    from core.methods.print import pvln
+    pvln("network misconf.") 
+                 
 
     print(GR+' [*] Loading up port scanner...')
     netmisc0x00(web)

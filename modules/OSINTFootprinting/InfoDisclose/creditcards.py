@@ -145,9 +145,11 @@ def creditcards(web):
 
     print(GR+' [*] Initiating module...')
     time.sleep(0.5)
-    print(R+'\n     ========================')
-    print(R+'      CREDIT CARD DISCLOSURE')
-    print(R+'     ========================\n')
+    #print(R+'\n     ========================')
+    #print(R+'      CREDIT CARD DISCLOSURE')
+    #print(R+'     ========================\n')
+    from core.methods.print import pleak
+    pleak("Credit card disclosure")
     credit0x00(web)
 
 def attack(web):

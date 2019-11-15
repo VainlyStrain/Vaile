@@ -25,9 +25,11 @@ def subnet(web):
     if "@" in web:
         web = web.split("@")[1]
     time.sleep(0.4)
-    print(R+'\n   ====================================')
-    print(R+'    S U B N E T  E N U M E R A T I O N')
-    print(R+'   ====================================\n')
+    #print(R+'\n   ====================================')
+    #print(R+'    S U B N E T  E N U M E R A T I O N')
+    #print(R+'   ====================================\n')
+    from core.methods.print import posintpas
+    posintpas("subnet enumeration")
     print(GR + ' [!] Enumerating subnets in network...')
     time.sleep(0.4)
     print(GR+' [*] Getting subnet class infos...\n')

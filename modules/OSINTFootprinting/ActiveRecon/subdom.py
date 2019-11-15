@@ -23,8 +23,8 @@ flist = []
 found = []
 total = []
 
-info = ""
-searchinfo = ""
+info = "This module tries to find subdomains and stores them in a file."
+searchinfo = "Subdomain Gatherer"
 properties = {}
 
 def subdombrute(web):
@@ -129,9 +129,11 @@ def subdom(web):
     fileo = 'tmp/logs/'+web+'-logs/'+str(web)+'-subdomains.lst'
     p = open(fileo,'w+')
     p.close
-    print(R+'\n   =====================================')
-    print(R+'    S U B D O M A I N   G A T H E R E R')
-    print(R+'   =====================================\n')
+    #print(R+'\n   =====================================')
+    #print(R+'    S U B D O M A I N   G A T H E R E R')
+    #print(R+'   =====================================\n')
+    from core.methods.print import posintact
+    posintact("subdomain gatherer")
     time.sleep(0.7)
     print(B+' [*] Initializing Step [1]...')
     subdombrute(web)

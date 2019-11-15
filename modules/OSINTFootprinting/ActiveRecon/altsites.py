@@ -25,9 +25,12 @@ properties = {}
 
 def altsites(web):
 
-    print(R+'\n    ===================================')
-    print(R+'     A L T E R N A T I V E   S I T E S')
-    print(R+'    ===================================\n')
+    #print(R+'\n    ===================================')
+    #print(R+'     A L T E R N A T I V E   S I T E S')
+    #print(R+'    ===================================\n')
+
+    from core.methods.print import posintact
+    posintact("alternative sites") 
 
     print(GR+' [*] Setting User-Agents...')
     time.sleep(0.7)

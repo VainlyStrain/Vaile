@@ -25,9 +25,11 @@ def getgeoip(web):
     web = web.replace('https://','')
     if "@" in web:
         web = web.split("@")[1]
-    print(R+'\n   =========================')
-    print(R+'    G E O I P   L O O K U P')
-    print(R+'   =========================\n')
+    #print(R+'\n   =========================')
+    #print(R+'    G E O I P   L O O K U P')
+    #print(R+'   =========================\n')
+    from core.methods.print import posintpas
+    posintpas("geoip lookup")
     time.sleep(0.4)
     print(GR+' [!] Looking Up for WhoIS Information...')
     time.sleep(0.4)

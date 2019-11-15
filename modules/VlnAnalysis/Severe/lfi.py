@@ -151,9 +151,13 @@ def lfi(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n     =========================================')
-    print(R+'      L O C A L   F I L E   I N C L U S I O N')
-    print(R+'     =========================================\n')
+    #print(R+'\n     =========================================')
+    #print(R+'\n      L O C A L   F I L E   I N C L U S I O N')
+    #print(R+'     ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·——·‹›\n')
+
+    from core.methods.print import pvln
+    pvln("local file inclusion") 
+                  
 
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
     param = input(O+' [#] Parameter Path (eg. /vuln/fetch.php?q=lmao) :> ')

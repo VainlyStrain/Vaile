@@ -24,9 +24,11 @@ properties = {}
 
 def dnschk(domain):
 
-    print(R+'\n   =====================')
-    print(R+'    D N S   L 0 0 K U P')
-    print(R+'   =====================\n')
+    #print(R+'\n   =====================')
+    #print(R+'    D N S   L 0 0 K U P')
+    #print(R+'   =====================\n')
+    from core.methods.print import posintpas
+    posintpas("dns lookup")
 
     domain = domain.split('//')[1]
     res = DNSDumpsterAPI(False).search(domain)

@@ -20,9 +20,9 @@ properties = {}
 
 def hashes():
 
-    print(R+'\n    =============================')
-    print(R+'     H A S H   G E N E R A T O R')
-    print(R+'    =============================\n')
+    #print(R+'\n    =============================')
+    print(R+'\n     H A S H   G E N E R A T O R')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
     message = input(O+" [#] Enter the string :> ")
     print(GR+' [+] Generating hashes...')
     time.sleep(0.6)

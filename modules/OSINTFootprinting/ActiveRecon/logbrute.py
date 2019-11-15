@@ -79,10 +79,10 @@ def logbrute(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    =====================================')
-    print(R+'     L O G F I L E   B R U T E F O R C E')
-    print(R+'    =====================================\n')
-
+    #print(R+'\n    =====================================')
+    print(R+'\n     L O G F I L E   B R U T E F O R C E')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·–\n')
+                 
     print(O+' [*] Path to file to be used '+R+'(Default: files/fuzz-db/log_paths.lst)...')
     fil = input(O+' [#] Your input (Press Enter if default) :> ')
     if fil == '':

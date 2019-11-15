@@ -28,9 +28,11 @@ properties = {}
 
 def commentssrc(web):
 
-    print(R+'\n    =================================')
-    print(R+'     C O M M E N T S   S C R A P E R')
-    print(R+'    =================================')
+    #print(R+'\n    =================================')
+    #print(R+'     C O M M E N T S   S C R A P E R')
+    #print(R+'    =================================')
+    from core.methods.print import posintact
+    posintact("comment scraper") 
     print(O+' [It is recommended to run ScanEnum/Crawlers')
     print(O+'       before running this module]\n')
     print(GR+' [*] Importing links...')

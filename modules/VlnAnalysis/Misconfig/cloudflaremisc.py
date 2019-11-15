@@ -40,9 +40,13 @@ def cloud0x00(web):
 
     web = web.replace('https://','')
     web = web.replace('http://','')
-    print(R+'\n   =========================================')
-    print(R+'    C L O U D F L A R E   M I S C O N F I G.')
-    print(R+'   =========================================\n')
+    #print(R+'\n   =========================================')
+    #print(R+'\n    C L O U D F L A R E   M I S C O N F I G.')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·——·‹›·––·‹›\n')
+
+    from core.methods.print import pvln
+    pvln("cloudflare misconfig.") 
+                
     time.sleep(0.4)
     print(GR+' [*] Checking server status...')
     try:

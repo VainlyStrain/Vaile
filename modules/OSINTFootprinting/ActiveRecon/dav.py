@@ -90,9 +90,11 @@ def dav(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.7)
-    print(R+'\n    =========================================')
-    print(R+'     D A V   H T T P   E N U M E R A T I O N')
-    print(R+'    =========================================\n')
+    #print(R+'\n    =========================================')
+    #print(R+'     D A V   H T T P   E N U M E R A T I O N')
+    #print(R+'    =========================================\n')
+    from core.methods.print import posintact
+    posintact("dav http enumeration") 
     time.sleep(0.7)
     print(O+' [!] Loading HTTP methods...')
     global pro, sr

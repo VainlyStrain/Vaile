@@ -25,9 +25,13 @@ def apachestat(web):
     flag = 0x00
     print(GR+' [*] Loading module...')
     time.sleep(0.7)
-    print(R+'\n    ===========================')
-    print(R+'     A P A C H E   S T A T U S ')
-    print(R+'    ===========================\n')
+    #print(R+'\n    ===========================')
+    #print(R+'     A P A C H E   S T A T U S ')
+    #print(R+'    ===========================\n')
+
+    from core.methods.print import posintact
+    posintact("apache status") 
+
     print(O+' [*] Importing fuzz parameters...')
     time.sleep(0.7)
     print(GR+' [*] Initializing bruteforce...')

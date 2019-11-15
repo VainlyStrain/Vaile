@@ -29,9 +29,12 @@ def ssscript(web):
     novuln = []
     web = web.replace('https://','')
     web = web.replace('http://','')
-    print(R+'\n   =======================================')
-    print(R+'    S A M E - S I T E   S C R I P T I N G')
-    print(R+'   =======================================\n')
+    #print(R+'\n   =======================================')
+    #print(R+'\n    S A M E - S I T E   S C R I P T I N G')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·——·\n')
+    from core.methods.print import pvln
+    pvln("same-site scripting") 
+                
     time.sleep(0.5)
     try:
         if os.path.exists('files/'+web+'-subdomains.lst') == True:
@@ -44,9 +47,10 @@ def ssscript(web):
         print(R+' [-] Exception occured!')
 
     os.system('mv '+web+'-subdomains.lst tmp/')
-    print(R+'\n    =========================')
-    print(R+'     S - S - S   T E S T E R')
-    print(R+'    =========================\n')
+    #print(R+'\n    =========================')
+    print(R+'\n     S - S - S   T E S T E R')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·–\n')
+                 
     try:
         with open('tmp/'+web+'-subdomains.lst','r') as dom:
             for m in dom:

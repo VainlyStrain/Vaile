@@ -25,9 +25,11 @@ def revdns(web):
     web = web.split('//')[1]
     if "@" in web:
         web = web.split("@")[1]
-    print(R+'\n   =====================================')
-    print(R+'    R E V E R S E   D N S   L O O K U P')
-    print(R+'   =====================================\n')
+    #print(R+'\n   =====================================')
+    #print(R+'    R E V E R S E   D N S   L O O K U P')
+    #print(R+'   =====================================\n')
+    from core.methods.print import posintpas
+    posintpas("reverse dns lookup")
     time.sleep(0.4)
     print('' + GR + color.BOLD + ' [!] Looking Up for Reverse DNS Info...')
     time.sleep(0.4)

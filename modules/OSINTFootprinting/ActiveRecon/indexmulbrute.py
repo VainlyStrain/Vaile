@@ -79,10 +79,10 @@ def indexmulbrute(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    =================================')
-    print(R+'     M U L T I P L E   I N D I C E S')
-    print(R+'    =================================\n')
-
+    #print(R+'\n    =================================')
+    print(R+'\n     M U L T I P L E   I N D I C E S')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·\n')
+                 
     print(O+' [*] Path to file to be used '+R+'(Default: files/fuzz-db/multipleindex_paths.lst)...')
     fil = input(O+' [#] Your input (Press Enter if default) :> ')
     if fil == '':

@@ -23,9 +23,12 @@ properties = {}
 
 def popbrute(web):
 
-    print(R+'\n   ===================================')
-    print(R+'    P O P 2/3   B R U T E F O R C E R')
-    print(R+'   ===================================\n')
+    #print(R+'\n   ===================================')
+    #print(R+'\n    P O P 2/3   B R U T E F O R C E R')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›\n')
+    from core.methods.print import pbrute
+    pbrute("POP2/3")
+                
     try:
         print(GR+' [*] Testing target...')
         time.sleep(0.5)

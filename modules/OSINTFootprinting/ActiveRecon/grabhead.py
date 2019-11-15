@@ -21,9 +21,11 @@ properties = {}
 
 def grabhead(web):
     time.sleep(0.4)
-    print(R+'\n      ==================================')
-    print(R+'      G R A B   H T T P   H E A D E R S')
-    print(R+'     ===================================\n')
+    #print(R+'\n      ==================================')
+    #print(R+'      G R A B   H T T P   H E A D E R S')
+    #print(R+'     ===================================\n')
+    from core.methods.print import posintact
+    posintact("grab http headers") 
     print(GR + color.BOLD + ' [*] Grabbing HTTP Headers...')
     time.sleep(0.4)
     web = web.rstrip()

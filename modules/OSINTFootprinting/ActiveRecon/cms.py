@@ -89,9 +89,11 @@ def cmsenum(web):
 
 def cms(web):
 
-    print(R+'\n   =========================')
-    print(R+'    C M S   D E T E C T O R')
-    print(R+'   =========================\n')
+    #print(R+'\n   =========================')
+    #print(R+'    C M S   D E T E C T O R')
+    #print(R+'   =========================\n')
+    from core.methods.print import posintact
+    posintact("cms detector") 
     time.sleep(0.4)
     print(GR+' [*] Parsing the web URL... ')
     time.sleep(0.4)

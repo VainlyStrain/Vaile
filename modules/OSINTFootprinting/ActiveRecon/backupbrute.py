@@ -79,10 +79,10 @@ def backupbrute(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    ===================================')
-    print(R+'     B A C K U P   B R U T E F O R C E')
-    print(R+'    ===================================\n')
-
+    #print(R+'\n    ===================================')
+    print(R+'\n     B A C K U P   B R U T E F O R C E')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
+                 
     print(O+' [*] Path to file to be used '+R+'(Default: files/fuzz-db/backup_paths.lst)...')
     fil = input(O+' [#] Your input (Press Enter if default) :> ')
     if fil == '':

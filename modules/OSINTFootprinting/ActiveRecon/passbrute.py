@@ -79,10 +79,10 @@ def passbrute(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    =========================================')
-    print(R+'     P A S S   P A T H   B R U T E F O R C E')
-    print(R+'    =========================================\n')
-
+    #print(R+'\n    =========================================')
+    print(R+'\n     P A S S   P A T H   B R U T E F O R C E')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
+                 
     print(O+' [*] Path to file to be used '+R+'(Default: files/fuzz-db/pass_paths.lst)...')
     fil = input(O+' [#] Your input (Press Enter if default) :> ')
     if fil == '':

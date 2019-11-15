@@ -20,9 +20,13 @@ properties = {}
 
 def sessionfix(url):
 
-    print(R+'\n   =================================')
-    print(R+'    S E S S I O N   F I X A T I O N')
-    print(R+'   =================================\n')
+    #print(R+'\n   =================================')
+    #print(R+'\n    S E S S I O N   F I X A T I O N')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·\n')
+
+    from core.methods.print import pvln
+    pvln("session fixation") 
+                
     print(GR+' [*] Making the request...')
     coo = input(O+' [#] Got any cookies? [Just Enter if None] :> ')
     if coo:

@@ -70,9 +70,11 @@ def hackedmail():
 
     print(GR+' [*] Loading module...')
     time.sleep(0.6)
-    print(R+'\n    =========================')
-    print(R+'     H A C K E D   E M A I L ')
-    print(R+'    =========================\n')
+    #print(R+'\n    =========================')
+    #print(R+'     H A C K E D   E M A I L ')
+    #print(R+'    =========================\n')
+    from core.methods.print import posintpas
+    posintpas("hacked email")
     time.sleep(0.7)
     getRes0x00()
 

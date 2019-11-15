@@ -44,7 +44,7 @@ global vas
 global dlist
 
 version = "2.0"
-e_version = "2.0.1-5#dev"
+e_version = "2.0.1-15#dev"
 module = ""
 targets = []
 
@@ -65,7 +65,7 @@ od = "modules.OSINTFootprinting.InfoDisclose."
 sc = "modules.ScanningEnumeration."
 sc1 = "modules.ScanningEnumeration.0x01-PortScanning."
 sc2 = "modules.ScanningEnumeration.0x02-WebCrawling."
-sp = "modules.ScanningEnumeration.SploitLoot."
+sp = "modules.SploitLoot."
 vam = "modules.VlnAnalysis.Misconfig."
 vao = "modules.VlnAnalysis.Other."
 vas = "modules.VlnAnalysis.Severe."

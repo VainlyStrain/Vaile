@@ -30,9 +30,11 @@ properties = {}
 def ssltlsscan(web):
 
     target = web.split('//')[1]
-    print(R+'\n    ===============================')
-    print(R+'     S S L   E N U M E R A T I O N')
-    print(R+'    ===============================\n')
+    #print(R+'\n    ===============================')
+    #print(R+'     S S L   E N U M E R A T I O N')
+    #print(R+'    ===============================\n')
+    from core.methods.print import pscan
+    pscan("ssl enumeration")
     print(GR+' [*] Testing server SSL status...')
     try:
         req = requests.get('https://'+target)

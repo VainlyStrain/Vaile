@@ -253,9 +253,13 @@ def auto0x00(web):
 
 def rfi(web):
 
-    print(R+'\n   ===========================================')
-    print(R+'    R E M O T E   F I L E   I N C L U S I O N')
-    print(R+'   ===========================================\n')
+    #print(R+'\n   ===========================================')
+    #print(R+'\n    R E M O T E   F I L E   I N C L U S I O N')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·——·‹›·–\n')
+
+    from core.methods.print import pvln
+    pvln("remote file inclusion") 
+                
     print(C+'    Choose from the options:\n')
     print(B+'    [1] Custom Targetting')
     print(B+'    [2] Automated Scanning\n')

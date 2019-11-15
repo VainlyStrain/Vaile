@@ -53,9 +53,11 @@ def pastebin(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.6)
-    print(R+'\n    =============================')
-    print(R+'     P A S T E B I N   P O S T S')
-    print(R+'    =============================\n')
+    #print(R+'\n    =============================')
+    #print(R+'     P A S T E B I N   P O S T S')
+    #print(R+'    =============================\n')
+    from core.methods.print import posintpas
+    posintpas("pastebin posts")
     getposts(web)
 
 def attack(web):

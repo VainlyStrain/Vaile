@@ -18,14 +18,24 @@ INTERMEDIATE
   fixed: PHPi xrange
   improved: automatic dropping of credentials for OSINT-passive modules where they are not needed
   fixed: autocorrect strikes again in legal disclaimer ;)
-  
-INTERMEDIATE
 
+  
+2.0.1-5 > 2.0.1-15
+--------------------
+
+  fixed: CLRF
+  fixed: Exploit invalid module error
+  fixed: xrange in some modules
+  fixed: string.ascii_letters in some modules
+  fixed: Broken exception syntax in some modules
+  fixed: SQLi error when leaving module
+  improved: show content of found paths in pathtrav module
+  improved: auto modules will carry on with next module when current one fails
+  improved: banners (main, modules)
   fixed: XPATHi
   fixed: LFI
   fixed: HTMLi
   partially fixed: RCE
+  improved: added support for multiple parameters in various modules
+  improved: pathtrav evasion implemented in LFI, too
   
-INTERMEDIATE#2
-
-  added support for multiple parameters in various modules

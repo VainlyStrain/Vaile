@@ -73,9 +73,12 @@ def RetrieveHeader(Target):
 
 def cookiecheck(web):
 
-    print(R+'\n    ==================================================')
-    print(R+'     C O O K I E   C H E C K  (HTTPOnly/Secure Flags)')
-    print(R+'    ==================================================\n')
+    #print(R+'\n    ==================================================')
+    #print(R+'\n     C O O K I E   C H E C K  (HTTPOnly/Secure Flags)')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·——·‹›·––·‹›·——·‹›·––\n')
+
+    from core.methods.print import pvln
+    pvln("Cookie check")            
 
     print(GR+" [!] Initializing Header Analysis...")
     Headers = RetrieveHeader(web)

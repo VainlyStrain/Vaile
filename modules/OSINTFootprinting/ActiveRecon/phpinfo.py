@@ -26,9 +26,11 @@ properties = {}
 def phpinfo(web):
 
     found = 0x00
-    print(R+'\n    =============================')
-    print(R+'     P H P I N F O   F I N D E R')
-    print(R+'    =============================\n')
+    #print(R+'\n    =============================')
+    #print(R+'     P H P I N F O   F I N D E R')
+    #print(R+'    =============================\n')
+    from core.methods.print import posintact
+    posintact("phpinfo finder") 
 
     print(GR+' [*] Importing file paths...')
     if os.path.exists('files/fuzz-db/phpinfo_paths.lst'):

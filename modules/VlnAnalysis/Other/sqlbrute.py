@@ -31,9 +31,11 @@ def bruter(user, passwd, ip, flag=False):
 
 def sqlbrute(web):
 
-    print(R+'\n   ===============================')
-    print(R+'    S Q L   B R U T E F O R C E R')
-    print(R+'   ===============================\n')
+    #print(R+'\n   ===============================')
+    #print(R+'\n    S Q L   B R U T E F O R C E R')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·–\n')
+    from core.methods.print import pbrute
+    pbrute("sql")
     try:
         print(GR+' [*] Testing target...')
         ip = socket.gethostbyname(web.split('//')[1])

@@ -26,9 +26,11 @@ def getconinfo(domain):
             domain = "https://" + domain
         else:
             domain = "http://" + domain
-    print(R+'\n    =======================================')
-    print(R+'     D O M A I N   C O N T A C T   I N F O')
-    print(R+'    =======================================\n')
+    #print(R+'\n    =======================================')
+    #print(R+'     D O M A I N   C O N T A C T   I N F O')
+    #print(R+'    =======================================\n')
+    from core.methods.print import posintpas
+    posintpas("domain contact info")
     time.sleep(0.6)
     print(GR+' [*] Importing API Key...')
     try:

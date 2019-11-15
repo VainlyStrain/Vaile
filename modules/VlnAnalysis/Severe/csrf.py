@@ -54,9 +54,13 @@ def request(referer,action,form,opener):
 
 def check0x00(web):
 
-    print(R+'\n   ====================================================')
-    print(R+'    C R O S S   S I T E   R E Q U E S T   F O R G E R Y')
-    print(R+'   ====================================================')
+    #print(R+'\n   ====================================================')
+    #print(R+'\n    C R O S S   S I T E   R E Q U E S T   F O R G E R Y')
+    #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·––·‹›·——·‹›·——·‹')
+
+    from core.methods.print import pvln
+    pvln("cross site request forgery") 
+
     time.sleep(0.7)
     print(O+' [This module has only full support for domains of startpages]')
     print(O+'   [Hence, may not satisfactorily work for all domains]\n')

@@ -81,9 +81,11 @@ def webarchive(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.6)
-    print(R+'\n    =============================================')
-    print(R+'     W A Y B A C K   M A C H I N E   L O O K U P')
-    print(R+'    =============================================\n')
+    #print(R+'\n    =============================================')
+    #print(R+'     W A Y B A C K   M A C H I N E   L O O K U P')
+    #print(R+'    =============================================\n')
+    from core.methods.print import posintpas
+    posintpas("wayback machine lookup")
     time.sleep(0.7)
     getRes0x00(web)
 

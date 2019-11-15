@@ -24,9 +24,11 @@ properties = {}
 
 def scan0x00(host):
 
-    print(R+'\n   =========================')
-    print(R+'    P O R T   S C A N N E R')
-    print(R+'   =========================\n')
+    #print(R+'\n   =========================')
+    #print(R+'    P O R T   S C A N N E R')
+    #print(R+'   =========================\n')
+    from core.methods.print import posintact
+    posintact("port scanner") 
     print(GR+' [*] Using most common ports...')
 
     ports = [20,21,23,25,53,67,68,69,80,109,110,111,123,137,143,156,161,162,179,389,443,445,512,513,546,547,636,993,995,1099,2121,2049,3306, 5432,5900,6000,6667,8080,8180,8443,10000]

@@ -51,9 +51,12 @@ def smtpbrute(web):
 
     print(GR+' [*] Loading module...\n')
     time.sleep(0.6)
-    print(R+'    =====================')
-    print(R+'     S M T P   B R U T E ')
-    print(R+'    =====================\n')
+    #print(R+'    =====================')
+    #print(R+'\n     S M T P   B R U T E ')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·\n')
+    from core.methods.print import pbrute
+    pbrute("smtp")
+                 
     try:
         with open('files/brute-db/smtp/smtp_defuser.lst') as users:
             for user in users:

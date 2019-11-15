@@ -59,9 +59,13 @@ def strutsshock(web):
 
 	print(GR+'\n [*] Loading module...')
 	time.sleep(0.5)
-	print(R+'\n    =======================================')
-	print(R+'     A P A C H E   S T R U T S   S H O C K ')
-	print(R+'    =======================================\n')
+	#print(R+'\n    =======================================')
+	#print(R+'\n     A P A C H E   S T R U T S   S H O C K ')
+	#print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·——·‹›·——·\n')
+
+	from core.methods.print import pvln
+	pvln("apache struts shock")
+	             
 	strutsshock0x00(web)
 
 def attack(web):

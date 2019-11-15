@@ -54,7 +54,7 @@ class VainShell(Cmd):
                     print("^C\n" + R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Command 'q' to end session.")
                 else:
                     print("^C")
-                    self.do_leave("")
+                    #self.do_leave("")
 
     def do_help(self, arg):
         """List available commands with "help" or detailed help with "help cmd"."""
@@ -325,7 +325,7 @@ class VainShell(Cmd):
 
     def do_intro(self, inp):
         prnt.banner()
-        #prnt.bannerbelow()
+        prnt.bannerbelownew()
         print()
 
     def help_intro(self):
@@ -480,6 +480,6 @@ if __name__ == '__main__':
    
     prnt.loadstyle()
     prnt.banner()
-    #prnt.bannerbelow()
+    prnt.bannerbelownew()
     VainShell().cmdloop()
     print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)

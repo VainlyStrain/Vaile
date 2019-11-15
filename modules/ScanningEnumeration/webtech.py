@@ -117,9 +117,12 @@ def apircv(web):
 
 def webtech(web):
 
-    print(R+'\n    =================================')
-    print(R+'     W E B   T E C H N O L O G I E S')
-    print(R+'    =================================\n')
+    #print(R+'\n    =================================')
+    #print(R+'     W E B   T E C H N O L O G I E S')
+    #print(R+'    =================================\n')
+
+    from core.methods.print import pscan
+    pscan("web technologies")
 
     check0x00(web)
     apircv(web)

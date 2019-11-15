@@ -21,9 +21,10 @@ properties = {}
 
 def honeypot(web):
 
-    print(R+'    ===================================')
-    print(R+'     H O N E Y P O T   D E T E C T O R')
-    print(R+'    ===================================')
+    #print(R+'    ===================================')
+    print(R+'\n     H O N E Y P O T   D E T E C T O R')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›')
+                 
     print(GR+' [*] Configuring APi request...')
     time.sleep(0.7)
     print(O+' [!] Reading APi Key...')

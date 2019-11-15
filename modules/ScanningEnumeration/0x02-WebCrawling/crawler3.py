@@ -101,9 +101,11 @@ def crawler3(web):
         print(GR+' [*] Loading (Level 3) crawler...')
         time.sleep(0.5)
 
-        print(R+'\n    ==========================')
-        print(R+'     C R A W L E R  (Depth 3)')
-        print(R+'    ==========================')
+        #print(R+'\n    ==========================')
+        #print(R+'     C R A W L E R  (Depth 3)')
+        #print(R+'    ==========================')
+        from core.methods.print import pscan
+        pscan("crawler (depth 3)")
         time.sleep(0.7)
         print(O+' [This crawler will recursively crawl')
         print(O+' all the links of the website as well as all')

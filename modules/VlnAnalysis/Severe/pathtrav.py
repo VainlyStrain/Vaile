@@ -16,7 +16,7 @@ import sys
 import urllib
 import requests
 import time
-from core.Core.colors import O, GR, R, G, B, C
+from core.Core.colors import O, GR, R, G, B, C, W, color
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -94,6 +94,8 @@ def check0x00(website0, gen_headers):
                 or ("State: R (running)" in content and ("Tgid:" in content or "TracerPid:" in content or "Uid:" in content)
                     and "/proc/self/status" in website))):
                 print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
+                print(W+color.BOLD+' [+] Content Received : ')
+                print(W+content)
                 website = str(website)
                 gotcha.append(website)
 
@@ -115,6 +117,8 @@ def check0x00(website0, gen_headers):
                 #print("{}\n\n\n {}".format(content,con2))
                 if con != con2:
                     print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
+                    print(W+color.BOLD+' [+] Content Received : ')
+                    print(W+content)
 
                     website = str(website)
                     gotcha.append(website)
@@ -137,8 +141,9 @@ def check0x00(website0, gen_headers):
             pass
         elif req.status_code == 403:
             print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
+            print(" [!] 403 - Forbidden")
         elif req.status_code == 401:
-            print(R+" [-] Missing authentication.\n")
+            print(R+" [-] 401 - Missing authentication.\n")
         else:
             print(R+" [-] Problem connecting to the website...\n")
             
@@ -177,9 +182,13 @@ def pathtrav(web):
     #global gotcha
     print(GR+'\n  ·› Loading module...')
     time.sleep(0.5)
-    print(R+'\n     ================================================')
-    print(R+'      P A T H   T R A V E R S A L  (Sensitive Paths)')
-    print(R+'     ================================================\n')
+    #print(R+'\n     ================================================')
+    #print(R+'\n      P A T H   T R A V E R S A L  (Sensitive Paths)')
+    #print(R+'     ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·\n')
+
+    from core.methods.print import pvln
+    pvln("path traversal") 
+                  
     try:
         print(GR+' [!] Input the directory to be used... Final Url will be like '+O+'"http://site.com/sensitive"')
         param = input(O+' [#] Enter directory asssociated (eg. /sensitive) [Enter for None] :> ')

@@ -25,9 +25,11 @@ properties = {}
 def iphistory(web):
 
     try:
-        print(R+'\n    =====================')
-        print(R+'     I P   H I S T O R Y')
-        print(R+'    =====================\n')
+        #print(R+'\n    =====================')
+        #print(R+'     I P   H I S T O R Y')
+        #print(R+'    =====================\n')
+        from core.methods.print import posintpas
+        posintpas("ip history")
         print(GR+' [*] Parsing Url...')
         web0 = web.split('//')[-1]
         if "@" in web0:

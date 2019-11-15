@@ -30,9 +30,11 @@ properties = {}
 
 def internalip0x00(url):
 
-    print(R+'\n    ========================')
-    print(R+'     INTERNAL IP DISCLOSURE')
-    print(R+'    ========================\n')
+    #print(R+'\n    ========================')
+    #print(R+'     INTERNAL IP DISCLOSURE')
+    #print(R+'    ========================\n')
+    from core.methods.print import pleak
+    pleak("internal ip disclosure")
     time.sleep(0.5)
     links = [url]
     po = url.split('//')[1]

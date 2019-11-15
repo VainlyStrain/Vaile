@@ -19,6 +19,7 @@ _____, ___
 
 import os
 import time
+import random
 from time import sleep
 
 from core import variables as vars
@@ -84,6 +85,13 @@ def banner():
     os.system("clear")
     print(vaile)
 
+def randomsg():
+    with open("files/ms.lst","r") as msg_list:
+        return random.choice(msg_list.readlines()).strip()
+
+def bannerbelownew():
+    print("   Vaile {}{}{}".format(color.END, RB, vars.e_version) + C)
+    print("  {}{}".format(RC, randomsg()))
 
 def bannerbelow():
     print("\n")
@@ -149,3 +157,80 @@ DISCLAIMER
 
 Vaile Attack was provided as an open-source, royalty-free penetration testing toolkit. It has capable modules in various phases which can unveil potential dangerous flaws in various web-applications which can further be exploited maliciously. Therefore the author as well as the contrbutors assume no liability for misuseof this toolkit. Usage of Vaile Attack for testing or exploiting websites without prior mutual consent can be considered as an illegal activity. It is the final user's responsibility to obey all applicable local, state and federal laws.  
             """)
+
+def title(mod):
+    return " ".join(mod[i].upper() for i in range(0, len(mod)))
+
+def posintpas(mod):
+    print("""
+   ,_       
+ ,'  `\\,_   
+ |_,-'_)    
+ /##c '\\  (   {}O S I N T   P A S S I V E{}
+' |'  -{{.  )
+  /\\__-' \\[]        {}{}{}
+ /`-_`\\     
+ '     \\    
+""".format(color.END, C, RC, title(mod), C))
+
+def posintact(mod):
+    print("""
+   ,_       
+ ,'  `\\,_   
+ |_,-'_)    
+ /##c '\\  (   {}O S I N T   A C T I V E{}
+' |'  -{{.  )
+  /\\__-' \\[]        {}{}{}
+ /`-_`\\     
+ '     \\    
+""".format(color.END, C, RC, title(mod), C))
+
+def psploit(mod):
+    print("""
+      ,--.!,
+   __/   -*-    {}S P L O I T{}
+ ,d08b.  '|`
+ 0088MM     {}{}{}
+ `9MMP'  
+""".format(color.END, C, RC, title(mod), C))
+
+def pvln(mod):
+    print("""
+   (
+   '\\
+  '  )  {}V L N Y S I S{}
+##-------->     
+  .  )       {}{}{}
+   ./
+   (
+""".format(color.END, C, RC, title(mod), C))
+
+def pscan(mod):
+    print("""
+       /\\
+      /  \\
+     /    \\   {}S C A N N I N G   &{}
+    /      \\
+   /        \\   {}E N U M E R A T I O N{}
+  /          \\
+ / /\\/\\  /\\/\\ \\   {}{}{}
+/ /    \\/    \\ \\
+\\/            \\/
+""".format(color.END, C, color.END, C, RC, title(mod), C))
+
+def pbrute(mod):
+    print("""
+ .--.
+/.-. '----------.   {}B R U T E F O R C E{}
+\\'-' .--"--""-"-'       {}{}{}
+ '--'
+""".format(color.END, C, RC, title(mod), C))
+
+def pleak(mod):
+    print("""
+▄▄ 
+██▌  {}I N F D I S C{}
+▐█·  
+.▀    {}{}{}
+ ▀ 
+""".format(color.END, C, RC, title(mod), C))

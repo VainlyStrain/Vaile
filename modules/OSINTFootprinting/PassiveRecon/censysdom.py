@@ -22,9 +22,11 @@ properties = {}
 
 def censysdom(web):
 
-    print(R+'\n    =======================================')
-    print(R+'     C E N S Y S   D O M A I N   R E C O N')
-    print(R+'    =======================================\n')
+    #print(R+'\n    =======================================')
+    #print(R+'     C E N S Y S   D O M A I N   R E C O N')
+    #print(R+'    =======================================\n')
+    from core.methods.print import posintpas
+    posintpas("censys domain recon") 
 
     time.sleep(0.6)
     print(GR+' [*] Importing API Key...')

@@ -28,9 +28,11 @@ properties = {}
 
 def phone0x00(url):
 
-    print(R+'\n    ========================')
-    print(R+'     PHON3 NuMBER HARVESTER')
-    print(R+'    ========================\n')
+    #print(R+'\n    ========================')
+    #print(R+'     PHON3 NuMBER HARVESTER')
+    #print(R+'    ========================\n')
+    from core.methods.print import pleak
+    pleak("phone number harvester")
     time.sleep(0.5)
     links = [url]
     po = url.split('//')[1]

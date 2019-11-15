@@ -23,9 +23,11 @@ properties = {}
 def sharedns(web):
 
     web = web.split('//')[1]
-    print(R+'\n    =========================================')
-    print(R+'     S H A R E D   D N S   H O S T N A M E S ')
-    print(R+'    =========================================\n')
+    #print(R+'\n    =========================================')
+    #print(R+'     S H A R E D   D N S   H O S T N A M E S ')
+    #print(R+'    =========================================\n')
+    from core.methods.print import posintact
+    posintact("shared dns hostnames") 
     print(O+' [!] Looking up for name servers on which website is hosted...\n'+G)
     time.sleep(0.7)
     system('dig +nocmd '+web+' ns +noall +answer')

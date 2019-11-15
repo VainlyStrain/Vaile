@@ -117,9 +117,11 @@ def crawler2(web):
     print(GR+' [*] Loading Level 2 Crawler...')
     time.sleep(0.6)
     totlinks = []
-    print(R+'\n    =========================')
-    print(R+'     C R A W L E R (Depth 2)')
-    print(R+'    =========================')
+    #print(R+'\n    =========================')
+    #print(R+'     C R A W L E R (Depth 2)')
+    #print(R+'    =========================')
+    from core.methods.print import pscan
+    pscan("crawler (depth 2)")
     time.sleep(0.7)
     print(O+' [This module will fetch both ext. ')
     print(O+' and internal links from a website]\n')

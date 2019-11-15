@@ -29,9 +29,11 @@ def sslcert(web):
         elif str(web).split("/")[3]:
             web = str(web).split("/")[2]
         cerp = []
-        print(R+'\n   =========================================')
-        print(R+'    S S L   C E R T I F I C A T E   I N F O')
-        print(R+'   =========================================\n')
+        #print(R+'\n   =========================================')
+        #print(R+'    S S L   C E R T I F I C A T E   I N F O')
+        #print(R+'   =========================================\n')
+        from core.methods.print import posintact
+        posintact("ssl certificate info") 
         time.sleep(0.3)
         context = ssl.create_default_context()
         server = context.wrap_socket(socket.socket(), server_hostname=web)

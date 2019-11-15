@@ -29,9 +29,11 @@ def scan0x00(target):
 
     try:
 
-        print(R+'\n    =================================')
-        print(R+'     T C P   C O N N E C T   S C A N ')
-        print(R+'    =================================\n')
+        #print(R+'\n    =================================')
+        #print(R+'     T C P   C O N N E C T   S C A N ')
+        #print(R+'    =================================\n')
+        from core.methods.print import pscan
+        pscan("tcp connect scan")
         min_port = input(O+" [#] Enter Minumum Port Number -> ")
         max_port = input(O+" [#] Enter Maximum Port Number -> ")
         open_ports = []

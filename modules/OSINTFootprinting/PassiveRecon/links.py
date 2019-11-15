@@ -25,9 +25,11 @@ properties = {}
 
 def links(web):
 
-    print(R+'\n   =====================')
-    print(R+'    P A G E   L I N K S ')
-    print(R+'   =====================\n')
+    #print(R+'\n   =====================')
+    #print(R+'    P A G E   L I N K S ')
+    #print(R+'   =====================\n')
+    from core.methods.print import posintpas
+    posintpas("page links")
     time.sleep(0.4)
     print('' + GR + color.BOLD + ' [!] Fetching links to the website...')
     time.sleep(0.4)

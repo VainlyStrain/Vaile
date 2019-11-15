@@ -66,9 +66,11 @@ def checkuser(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.6)
-    print(R+'\n    =======================')
-    print(R+'     C H E C K   A L I A S')
-    print(R+'    =======================\n')
+    #print(R+'\n    =======================')
+    #print(R+'     C H E C K   A L I A S')
+    #print(R+'    =======================\n')
+    from core.methods.print import posintpas
+    posintpas("check alias") 
 
     print(GR+' [*] Parsing Url...')
     web0 = tld.get_fld(web).split('.', 1)[0]

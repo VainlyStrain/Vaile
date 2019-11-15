@@ -50,9 +50,12 @@ def telnetbrute(web):
 
     print(GR+' [*] Loading module...\n')
     time.sleep(0.6)
-    print(R+'    =========================')
-    print(R+'     T E L N E T   B R U T E ')
-    print(R+'    =========================\n')
+    #print(R+'    =========================')
+    #print(R+'\n     T E L N E T   B R U T E ')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·–\n')
+    from core.methods.print import pbrute
+    pbrute("telnet")
+                 
     with open('files/brute-db/telnet/telnet_defuser.lst') as users:
         for user in users:
             user = user.strip('\n')

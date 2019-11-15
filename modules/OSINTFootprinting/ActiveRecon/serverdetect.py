@@ -42,9 +42,11 @@ properties = {}
 
 def serverdetect(web):
 
-    print(R+'\n   ===========================')
-    print(R+'    D E T E C T   S E R V E R')
-    print(R+'   ===========================\n')
+    #print(R+'\n   ===========================')
+    #print(R+'    D E T E C T   S E R V E R')
+    #print(R+'   ===========================\n')
+    from core.methods.print import posintact
+    posintact("detect server") 
     time.sleep(0.4)
     print(GR+' [*] Checking server status...')
     web = web.replace('https://','')

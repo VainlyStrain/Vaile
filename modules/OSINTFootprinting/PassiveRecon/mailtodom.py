@@ -63,9 +63,11 @@ def mailtodom():
 
     print(GR+' [*] Loading module...')
     time.sleep(0.6)
-    print(R+'\n    ===============================')
-    print(R+'     E M A I L   T O   D O M A I N ')
-    print(R+'    ===============================\n')
+    #print(R+'\n    ===============================')
+    #print(R+'     E M A I L   T O   D O M A I N ')
+    #print(R+'    ===============================\n')
+    from core.methods.print import posintpas
+    posintpas("email to domain")
     time.sleep(0.7)
     getRes0x00()
 

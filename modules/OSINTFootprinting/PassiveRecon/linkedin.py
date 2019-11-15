@@ -58,9 +58,11 @@ def linkedin(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.6)
-    print(R+'\n    =====================================')
-    print(R+'     L I N K E D I N   G A T H E R I N G')
-    print(R+'    =====================================\n')
+    #print(R+'\n    =====================================')
+    #print(R+'     L I N K E D I N   G A T H E R I N G')
+    #print(R+'    =====================================\n')
+    from core.methods.print import posintpas
+    posintpas("linkedin gathering")
     getposts(web)
 
 def attack(web):

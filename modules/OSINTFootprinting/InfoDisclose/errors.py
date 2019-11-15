@@ -76,9 +76,11 @@ def request(url):
 
 def errors(web):
 
-    print(R+'\n       =========================')
-    print(R+'        E R R O R   H U N T E R ')
-    print(R+'       =========================')
+    #print(R+'\n       =========================')
+    #print(R+'        E R R O R   H U N T E R ')
+    #print(R+'       =========================')
+    from core.methods.print import pleak
+    pleak("error hunter")
     print(O+'  [This module covers up Full Path Disclosures]\n')
     print(GR+' [*] Making the request...')
     time.sleep(0.5)

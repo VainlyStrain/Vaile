@@ -50,9 +50,11 @@ def grab(web):
 
 def bannergrab(web):
 
-    print(R+'\n    ===============================')
-    print(R+'     B A N N E R   G R A B B I N G')
-    print(R+'    ===============================\n')
+    #print(R+'\n    ===============================')
+    #print(R+'     B A N N E R   G R A B B I N G')
+    #print(R+'    ===============================\n')
+    from core.methods.print import pscan
+    pscan("banner grabbing")
 
     print(GR+' [*] Parsing Url...')
     web = web.replace('http://','')

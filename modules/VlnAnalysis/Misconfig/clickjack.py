@@ -20,9 +20,13 @@ properties = {}
 
 def clickjack(web):
 
-    print(R+'\n      ========================')
-    print(R+'      C L I C K J A C K I N G')
-    print(R+'     =========================\n')
+    #print(R+'\n      ========================')
+    #print(R+'\n      C L I C K J A C K I N G')
+    #print(R+'     ——·‹›·––·‹›·——·‹›·——·‹›·—\n')
+
+    from core.methods.print import pvln
+    pvln("clickjacking") 
+                  
     try:
         dom = web
         print(''+C+' [*] Configuring the web address...')

@@ -102,9 +102,11 @@ def crlf(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    =============================')
-    print(R+'     C R L F   I N J E C T I O N')
-    print(R+'    =============================\n')
+    #print(R+'\n    =============================')
+    #print(R+'\n     C R L F   I N J E C T I O N')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›\n')
+    from core.methods.print import pvln
+    pvln("CRLF Injection")             
 
     gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
                       'Accept-Language':'en-US;',
@@ -120,17 +122,20 @@ def crlf(web):
     time.sleep(0.5)
     print(O+' [*] Setting header values...')
     time.sleep(0.7)
-    req = urllib.request.Request(web)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201')
-    req.add_header('Accept-Language', 'en-US;')
-    req.add_header('Accept-Encoding', 'gzip, deflate')
-    req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;')
-    req.add_header('Connection', 'close')
-    response = urllib.request.urlopen(req)
+    if "@" in web:
+        print(" [-] Check unavailable for credential-based sites. Continuing...")
+    else:
+        req = urllib.request.Request(web)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201')
+        req.add_header('Accept-Language', 'en-US;')
+        req.add_header('Accept-Encoding', 'gzip, deflate')
+        req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;')
+        req.add_header('Connection', 'close')
+        response = urllib.request.urlopen(req)
 
-    print(O+' [+] Response headers obtained!\n'+C)
-    time.sleep(1)
-    print(response.info())
+        print(O+' [+] Response headers obtained!\n'+C)
+        time.sleep(1)
+        print(response.info())
 
     time.sleep(0.8)
     print(O+' [*] Initiating '+R+'User-Agent Based Check...')

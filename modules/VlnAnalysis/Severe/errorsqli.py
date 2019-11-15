@@ -34,9 +34,9 @@ def auto0x00(web):
 
     def sqlicookie0x00(web):
 
-        print(R+'\n    =========================')
-        print(R+'     S Q L i  (Cookie Based)')
-        print(R+'    =========================\n')
+        #print(R+'\n    =========================')
+        print(R+'\n     S Q L i  (Cookie Based)')
+        print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·–\n')
 
         sleep(0.5)
         session = requests.Session()
@@ -64,9 +64,9 @@ def auto0x00(web):
 
     def sqliuser0x00(web):
 
-        print(R+'\n    =============================')
-        print(R+'     S Q L i  (User-Agent Based)')
-        print(R+'    =============================\n')
+        #print(R+'\n    =============================')
+        print(R+'\n     S Q L i  (User-Agent Based)')
+        print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
 
         for i in pay:
             print(B+' [*] Using payload : '+C+i)
@@ -99,9 +99,9 @@ def auto0x00(web):
 
 def manual0x00(web):
 
-    print(R+'\n    ========================')
-    print(R+'     S Q L i  (Manual Mode)')
-    print(R+'    ========================\n')
+    #print(R+'\n    ========================')
+    print(R+'\n     S Q L i  (Manual Mode)')
+    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·\n')
     bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /sqli/fetch.php?id=x)'+O+' :> ')
     choice = ""
     if "&" in bug:
@@ -145,9 +145,10 @@ def errorsqli(web):
         sleep(0.6)
         if web.endswith('/'):
             web = web[:-1]
-        print(R+'\n    ==========================================')
-        print(R+'     S Q L   I N J E C T I O N  (Error Based)')
-        print(R+'    ==========================================\n')
+        #print(R+'\n    ==========================================')
+        print(R+'\n     S Q L   I N J E C T I O N  (Error Based)')
+        print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·\n')
+                     
         print(GR+' [*] Importing error parameters...')
         sleep(0.8)
         try:

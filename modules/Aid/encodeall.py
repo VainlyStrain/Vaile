@@ -74,9 +74,10 @@ def gzip0x00(st):
 
 def encodeall():
     try:
-        print(R+'\n    =============================')
-        print(R+'     S T R I N G   E N C O D E R')
-        print(R+'    =============================\n')
+        #print(R+'\n    =============================')
+        print(R+'\n     S T R I N G   E N C O D E R')
+        print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
+                     
         st = input(O+' [-] Enter a string to be encoded :> ')
 
         def encode0x00(st):

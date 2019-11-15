@@ -88,9 +88,13 @@ def phpi(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    =====================================')
-    print(R+'     P H P   C O D E   I N J E C T I O N')
-    print(R+'    =====================================\n')
+    #print(R+'\n    =====================================')
+    #print(R+'\n     P H P   C O D E   I N J E C T I O N')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·—\n')
+
+    from core.methods.print import pvln
+    pvln("php code Injection") 
+                 
 
     gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
                       'Accept-Language':'en-US;',

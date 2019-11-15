@@ -135,9 +135,13 @@ def RetrieveHeader(Target):
 def headers(web):
 
     try:
-        print(R+'\n    =========================================')
-        print(R+'     H T T P   H E A D E R   A N A L Y S I S')
-        print(R+'    =========================================\n')
+        #print(R+'\n    =========================================')
+        #print(R+'\n     H T T P   H E A D E R   A N A L Y S I S')
+        #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·——·‹›·––·‹›\n')
+
+        from core.methods.print import pvln
+        pvln("http header analysis") 
+                   
         time.sleep(0.5)
         print(GR+" [!] Initializing Header Analysis...")
         Headers = RetrieveHeader(web)

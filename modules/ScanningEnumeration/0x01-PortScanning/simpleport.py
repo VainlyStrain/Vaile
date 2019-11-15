@@ -24,9 +24,11 @@ properties = {}
 
 def scan0x00(host):
 
-    print(R+'\n   =======================================')
-    print(R + "    S I M P L E   P O R T   S C A N N E R")
-    print(R + '   =======================================\n')
+    #print(R+'\n   =======================================')
+    #print(R + "    S I M P L E   P O R T   S C A N N E R")
+    #print(R + '   =======================================\n')
+    from core.methods.print import pscan
+    pscan("simple port scanner")
     start_port = input(O+' [#] Enter initial port :> ')
     end_port = input(O+' [#] Enter ending port :> ')
 

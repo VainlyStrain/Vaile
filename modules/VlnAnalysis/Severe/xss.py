@@ -31,9 +31,10 @@ def auto0x00(web):
 
     def xsscookie0x00(web):
 
-        print(R+'\n    =======================')
-        print(R+'     X S S  (Cookie Based)')
-        print(R+'    =======================\n')
+        #print(R+'\n    =======================')
+        print(R+'\n     X S S  (Cookie Based)')
+        print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›\n')
+                     
 
         sleep(0.5)
         session = requests.Session()
@@ -60,9 +61,10 @@ def auto0x00(web):
 
     def xssuser0x00(web):
 
-        print(R+'\n    ===========================')
-        print(R+'     X S S  (User-Agent Based)')
-        print(R+'    ===========================\n')
+        #print(R+'\n    ===========================')
+        print(R+'\n     X S S  (User-Agent Based)')
+        print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––·\n')
+                     
 
         for j in pay:
             i = '%s' % j
@@ -83,9 +85,10 @@ def auto0x00(web):
 
     def xssref0x00(web):
 
-        print(R+'\n    ===========================')
-        print(R+'     X S S  (Referrer Based)')
-        print(R+'    ===========================\n')
+        #print(R+'\n    ===========================')
+        print(R+'\n     X S S  (Referrer Based)')
+        print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––·\n')
+                     
 
         for j in pay:
             i = '%s' % j
@@ -124,9 +127,10 @@ def auto0x00(web):
 def xsspoly0x00(li, bug2):
 
     yay = 0x00
-    print(R+'\n    ==========================')
-    print(R+'     X S S  (Polyglot Fuzzer)')
-    print(R+'    ==========================\n')
+    #print(R+'\n    ==========================')
+    print(R+'\n     X S S  (Polyglot Fuzzer)')
+    print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·––\n')
+                 
     try:
         with open('files/payload-db/polyglot_payloads.lst','r') as payloads:
             for payload in payloads:
@@ -166,9 +170,10 @@ def xsspoly0x00(li, bug2):
 def manual0x00(web):
 
     yay = 0x00
-    print(R+'\n    ======================')
-    print(R+'     X S S  (Manual Mode)')
-    print(R+'    ======================\n')
+    #print(R+'\n    ======================')
+    print(R+'\n     X S S  (Manual Mode)')
+    print(R+'    ——·‹›·––·‹›·——·‹›·––·‹\n')
+                 
     bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /xss/search.php?q=drake)'+O+' :> ')
     choice = ""
     if "&" in bug:
@@ -229,9 +234,13 @@ def xss(web):
         sleep(0.6)
         if web.endswith('/'):
             web = web[:-1]
-        print(R+'\n    =========================================')
-        print(R+'     C R O S S   S I T E   S C R I P T I N G')
-        print(R+'    =========================================\n')
+        #print(R+'\n    =========================================')
+        #print(R+'\n     C R O S S   S I T E   S C R I P T I N G')
+        #print(R+'    ——·‹›·––·‹›·——·‹›·––·‹›·–—·‹›·––·‹›·——·‹›\n')
+
+        from core.methods.print import pvln
+        pvln("Cross site scripting") 
+                     
         print(GR+' [*] Importing payloads...')
         sleep(0.8)
         try:

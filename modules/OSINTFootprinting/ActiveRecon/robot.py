@@ -20,9 +20,12 @@ properties = {}
 
 def robot(web):
 
-    print(R+'\n   =============================')
-    print(R+'    R O B O T S   C H E C K E R')
-    print(R+'   =============================\n')
+    #print(R+'\n   =============================')
+    #print(R+'    R O B O T S   C H E C K E R')
+    #print(R+'   =============================\n')
+
+    from core.methods.print import posintact
+    posintact("robots checker") 
 
     url = web + '/robots.txt'
     print(' [!] Testing for robots.txt...\n')

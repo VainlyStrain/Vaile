@@ -58,9 +58,11 @@ def port0x00(web):
 def osdetect(web):
     try:
         time.sleep(0.4)
-        print(R+'\n     ===================================')
-        print(R+'      O S   F I N G E R P R I N T I N G')
-        print(R+'     ===================================\n')
+        #print(R+'\n     ===================================')
+        #print(R+'      O S   F I N G E R P R I N T I N G')
+        #print(R+'     ===================================\n')
+        from core.methods.print import pscan
+        pscan("os fingerprinting")
         web = web.replace('http://','')
         web = web.replace('https://','')
         print(GR+' [*] Initialising Module [1]...')

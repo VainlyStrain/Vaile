@@ -25,9 +25,11 @@ properties = {}
 def webscan(web):
 
     try:
-        print(R+'\n    ===========================================')
-        print(R+'     W E B S E R V E R   E N U M E R A T I O N')
-        print(R+'    ===========================================')
+        #print(R+'\n    ===========================================')
+        #print(R+'     W E B S E R V E R   E N U M E R A T I O N')
+        #print(R+'    ===========================================')
+        from core.methods.print import pscan
+        pscan("webserver enumeration")
         print(O+' [This module will scan the whole CENSYS database for')
         print(O+'      collecting domain based IP Addresses and ')
         print(O+'           fingerprint them accordingly]\n')
@@ -36,7 +38,7 @@ def webscan(web):
         print(GR+' [*] Importing API Key...')
         try:
             from files.API_KEYS import CENSYS_UID, CENSYS_SECRET
-        except IOError as ImportError:
+        except (IOError, ImportError):
             print(R+' [-] Error while importing key...')
 
         web = web.split('//')[1]

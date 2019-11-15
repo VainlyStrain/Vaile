@@ -12,8 +12,8 @@
 
 import sys
 import time
-from modules.VlnAnalysis.Severe.errorsqli import *
-from modules.VlnAnalysis.Severe.blindsqli import *
+from modules.VlnAnalysis.Severe.errorsqli import errorsqli
+from modules.VlnAnalysis.Severe.blindsqli import blindsqli
 from core.Core.colors import *
 
 info = "This module scans the target for SQL Injection flaws, supporting both blind and error-based injection."
@@ -24,14 +24,18 @@ def sqli(web):
 
     print(GR+'\n [*] Loading module...')
     time.sleep(0.7)
-    print(R+'\n    ===========================')
-    print(R+'     S Q L   ! N J E C T I O N')
-    print(R+'    ===========================\n')
+    #print(R+'\n    ===========================')
+    #print(R+'\n     S Q L   ! N J E C T I O N')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·\n')
+
+    from core.methods.print import pvln
+    pvln("sql !njection") 
+                 
     time.sleep(0.6)
     print(O+' Choose from the options:\n')
     print(B+'  [1] '+C+'Error Based SQLi'+W+' (Manual + Automated)')
     print(B+'  [2] '+C+'Blind Based SQLi'+W+' (Manual + Automated)\n')
-    print(B+'  [3] '+C+'Back to Console\n')
+    print(B+'  [99] '+C+'Back to Console\n')
     v = input(O+' [#] TID :> ')
 
     if v.strip() == '1':

@@ -51,9 +51,12 @@ def xmppbrute(web):
 
     print(GR+' [*] Loading module...\n')
     time.sleep(0.6)
-    print(R+'    =====================')
-    print(R+'     X M P P   B R U T E ')
-    print(R+'    =====================\n')
+    #print(R+'    =====================')
+    #print(R+'\n     X M P P   B R U T E ')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·\n')
+    from core.methods.print import pbrute
+    pbrute("xmpp")
+                 
     with open('files/brute-db/xmpp/xmpp_defuser.lst') as users:
         for user in users:
             user = user.strip('\n')

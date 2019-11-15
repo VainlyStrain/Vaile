@@ -44,9 +44,11 @@ properties = {}
 def crawler10x00(web):
 
     time.sleep(0.5)
-    print(R+'\n    ===========================')
-    print(R+'     C R A W L E R  (Depth 1)')
-    print(R+'    ==========================\n')
+    #print(R+'\n    ===========================')
+    #print(R+'     C R A W L E R  (Depth 1)')
+    #print(R+'    ==========================\n')
+    from core.methods.print import pscan
+    pscan("crawler (depth 1)")
     print(O+' [This module will fetch all links')
     print(O+' from an online API and then crawl ')
     print(O+'         them one by one]      ')

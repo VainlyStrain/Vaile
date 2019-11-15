@@ -22,9 +22,11 @@ properties = {}
 
 def googlenum(web):
 
-    print(R+'\n    =================================')
-    print(R+'     G O O G L E   G A T H E R I N G ')
-    print(R+'    =================================\n')
+    #print(R+'\n    =================================')
+    #print(R+'     G O O G L E   G A T H E R I N G ')
+    #print(R+'    =================================\n')
+    from core.methods.print import posintpas
+    posintpas("google gathering")
     try:
         print(GR+' [*] Importing API Token...')
         time.sleep(0.7)

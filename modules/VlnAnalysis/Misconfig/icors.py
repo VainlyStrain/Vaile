@@ -102,9 +102,13 @@ def cors0x00(url, ssltest, firstrun=False):
 def icors(web):
 
     print(GR+' [*] Loading module...')
-    print(R+'\n    =========================================')
-    print(R+'     iNSECURE CROSS ORIGIN RESCOURCE SHARING')
-    print(R+'    =========================================\n')
+    #print(R+'\n    =========================================')
+    #print(R+'\n     iNSECURE CROSS ORIGIN RESCOURCE SHARING')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·––·‹›·——·‹›\n')
+                 
+    from core.methods.print import pvln
+    pvln("icors") 
+
 
     check0x00(web)
     time.sleep(1)

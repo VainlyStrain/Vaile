@@ -77,9 +77,11 @@ def googlegroups(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.7)
-    print(R+'\n    ===========================')
-    print(R+'     G O O G L E   G R O U P S')
-    print(R+'    ===========================\n')
+    #print(R+'\n    ===========================')
+    #print(R+'     G O O G L E   G R O U P S')
+    #print(R+'    ===========================\n')
+    from core.methods.print import posintpas
+    posintpas("google groups")
 
     print(O+' [!] Initiating enumeration via Google Web...')
     time.sleep(0.7)

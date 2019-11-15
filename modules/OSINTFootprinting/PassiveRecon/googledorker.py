@@ -47,9 +47,11 @@ def googledorker(web):
 
     try:
 
-        print(R+'\n   ===========================')
-        print(R+'    G O O G L E   D O R K E R')
-        print(R+'   ===========================\n')
+        #print(R+'\n   ===========================')
+        #print(R+'    G O O G L E   D O R K E R')
+        #print(R+'   ===========================\n')
+        from core.methods.print import posintpas
+        posintpas("google dorker")
         print(O+' [-] Warning! You may get a captcha if you are being too frequent...')
         print(GR+' [*] Initializing google dorking...')
 

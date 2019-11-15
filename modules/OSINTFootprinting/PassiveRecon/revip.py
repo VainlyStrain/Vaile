@@ -26,9 +26,11 @@ def revip(web):
     web = web.replace('https://','')
     if "@" in web:
         web = web.split("@")[1]
-    print(R+'\n   ===================================')
-    print(R+'    R E V E R S E   I P   L O O K U P')
-    print(R+'   ===================================\n')
+    #print(R+'\n   ===================================')
+    #print(R+'    R E V E R S E   I P   L O O K U P')
+    #print(R+'   ===================================\n')
+    from core.methods.print import posintpas
+    posintpas("reverse ip lookup")
     time.sleep(0.4)
     print('' + GR + color.BOLD + ' [!] Looking Up for Reverse IP Info...')
     time.sleep(0.4)

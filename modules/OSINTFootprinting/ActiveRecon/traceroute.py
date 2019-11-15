@@ -20,9 +20,11 @@ properties = {}
 
 def traceroute(web):
 
-    print(R+'\n   =====================')
-    print(R+'    T R A C E R O U T E')
-    print(R+'   =====================\n')
+    #print(R+'\n   =====================')
+    #print(R+'    T R A C E R O U T E')
+    #print(R+'   =====================\n')
+    from core.methods.print import posintact
+    posintact("traceroute") 
 
     web = web.replace('https://','')
     web = web.replace('http://','')

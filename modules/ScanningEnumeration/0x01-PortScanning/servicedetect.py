@@ -24,9 +24,11 @@ properties = {}
 
 def service0x00(host):
 
-    print(R+'\n   ===================================')
-    print(R + "    S E R V I C E   D E T E C T I O N")
-    print(R + '   ===================================\n')
+    #print(R+'\n   ===================================')
+    #print(R + "    S E R V I C E   D E T E C T I O N")
+    #print(R + '   ===================================\n')
+    from core.methods.print import pscan
+    pscan("service detection")
     start_port = input(O+' [#] Enter initial port :> ')
     end_port = input(O+' [#] Enter ending port :> ')
 
@@ -142,7 +144,7 @@ def service0x00(host):
             if r == 0:
                 result = r
             sock.close()
-        except Exception as e:
+        except:
             pass
 
         return result

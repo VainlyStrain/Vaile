@@ -432,9 +432,11 @@ def threatintel(web):
 
     print(GR+' [*] Loading components...')
     time.sleep(0.7)
-    print(R+'\n    =======================================')
-    print(R+'     T H R E A T   I N T E L L I G E N C E')
-    print(R+'    =======================================\n')
+    #print(R+'\n    =======================================')
+    #print(R+'     T H R E A T   I N T E L L I G E N C E')
+    #print(R+'    =======================================\n')
+    from core.methods.print import posintpas
+    posintpas("threat intelligence")
     print(O+' [Data in these threatlists is the latest data')
     print(O+'            not older than a week!]\n')
     print(C+' [!] Parsing Url..')

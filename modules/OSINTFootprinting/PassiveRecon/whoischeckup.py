@@ -24,9 +24,11 @@ def whoischeckup(web):
     web = web.replace('https://','')
     if "@" in web:
         web = web.split("@")[1]
-    print(R+'\n   =========================')
-    print(R+'    W H O I S   L O O K U P')
-    print(R+'   =========================\n')
+    #print(R+'\n   =========================')
+    #print(R+'    W H O I S   L O O K U P')
+    #print(R+'   =========================\n')
+    from core.methods.print import posintpas
+    posintpas("whois lookup")
     time.sleep(0.4)
     print('' + GR + color.BOLD + ' [!] Looking Up for WhoIS Information...')
     time.sleep(0.4)

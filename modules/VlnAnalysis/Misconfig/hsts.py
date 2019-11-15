@@ -55,9 +55,12 @@ def getHeaders0x00(web):
 def hsts(web):
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n    ================================')
-    print(R+'     HTTP STRICT TRANSPORT SECURITY')
-    print(R+'    ================================\n')
+    #print(R+'\n    ================================')
+    #print(R+'\n     HTTP STRICT TRANSPORT SECURITY')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·––\n')
+    from core.methods.print import pvln
+    pvln("hsts") 
+                 
     if 'https' in web:
         check0x00(getHeaders0x00(web))
     else:

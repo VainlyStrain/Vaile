@@ -73,9 +73,13 @@ def check0x00(status,content):
 
 def subdomover(web):
 
-    print(R+'\n    =====================================')
-    print(R+'     S U B D O M A I N   T A K E O V E R ')
-    print(R+'    =====================================\n')
+    #print(R+'\n    =====================================')
+    #print(R+'\n     S U B D O M A I N   T A K E O V E R ')
+    #print(R+'    ——·‹›·––·‹›·——·‹›·——·‹›·——·‹›·——·‹›·–\n')
+
+    from core.methods.print import pvln
+    pvln("subdomain takeover") 
+                 
 
     time.sleep(0.6)
     print(O+' Choose from the folowing:\n')

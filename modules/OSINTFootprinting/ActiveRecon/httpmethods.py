@@ -21,9 +21,12 @@ properties = {}
 def httpmethods(web):
 
     try:
-        print(R+'\n    =========================')
-        print(R+'     H T T P   M E T H O D S ')
-        print(R+'    =========================\n')
+        #print(R+'\n    =========================')
+        #print(R+'     H T T P   M E T H O D S ')
+        #print(R+'    =========================\n')
+
+        from core.methods.print import posintact
+        posintact("http methods") 
 
         print(GR+' [*] Parsing Url...')
         time.sleep(0.7)

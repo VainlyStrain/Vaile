@@ -72,9 +72,13 @@ def ldap(web):
 
     print(GR+' [*] Loading module...')
     time.sleep(0.5)
-    print(R+'\n     =============================')
-    print(R+'      L D A P   I N J E C T I O N')
-    print(R+'     =============================\n')
+    #print(R+'\n     =============================')
+    #print(R+'\n      L D A P   I N J E C T I O N')
+    #print(R+'     ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›\n')
+
+    from core.methods.print import pvln
+    pvln("ldap Injection") 
+                  
     try:
         web0 = input(O+' [#] Parameter path to test (eg. /lmao.php?foo=bar) :> ')
         if "?" in web0 and '=' in web0:
