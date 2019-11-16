@@ -177,6 +177,7 @@ Vaile Attack presently supports the following: `and more modules are under activ
 	    - Depth 1 `Indexed Uri Crawler`
 	    - Depth 2 `Single Page Crawler`
 	    - Depth 3 `Web Link Crawler`
+	+ ARP Scanner `NEW`
 
 * __Vulnerability Analysis__
 

@@ -42,3 +42,5 @@ INTERMEDIATE
 INTERMEDIATE
 
   fixed: osdetect bytes -> string error
+  improved: vicadd & IPs
+  new module: arpscan

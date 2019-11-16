@@ -233,6 +233,8 @@ class VainShell(Cmd):
         if vars.module == "":
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
             return None
+        elif "arpscan" in vars.module:
+            select.attack("")
         elif len(vars.targets) <= 0:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No target(s) set.")
             return None
@@ -257,14 +259,24 @@ class VainShell(Cmd):
 """)
 
     def do_vicadd(self, inp):
-        addtarget.inputin(inp)
+        if "--ip" in inp:
+            ip = inp.replace("--ip", "").strip()
+            addtarget.inputip(ip)
+        else:
+            addtarget.inputin(inp)
 
     def help_vicadd(self):
         print("""
   vicadd
   --------
 
-  Add the specified URL to the target list.
+  Add the specified target to the target list.
+  Syntax: viacdd [--ip] TARGET
+
+    TARGET: the target added to the list.
+    
+  Options:
+    --ip: specified target is an IP, rather than an URL
 """)
 
     def do_phpsploit(self, inp):

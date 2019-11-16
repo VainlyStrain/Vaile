@@ -13,6 +13,7 @@
 import os
 import socket
 import time
+import string
 
 import core.variables as vars
 from core.Core.colors import *
@@ -57,8 +58,30 @@ def inputin(target):
             print(" [+] Target added: {}".format(webfin))
 
         except socket.gaierror:
-            print(R + ' [-] Site seems to be down...')
+            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Target seems down...")
             pass
 
     except KeyboardInterrupt:
         pass
+
+def inputip(target):
+    v4 = target.split(".")
+    v6 = target.split(":")
+    try:
+        if len(v4) == 4 and (i.isdigit() for i in v4):
+            if (int(i) in range(0,256) for i in v4):
+                print(" [+] IPv4 detected!")
+        elif len(v6) == 8 and (len(i) in range(0,5) for i in v6):
+            if (int(i) for i in v6):
+                print(" [+] IPv6 detected!")
+        else:
+            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Invalid IP: {}".format(target))
+    except ValueError:
+        print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Invalid IP: {}".format(target))
+        pass
+
+    if os.system("ping -c 1 " + target) is 0:
+        vars.targets.append(target)
+        print(" [+] Target added: {}".format(target))
+    else:
+        print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Target seems down...")
