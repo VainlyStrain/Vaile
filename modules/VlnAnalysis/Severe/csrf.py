@@ -36,7 +36,7 @@ properties = {}
 
 def request(referer,action,form,opener):
 
-    data = urllib.urlencode(form)
+    data = urllib.parse.urlencode(form)
     headers = {'User-Agent' : 'Mozilla/5.0 (Windows 8.0; U; Windows NT 5.2; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3 (.NET CLR 3.5.30729)','Referer' : referer}
     try:
         return opener.open(action,data).read()
@@ -135,12 +135,12 @@ def check0x00(web):
             try:
                 soup=crawler.process(web)
                 if not soup:
-                    continue;
+                    continue
 
                 i=0
                 print(O+' [*] Retrieving all forms on ' +C+ url +O+'...')
                 for m in getAllForms(soup):
-                    action = uri.buildAction(url,m['action'])
+                    action = buildAction(url,m['action'])
                     if not action in actionDone and action!='':
                         try:
                             print()
@@ -169,10 +169,10 @@ def check0x00(web):
                                         print(B+' [+] URL : ' +P+url)
                                         print(G+' [+] Action : ' +O+m['action'])
 
-                                    print(O+' [+] Code : '+W+urllib.urlencode(result))
+                                    print(O+' [+] Code : '+W+urllib.parse.urlencode(result))
                                     print('')
 
-                                continue;
+                                continue
 
                             o2 = resp2.open(url).read()
 
@@ -181,7 +181,7 @@ def check0x00(web):
 
                             except IndexError:
                                 print(R+' [-] Form Error')
-                                continue;
+                                continue
 
                             contents2 = form.prepareFormInputs(form2)
                             r3 = request(url,action,contents2,resp2)
@@ -231,7 +231,7 @@ def check0x00(web):
             except urllib.error.URLError as e:
                 print(R+' [-] Exception at %s' % url)
                 print(R+' [-] Error : '+str(e))
-                continue;
+                continue
 
     except KeyboardInterrupt:
         print(R+"\n [-] Interrupted by user")

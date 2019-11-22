@@ -13,6 +13,9 @@
 import os
 import time
 import requests
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -23,11 +26,10 @@ info = "Open Redirect Checker"
 searchinfo = "Open Redirect Checker"
 properties = {}
 
-def check0x00(web, headers):
-
-    print(GR+' [*] Configuring payloads with Url...')
+def check0x00(web, headers, pays):
+    success = []
     web000 = web.split('=')[0] + '='
-    for pay in payloads:
+    for pay in pays:
         web0x0 = web000 + pay
         print(B+'\n [!] Using payload : '+C+pay+' ...')
         print(GR+' [+] Url : '+C+web0x0+' ...')
@@ -37,10 +39,13 @@ def check0x00(web, headers):
         stat = str(req.status_code)
         if stat == '302':
             print(O+' [+] HTTP 302 Response '+GR+'(Found)!\n '+G+' [+] Confirm open-redirection vulnerability at : '+C+web0x0)
+            success.append(pay+" : "+stat)
         elif stat == '301':
             print(O+' [+] HTTP 301 Response! '+GR+'(Moved Permanently)!\n '+G+' [+] Potential open-redirection vulnerability at : '+C+web0x0)
+            success.append(pay+" : "+stat)
         elif stat == '307':
             print(O+' [+] HTTP 307 Response! '+GR+'(Temporary Redirect)!\n '+G+' [+] Potential open-redirection vulnerability at : '+C+web0x0)
+            success.append(pay+" : "+stat)
         elif stat == '400':
             print(R+' [-] HTTP 400 Response '+GR+'(Bad Request)!')
         elif stat == '403':
@@ -56,12 +61,15 @@ def check0x00(web, headers):
         elif stat == '500':
             print(O+' [-] HTTP 500 Response '+GR+'(Internal Error)! Server could not handle request!')
             print(G+' [+] Potential Vulnerability at : '+C+web0x0)
+            success.append(pay+" : "+stat)
         elif stat == '502':
             print(O+' [-] HTTP 502 Response '+GR+'(Internal Error)! Server could not handle request!')
             print(G+' [+] Potential Vulnerability at : '+C+web0x0)
+            success.append(pay+" : "+stat)
         elif stat == '503':
             print(O+' [-] HTTP 503 Response '+GR+'(Internal Error)! Server could not handle request!')
             print(G+' [+] Potential Vulnerability at : '+C+web0x0)
+            success.append(pay+" : "+stat)
         elif stat == '200':
             print(R+' [-] HTTP 200 Response '+GR+'(OK)!')
             print(G+' [+] Redirection confirmation page at : '+O+web0x0)
@@ -81,6 +89,7 @@ def check0x00(web, headers):
             break
         else:
             print(R+' [-] Interesting HTTP Response : '+O+stat)
+    return success
 
 def getPayloads0x00(fi):
     try:
@@ -125,6 +134,9 @@ def openredirect(web):
             print(R+' [-] Your input does not match a parameter...')
             param = input(O+' [#] Enter paramter to test :> ')
 
+        pa = input(" [?] Parallel Attack? (enter if not) :> ")
+        parallel = pa is not ""
+
         print(GR+' [*] Configuring relative headers...')
         time.sleep(0.8)
         gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
@@ -149,8 +161,23 @@ def openredirect(web):
         input_cookie = input("\n [#] Got any cookies? [just enter if none] :> ")
         if(len(input_cookie) > 0):
             gen_headers['Cookie'] = input_cookie
-        check0x00(web00, gen_headers)
-
+        print(GR+' [*] Configuring payloads with Url...')
+        success = []
+        if not parallel:
+            check0x00(web00, gen_headers, payloads)
+        else:
+            paylists = listsplit(payloads, round(len(payloads)/processes))
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(check0x00, args=(web00,gen_headers,l,)) for l in paylists]
+                for y in res:
+                    i = y.get()
+                    success += i
+        if success:
+            print(" [+] Open Redirect Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
     except KeyboardInterrupt:
         print(R+' [-] User Interruption Detected!')
         pass

@@ -44,3 +44,29 @@ INTERMEDIATE
   fixed: osdetect bytes -> string error
   improved: vicadd & IPs
   new module: arpscan
+
+
+[·= VERSION 2.1 - parallelisation update =·]
+
+2.1.0-5
+---------
+
+  added: parallelisation mode for multiple modules to speed up calculation
+  #all port scanners (parallelisation-only)
+  #most of vlnysis-severe (choice through user input)
+  added: "processes" command to set processes to be used in parallelisation
+  added: new core methods to handle parallelisation
+  fixed: TCP stealth scanner unable to find ports
+  fixed: rce crash
+  fixed: all subdom modules
+  fixed: module x has no y in csrf
+  fixed: payload duplication in sqli and xss
+  fixed: getcensys
+  improved: list&find only dispay name, not path
+  improved: interface in "ip" controlled by variable in variables.py
+  improved: non-verbose port scanning is less verbose
+
+UPCOMING
+
+  fix: crash when Keyboard Interrupt in port scanner
+

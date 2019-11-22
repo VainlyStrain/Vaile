@@ -16,22 +16,63 @@ import os
 import socket
 import scapy
 from scapy.all import *
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from core.Core.colors import *
 
-info = "Port Scanner."
+info = "This module checks if common ports are open."
 searchinfo = "Port Scanner"
 properties = {}
+
+
+def check_portv(host, port, result = 1):
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(0.5)
+        print(C+"\n [*] Scanning port " + str(port)+'...')
+        r = sock.connect_ex((host, port))
+        #print(GR+' [*] Analysing response...')
+        time.sleep(0.5)
+        #print(O+' [*] Adding up results together...')
+        time.sleep(0.1)
+        if r == 0:
+            result = r
+
+        sock.close()
+
+    except Exception as e:
+        print(''+R+' [!] Exception detected at port %s !' % port)
+        pass
+
+    return result
+
+def portloop(portlist, host):
+    open = []
+    closed = []
+    for p in portlist:
+        sys.stdout.flush()
+        response = check_portv(host, p)
+        if response == 0:
+            print(G+' [!] Port ' +O+ str(p) +G+ ' detected Open !')
+            open.append(p)
+        else:
+            print(R+' [!] Port ' +O+ str(p) +R+ ' detected Closed !')
+            closed.append(p)
+    return (open, closed)
 
 def scan0x00(host):
 
     #print(R+'\n   =========================')
     #print(R+'    P O R T   S C A N N E R')
     #print(R+'   =========================\n')
-    from core.methods.print import posintact
-    posintact("port scanner") 
+    from core.methods.print import pscan
+    pscan("port scanner")
     print(GR+' [*] Using most common ports...')
 
     ports = [20,21,23,25,53,67,68,69,80,109,110,111,123,137,143,156,161,162,179,389,443,445,512,513,546,547,636,993,995,1099,2121,2049,3306, 5432,5900,6000,6667,8080,8180,8443,10000]
+    mlprts = listsplit(ports, round(len(ports)/processes))
+    #print(mlprts)
     print(O+' [+] Scanning %s ports...' % len(ports))
     try:
         ip = socket.gethostbyname(host)
@@ -47,41 +88,18 @@ def scan0x00(host):
     open_ports = []
     closed_ports = []
 
-    def check_portv(host, port, result = 1):
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(0.5)
-            print(C+"\n [*] Scanning port " + str(port)+'...')
-            r = sock.connect_ex((host, port))
-            print(GR+' [*] Analysing response...')
-            time.sleep(0.5)
-            print(O+' [*] Adding up results together...')
-            time.sleep(0.1)
-            if r == 0:
-                result = r
-
-            sock.close()
-
-        except Exception as e:
-            print(''+R+' [!] Exception detected at port %s !' % port)
-            pass
-
-        return result
-
     print(B+" [*] Scanning started at %s" %(time.strftime("%I:%M:%S %p")))
     starting_time = time.time()
     try:
         print(O+" [*] Scan in progress..")
         time.sleep(0.8)
-        for p in ports:
-            sys.stdout.flush()
-            response = check_portv(host, p)
-            if response == 0:
-                print(G+' [!] Port ' +O+ str(p) +G+ ' detected Open !')
-                open_ports.append(p)
-            else:
-                print(R+' [!] Port ' +O+ str(p) +R+ ' detected Closed !')
-                closed_ports.append(p)
+        with Pool(processes=processes) as pool:
+            res = [pool.apply_async(portloop, args=(l,host,)) for l in mlprts]
+            #res1 = pool.apply_async(portloop, )
+            for i in res:
+                j = i.get()
+                open_ports += j[0]
+                closed_ports += j[1]
 
         print(C+"\n [+] Scanning completed at %s" %(time.strftime("%I:%M:%S %p")))
         ending_time = time.time()

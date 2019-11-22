@@ -129,8 +129,10 @@ def subdom(web):
     if 'http' in web:
         web = web.replace('http://','')
         web = web.replace('https://','')
-
-    fileo = web+'-subdomains.lst'
+    webb = web
+    if "@" in web:
+        webb = web.split("@")[1]
+    fileo = webb+'-subdomains.lst'
     p = open(fileo,'w+')
     p.close
     print(R+'\n    S U B D O M A I N   G A T H E R E R')

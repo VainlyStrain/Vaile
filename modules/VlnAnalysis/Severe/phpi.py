@@ -19,6 +19,9 @@ from core.Core.colors import *
 from random import choice
 from string import ascii_uppercase, ascii_lowercase
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from multiprocessing import Pool, TimeoutError
+from core.variables import processes
+from core.methods.multiproc import listsplit
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
@@ -33,6 +36,7 @@ def genRandStr0x00(n):
 def check0x00(web0x00, pay, gen_headers):
 
     try:
+        success = []
         hunt = 0x00
         print(GR+' [*] Making the request...')
         rq = requests.get(web0x00, headers=gen_headers, allow_redirects=False, verify=False)
@@ -48,6 +52,7 @@ def check0x00(web0x00, pay, gen_headers):
             print(B+' [+] Payload : '+C+pay)
             print(O+' [+] Response : \033[0m\n')
             print(c)
+            success.append(pay)
         else:
             print(R+' [-] Payload '+O+pay+R+' unsuccessful...')
             print(R+' [-] No successful code injection at : '+O+web0x00)
@@ -55,6 +60,8 @@ def check0x00(web0x00, pay, gen_headers):
     except Exception as e:
         print(R+' [-] Exception encountered!')
         print(R+' [-] Error : '+str(e))
+
+    return success
 
 def getFile0x00():
 
@@ -83,6 +90,16 @@ def getFile0x00():
 
     except IOError:
         print(R+' [-] File path '+O+fi+R+' not found!')
+
+def checkpre(payloads, web00, bug2, gen_headers):
+    success = []
+    for pay in payloads:
+        print(GR+'\n [*] Setting parameters...')
+        web0x00 = web00 + pay + bug2
+        print(C+' [+] Using payload : '+B+str(pay))
+        print(B+' [+] Using !nfected Url : '+GR+str(web0x00)) # display whats going on
+        success += check0x00(web0x00, pay, gen_headers) # check the outupt of the fuzz
+    return success
 
 def phpi(web):
 
@@ -122,16 +139,33 @@ def phpi(web):
             tmp = bug2.split("&")[0]
             bug2 = bug2.replace(tmp,"")
 
+    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+    parallel = pa is not ""
+
     getFile0x00() # get the file with payloads
     web00 = web + param.split(choice + '=')[0] + choice + '='
     try:
-        for pay in payloads:
-            print(GR+'\n [*] Setting parameters...')
-            web0x00 = web00 + pay + bug2
-            print(C+' [+] Using payload : '+B+str(pay))
-            print(B+' [+] Using !nfected Url : '+GR+str(web0x00)) # display whats going on
-            check0x00(web0x00, pay, gen_headers) # check the outupt of the fuzz
-
+        success = []
+        if not parallel:
+            for pay in payloads:
+                print(GR+'\n [*] Setting parameters...')
+                web0x00 = web00 + pay + bug2
+                print(C+' [+] Using payload : '+B+str(pay))
+                print(B+' [+] Using !nfected Url : '+GR+str(web0x00)) # display whats going on
+                success += check0x00(web0x00, pay, gen_headers) # check the outupt of the fuzz
+        else:
+            paylists = listsplit(payloads, round(len(payloads)/processes))
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(checkpre, args=(l, web00, bug2, gen_headers,)) for l in paylists]
+                for y in res:
+                    i = y.get()
+                    success += i
+        if success:
+            print(" [+] PHPi Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
     except Exception as e: # if error
         print(R+' [-] Unexpected Exception Encountered!')
         print(R+' [-] Exception : '+str(e))

@@ -132,8 +132,11 @@ def subdom0x00(web):
     if 'http' in web:
         web = web.replace('http://','')
         web = web.replace('https://','')
+    webb = web
+    if "@" in web:
+        webb = web.split("@")[1]
     try:
-        fileo = 'tmp/'+web+'-subdomains.lst'
+        fileo = 'tmp/'+webb+'-subdomains.lst'
         p = open(fileo,'w+')
         p.close
         print(R+'\n    S U B D O M A I N   G A T H E R E R')
@@ -148,11 +151,12 @@ def subdom0x00(web):
         acc = report(web, found, final)
         print(O+' [*] Writing found subdomains to a file...')
         if acc:
+            miv = open(fileo,'a')
             for pwn in acc:
                 vul = str(pwn) + '\n'
-                miv = open(fileo,'a')
+                
                 miv.write(vul)
-                miv.close()
+            miv.close()
         print(G+' [+] Done!')
 
     except Exception as e:

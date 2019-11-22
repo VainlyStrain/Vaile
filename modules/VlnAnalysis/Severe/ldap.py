@@ -15,6 +15,9 @@ import sys
 import time
 import requests
 sys.path.append('files/signaturedb/')
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from core.Core.colors import *
 from files.signaturedb.ldaperror_signatures import ldap_errors
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -37,11 +40,9 @@ def getFile0x00(fi):
             payloads.append(c)
     print(G+' [+] Loaded '+O+str(len(payloads))+G+' payloads...')
 
-def check0x00(web000, headers):
-
-    print(GR+' [*] Starting enumeration...')
-    time.sleep(0.7)
-    for payload in payloads:
+def check0x00(web000, headers, pays):
+    success = []
+    for payload in pays:
         gotcha = False
         print(B+'\n [+] Using Payload : '+C+payload)
         web0x00 = web000 + payload
@@ -56,6 +57,7 @@ def check0x00(web000, headers):
                     gotcha=True
                     print(O+' [+] Response : ')
                     print(P+req)
+                    success.append(payload)
                 else:
                     pass
 
@@ -67,6 +69,7 @@ def check0x00(web000, headers):
 
         except Exception as e:
             print(R+' [-] Query Exception : '+str(e))
+    return success
 
 def ldap(web):
 
@@ -93,6 +96,9 @@ def ldap(web):
             else:
                 web00 = web + '/' + web0
         print(B+' [+] Parameterised Url : '+C+web00)
+
+        pa = input(" [?] Parallel Attack? (enter if not) :> ")
+        parallel = pa is not ""
 
         input_cookie = input("\n [*] Enter cookies if needed (Enter if none) :> ")
         print(GR+' [*] Setting headers...')
@@ -121,7 +127,24 @@ def ldap(web):
         print(O+' [!] Parsing url...')
         time.sleep(0.7)
         web000 = web00.split('=')[0] + '='
-        check0x00(web000, gen_headers)
+        print(GR+' [*] Starting enumeration...')
+        time.sleep(0.7)
+        success = []
+        if not parallel:
+            success += check0x00(web000, gen_headers, payloads)
+        else:
+            paylists = listsplit(payloads, round(len(payloads)/processes))
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(check0x00, args=(web000,gen_headers,l,)) for l in paylists]
+                for y in res:
+                    i = y.get()
+                    success += i
+        if success:
+            print(" [+] LDAPi Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
 
     except KeyboardInterrupt:
         print(R+' [-] Aborting module...')

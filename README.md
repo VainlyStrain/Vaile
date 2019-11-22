@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/VainlyStrain/Vaile/blob/master/Vaile">
-    <img src="https://img.shields.io/static/v1.svg?label=Version&message=2.0&color=lightgrey&style=flat-square&logo=dev.to&logoColor=white">
+    <img src="https://img.shields.io/static/v1.svg?label=Version&message=2.1&color=lightgrey&style=flat-square&logo=dev.to&logoColor=white">
   </a>
   <a href="https://www.python.org/">
     <img src="https://img.shields.io/static/v1.svg?label=Python&message=3.7&color=lightgrey&style=flat-square&logo=python&logoColor=white">
@@ -25,6 +25,7 @@ Here is some light on what the framework is all about:
 - [x] Exploits Castle has only 1 exploit. `(purely developmental)`
 - [x] And finally, Auxillaries have got 4 modules. `more under development`
 - [x] All four phases each have an `Auto-Awesome` module which automates every module for you.
+- [x] Since 2.1: huge performance boost through parallelisation in various modules
 - [x] You just need the domain, and leave everything is to this tool.
 - [x] Vaile has full verbose out support, so you'll know whats going on.
 
@@ -84,6 +85,7 @@ To get started, you need to set your own `API KEYS` for various OSINT & Scanning
     opts      Show options of current module.        [M]
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
+	processes Set number of processes in parallelis.  :
     q         Terminate Vaile session.                :
     sessions  Interact with cached sessions.          :
     set       Set option value of module.            [M]
@@ -289,7 +291,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.0.1-15 [latest release] [#stable]
+v2.1.0-5 [latest release] [#stable]
 ```
 
 ### Disclaimer:

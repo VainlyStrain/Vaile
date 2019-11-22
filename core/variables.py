@@ -42,11 +42,14 @@ global vao
 global vas
 
 global dlist
+global interface
 
-version = "2.0"
-e_version = "2.0.1-15#dev"
+version = "2.1"
+e_version = "2.1.0-5#dev"
 module = ""
 targets = []
+processes = 8
+interface = "wlp4s0"
 
 modir = os.path.dirname(os.path.realpath(__file__)) + "/../modules/"
 sploidir = os.path.dirname(os.path.realpath(__file__)) + "/../modules/SploitLoot/"

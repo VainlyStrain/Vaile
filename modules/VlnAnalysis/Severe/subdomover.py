@@ -117,6 +117,8 @@ def subdomover(web):
         time.sleep(0.5)
         web0 = web.replace('http://','')
         web0 = web.replace('https://','')
+        if "@" in web0:
+            web0 = web0.split("@")[1]
         if not os.path.exists('tmp/logs/'+web0+'-logs/'):
             os.makedirs('tmp/logs/'+web0+'-logs/')
 

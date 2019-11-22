@@ -141,6 +141,7 @@ def info():
     opts      Show options of current module.        [M]
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
+    processes Set number of processes in parallelis.  :
     q         Terminate Vaile session.                :
     sessions  Interact with cached sessions.          :
     set       Set option value of module.            [M]
@@ -198,7 +199,7 @@ def pvln(mod):
     print("""
    (
    '\\
-  '  )  {}V L N Y S I S{}
+  '  )       {}V L N Y S I S{}
 ##-------->     
   .  )       {}{}{}
    ./

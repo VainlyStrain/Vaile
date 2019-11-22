@@ -16,6 +16,9 @@ import requests
 import time
 sys.path.append('files/signaturedb/')
 from re import search
+from multiprocessing import Pool, TimeoutError
+from core.variables import processes
+from core.methods.multiproc import listsplit
 from core.Core.colors import *
 from files.signaturedb.lfierror_signatures import errorsig
 from random import choice
@@ -26,19 +29,17 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
 ev = [""]
 
-gotcha = []
-loggy = []
-enviro = []
-fud = []
-generic = []
-cnfy = []
-
 info = "This module checks the presence of local file inclusion vulnerabilities."
 searchinfo = "Local File Inclusion Scanner"
 properties = {}
 
 def check0x00(web0x00, pay, gen_headers):
-
+    gotcha = []
+    loggy = []
+    enviro = []
+    fud = []
+    generic = []
+    cnfy = []
     try:
         hunt = 0x00
         print(GR+' [*] Making the request...')
@@ -104,6 +105,9 @@ def check0x00(web0x00, pay, gen_headers):
     except Exception as e:
         print(R+' [-] Exception encountered!')
         print(R+' [-] Error : '+str(e))
+        
+    return (gotcha, generic, loggy, enviro, fud, cnfy)
+
 
 def outto0x00(toPrint,stack):
     print(" [+] %s: [%s]" %(toPrint,len(stack)))
@@ -147,6 +151,78 @@ def getFile0x00():
     except IOError:
         print(R+' [-] File path '+O+fi+R+' not found!')
 
+def chkpre(evasion, filepath, payloads, web00, bug2, gen_headers):
+    gotcha = []
+    generic = []
+    loggy = []
+    enviro = []
+    fud = []
+    cnfy = []
+    for pay in payloads:
+        if evasion and filepath != "":
+            pay = pay.replace("etc/shadow", filepath)
+        print(GR+'\n [*] Setting parameters...')
+        web0x00 = web00 + pay + bug2
+        print(C+' [+] Using path : '+B+str(pay))
+        print(B+' [+] Url : '+GR+str(web0x00))
+        paths = check0x00(web0x00, pay, gen_headers)
+        gotcha += paths[0]
+        generic += paths[1]
+        loggy += paths[2]
+        enviro += paths[3]
+        fud += paths[4]
+        cnfy += paths[5]
+    return (gotcha, generic, loggy, enviro, fud, cnfy)
+
+def atck(evasion, filepath, payloads, web00, bug2, parallel, gen_headers):
+    gotcha = []
+    loggy = []
+    enviro = []
+    fud = []
+    generic = []
+    cnfy = []
+    if not parallel:
+        for pay in payloads:
+            if evasion and filepath != "":
+                pay = pay.replace("etc/shadow", filepath)
+            print(GR+'\n [*] Setting parameters...')
+            web0x00 = web00 + pay + bug2
+            print(C+' [+] Using path : '+B+str(pay))
+            print(B+' [+] Url : '+GR+str(web0x00))
+            paths = check0x00(web0x00, pay, gen_headers)
+            gotcha += paths[0]
+            generic += paths[1]
+            loggy += paths[2]
+            enviro += paths[3]
+            fud += paths[4]
+            cnfy += paths[5]
+    else:
+        paylists = listsplit(payloads, round(len(payloads)/processes))
+        with Pool(processes=processes) as pool:
+            res = [pool.apply_async(chkpre, args=(evasion,filepath,l,web00,bug2,gen_headers,)) for l in paylists]
+            #res1 = pool.apply_async(portloop, )
+            for i in res:
+                paths = i.get()
+                gotcha += paths[0]
+                generic += paths[1]
+                loggy += paths[2]
+                enviro += paths[3]
+                fud += paths[4]
+                cnfy += paths[5]
+    if gotcha:
+
+        print(G+"\n [+] Retrieved %s interesting paths...\n" % str(len(gotcha)))
+        time.sleep(0.5)
+
+        outto0x00("Logs",loggy)
+        outto0x00("/proc/self/environ",enviro)
+        outto0x00("/proc/self/fd",fud)
+        outto0x00("Configuration", cnfy)
+        outto0x00("Generic",generic)
+
+    else:
+        print(R+' [-] No vulnerable paths found!')
+
 def lfi(web):
 
     print(GR+' [*] Loading module...')
@@ -177,6 +253,8 @@ def lfi(web):
             bug2 = param.split(choice)[1]
             tmp = bug2.split("&")[0]
             bug2 = bug2.replace(tmp,"")
+    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+    parallel = pa is not ""
     getFile0x00()
     print(GR+' [*] Setting headers...')
     gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
@@ -193,28 +271,8 @@ def lfi(web):
         filepath = ""
         if evasion:
             filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
-        for pay in payloads:
-            if evasion and filepath != "":
-                pay = pay.replace("etc/shadow", filepath)
-            print(GR+'\n [*] Setting parameters...')
-            web0x00 = web00 + pay + bug2
-            print(C+' [+] Using path : '+B+str(pay))
-            print(B+' [+] Url : '+GR+str(web0x00))
-            check0x00(web0x00, pay, gen_headers)
-
-        if gotcha:
-
-            print(G+"\n [+] Retrieved %s interesting paths...\n" % str(len(gotcha)))
-            time.sleep(0.5)
-
-            outto0x00("Logs",loggy)
-            outto0x00("/proc/self/environ",enviro)
-            outto0x00("/proc/self/fd",fud)
-            outto0x00("Configuration", cnfy)
-            outto0x00("Generic",generic)
-
-        else:
-            print(R+' [-] No vulnerable paths found!')
+        
+        atck(evasion, filepath, payloads, web00, bug2, parallel, gen_headers)
 
     except Exception as e:
         print(R+' [-] Unexpected Exception Encountered!')

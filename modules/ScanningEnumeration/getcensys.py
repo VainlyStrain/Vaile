@@ -16,7 +16,7 @@ import socket
 import http.cookiejar
 import subprocess
 import time
-from modules.ScanningEnumeration.getports import *
+from modules.ScanningEnumeration.getports import getports
 from core.Core.colors import *
 
 info = "This module tries to determine the target's OS using censys."

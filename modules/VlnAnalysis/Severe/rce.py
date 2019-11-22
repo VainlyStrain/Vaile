@@ -13,18 +13,16 @@ import sys
 import time
 import re
 import urllib
-from urllib.request import FancyURLopener
+import requests
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from core.Core.colors import *
 payloads = []
 
 info = "This module probes the target for Command Injection vulnerabilities using Vaile's built-in payload dictionary."
 searchinfo = "Command Injection Probe"
 properties = {}
-
-class UserAgent(FancyURLopener):
-    verion = 'Mozilla/5.0 (X11; Linux x86_64; rv:28.0) Gecko/20100101  Firefox/28.0'
-
-useragent = UserAgent()
 
 class HTTP_HEADER:
     HOST = "Host"
@@ -51,46 +49,47 @@ def headread(url):
     print(C+" [+] Host: " + str(Host))
     print(B+" [+] Web server: " + str(Server))
 
-def check0x00(url, payloads, check):
+def check0x00(url, pays, check):
 
-    vuln = 0
-
-    print(GR+' [*] Starting command injection testing...')
+    #vuln = 0
+    success = []
+    
     for params in url.split("?")[1].split("&"):
-        for payload in payloads:
+        for payload in pays:
             vuln = False
             print(B+'\n [*] Trying payload :> '+C+str(payload))
             print(GR+' [!] Setting parameter value...')
             bugs = url.replace(params, params + str(payload).strip())
             print(O+' [*] Making the request...')
-            request = useragent.open(bugs)
+            #request = useragent.open(bugs)
+            request = requests.get(bugs)
             print(GR+' [*] Reading response...')
-            html = request.readlines()
-            for line in html:
-                checker = re.findall(check, line)
-                if (len(checker) != 0):
-                    vuln = True
-                else:
-                    vuln = False
+            html = request.content
+            checker = re.findall(check, str(html))
+            if (len(checker) != 0):
+                vuln = True
+            else:
+                vuln = False
 
             if vuln == True:
                 print(G+" [+] Possible vulnerability found!")
                 print(C+" [+] Payload: ", payload)
                 print(R+" [+] Example PoC: " + bugs)
-                vuln = vuln + 1
+                #vuln = vuln + 1
+                success.append(payload)
             else:
                 print(R+' [-] No command injection flaw detected!')
                 print(O+' [-] Payload '+R+payload+O+' not working!')
 
 
-    if (vuln == 0):
-        print(G+"\n [+] This website is damn secure. No vulnerabilities found. :)\n")
-    else:
-        print("\n [+] "+str(vuln)+" Bugs Found. Happy Hunting... :) \n")
+    #if (vuln == 0):
+    #    print(G+"\n [+] This website is damn secure. No vulnerabilities found. :)\n")
+    #else:
+    #    print("\n [+] "+str(vuln)+" Bugs Found. Happy Hunting... :) \n")
+    return success
 
 
-
-def getPayloads(url):
+def getPayloads(url, parallel):
 
     print(GR+' [*] Loading payloads...')
     time.sleep(0.8)
@@ -104,7 +103,23 @@ def getPayloads(url):
         print(R+' [-] Exception: '+str(e))
     print(G+' [+] '+str(len(payloads)+1)+' Payloads loaded!')
     check = re.compile("51107ed95250b4099a0f481221d56497|Linux|eval\(\)|SERVER_ADDR|Volume.+Serial|\[boot|root|x:bin", re.I)
-    check0x00(url, payloads, check)
+    print(GR+' [*] Starting command injection testing...')
+    success = []
+    if not parallel:
+        check0x00(url, payloads, check)
+    else:
+        paylists = listsplit(payloads, round(len(payloads)/processes))
+        with Pool(processes=processes) as pool:
+            res = [pool.apply_async(check0x00, args=(url,l,check,)) for l in paylists]
+            for y in res:
+                i = y.get()
+                success += i
+    if success:
+        print(" [+] CMDi Vulnerability found! Successful payloads:")
+        for i in success:
+            print(i)
+    else:
+        print(R + "\n [-] No payload succeeded."+C)
 
 def rce(web):
 
@@ -128,7 +143,9 @@ def rce(web):
         else:
             web00 = web + '/' + web0
 
-        getPayloads(web00)
+        pa = input(" [?] Parallel Attack? (enter if not) :> ")
+        parallel = pa is not ""
+        getPayloads(web00, parallel)
     else:
         print(R+" [-] Please enter the URL with parameters...")
         rce(web)

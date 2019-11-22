@@ -29,6 +29,9 @@ def ssscript(web):
     novuln = []
     web = web.replace('https://','')
     web = web.replace('http://','')
+    webb = web
+    if "@" in web:
+        webb = web.split("@")[1]
     #print(R+'\n   =======================================')
     #print(R+'\n    S A M E - S I T E   S C R I P T I N G')
     #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·‹›·——·\n')
@@ -37,7 +40,7 @@ def ssscript(web):
                 
     time.sleep(0.5)
     try:
-        if os.path.exists('files/'+web+'-subdomains.lst') == True:
+        if os.path.exists('files/'+webb+'-subdomains.lst') == True:
             pass
         else:
             print(O+' [*] Gathering subdomains...')
@@ -46,13 +49,13 @@ def ssscript(web):
     except:
         print(R+' [-] Exception occured!')
 
-    os.system('mv '+web+'-subdomains.lst tmp/')
+    os.system('mv '+webb+'-subdomains.lst tmp/')
     #print(R+'\n    =========================')
     print(R+'\n     S - S - S   T E S T E R')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·–\n')
                  
     try:
-        with open('tmp/'+web+'-subdomains.lst','r') as dom:
+        with open('tmp/'+webb+'-subdomains.lst','r') as dom:
             for m in dom:
                 m = m.replace('\n','')
                 print(C+' [*] Running tests on '+GR+m+C+' for Same-Site Scripting...')
