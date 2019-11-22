@@ -21,6 +21,7 @@ import os
 import time
 import random
 from time import sleep
+from datetime import datetime
 
 from core import variables as vars
 from core.Core.colors import *
@@ -80,10 +81,63 @@ vaile = """\033[1m
                      .    
 """.format(vars.version)
 
+sp00k70b3r = """
+      ___
+     /   \\
+    / O O \\       _ __         
+   |   O   |     /// / _   _   _ _ __ 
+ , |       | ,  / ` /,'o| /o| /o|\\V / 
+  \\/(     )\\/  /_n_/ |_,7/_,'/_,' )/  
+   | )   ( |            //  //   //    
+   |(     )|      ___
+   ||   | |'    ,' _/ _   _   _   /7  /7  _   /7  __ _ 
+   `|   | |    _\\ `. /o|,'o|,'o| //_7/_7,'o| /o\\,'o///7
+    |   | |   /___,'/_,'|_,'|_,'//\\\\//  |_,'/_,'|_(//  
+    |   /-'        //        
+    |_.'    
+""" 
+
+christmas = """\033[1m
+               ,--.
+              (:.. )
+           ,--.`--'
+          (:.. )'""`.
+           `--/`.__,'
+             f f                      .-.   .-..----..----. .----..-.  .-. 
+            ,'.`.                     |  `.'  || {_  | {}  }| {}  }\\ \\/ / 
+        _,-'  :  `-._                 | |\\ /| || {__ | .-. \\| .-. \\ }  {  
+        `-._ .:. _,-'                 `-' ` `-'`----'`-' `-'`-' `-' `--' 
+            ) :.(          .---. .-. .-..----. .-. .----..---. .-.   .-.  .--.   .----.
+        _,-' .:  `-._     /  ___}| {_} || {}  }| |{ {__ {_   _}|  `.'  | / {} \\ { {__  
+       '-._  .:.  _,-`    \\     }| { } || .-. \\| |.-._} } | |  | |\\ /| |/  /\\  \\.-._} }
+           )  :  (         `---' `-' `-'`-' `-'`-'`----'  `-'  `-' ` `-'`-'  `-'`----' 
+       _,-'..::.  `-._
+       `-._  .:   _,-'
+           `. : ,'
+         _,-' : `-._
+         `-. .:. ,-'
+            \\ . /
+             `v' 
+
+"""
+
+currentMonth = datetime.now().month
+currentDay = datetime.now().day
+
+def f00l():
+    #add some stuff here when time has come ;)
+    return
 
 def banner():
     os.system("clear")
-    print(vaile)
+    if currentMonth == 10:
+        print(sp00k70b3r)
+    elif currentDay == 1 and currentMonth == 4:
+        f00l()
+    elif currentDay in [24,25,26] and currentMonth == 12:
+        print(christmas)
+    else:
+        print(vaile)
 
 def randomsg():
     with open("files/ms.lst","r") as msg_list:

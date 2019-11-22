@@ -29,6 +29,14 @@ Here is some light on what the framework is all about:
 - [x] You just need the domain, and leave everything is to this tool.
 - [x] Vaile has full verbose out support, so you'll know whats going on.
 
+### Main new features
+The main differences between Vaile and TIDoS are:
+- [x] the programming language: Vaile is fully ported to Python3
+- [x] the interface: Vaile presents a new, Metasploit-like console interface
+- [x] Parallelisation: Vaile uses multiprocessing to speed up attacks
+- [x] Module Completion: Some modules have been feature-extended (e.g. more evasion, supporting more than 1 query parameter)
+- [x] Some new modules: arpscan
+
 ### Installation :-
 
 #### Installation Script (Globally) :
@@ -85,7 +93,7 @@ To get started, you need to set your own `API KEYS` for various OSINT & Scanning
     opts      Show options of current module.        [M]
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
-	processes Set number of processes in parallelis.  :
+    processes Set number of processes in parallelis.  :
     q         Terminate Vaile session.                :
     sessions  Interact with cached sessions.          :
     set       Set option value of module.            [M]
