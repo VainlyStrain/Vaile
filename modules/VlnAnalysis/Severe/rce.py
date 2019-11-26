@@ -13,11 +13,12 @@ import sys
 import time
 import re
 import urllib
-import requests
+#import requests
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
 from core.Core.colors import *
+from core.methods.tor import session
 payloads = []
 
 info = "This module probes the target for Command Injection vulnerabilities using Vaile's built-in payload dictionary."
@@ -53,7 +54,7 @@ def check0x00(url, pays, check):
 
     #vuln = 0
     success = []
-    
+    requests = session()
     for params in url.split("?")[1].split("&"):
         for payload in pays:
             vuln = False

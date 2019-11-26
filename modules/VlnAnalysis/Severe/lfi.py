@@ -12,10 +12,11 @@
 
 import os
 import sys
-import requests
+import requests as wrn
 import time
 sys.path.append('files/signaturedb/')
 from re import search
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.variables import processes
 from core.methods.multiproc import listsplit
@@ -25,7 +26,7 @@ from random import choice
 from string import ascii_uppercase, ascii_lowercase
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
 ev = [""]
 
@@ -40,6 +41,7 @@ def check0x00(web0x00, pay, gen_headers):
     fud = []
     generic = []
     cnfy = []
+    requests = session()
     try:
         hunt = 0x00
         print(GR+' [*] Making the request...')

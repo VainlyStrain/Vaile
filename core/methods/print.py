@@ -50,13 +50,13 @@ def loadstyle():
 
 
 
-vaile = """\033[1m
+vaile = """{}
                       .   
                       .   
                       .   
                       .   
                       .   
-\033[0m____, __          \033[1m \033[0m \033[1m ..   
+{}____, __            {} ..   
    + ;               ..   
    .:,                       
      ’                      
@@ -69,9 +69,9 @@ vaile = """\033[1m
           ';. '           
          .;...,           
     ~   Vaile Attack : saarsec   ~        
-    \033[1;31m~  fork from\033[0m\033[1m Infected Drake  ~    
+    {}~  fork from{} Infected Drake  ~    
               .'.         
-  5 Phases  |  \033[1;31mv {}  |  \033[0m\033[1m108 Modules
+  5 Phases  |  {}v {}  |  {}108 Modules
                 ;.        
                  .,.      
                    .'.    
@@ -79,7 +79,7 @@ vaile = """\033[1m
                     ...   
                      : .  
                      .    
-""".format(vars.version)
+""".format(color.BOLD, color.END, color.BOLD, R, C, R, vars.version, C)
 
 sp00k70b3r = """
       ___
@@ -145,7 +145,7 @@ def randomsg():
 
 def bannerbelownew():
     print("   Vaile {}{}{}".format(color.END, RB, vars.e_version) + C)
-    print("  {}{}".format(RC, randomsg()))
+    print("  {}{}{}".format(RC, randomsg(), color.END))
 
 def bannerbelow():
     print("\n")
@@ -199,6 +199,7 @@ def info():
     q         Terminate Vaile session.                :
     sessions  Interact with cached sessions.          :
     set       Set option value of module.            [M]
+    tor       Pipe Attacks through the Tor Network.   :
     vicadd    Add Target to list.                     :
     vicdel    Delete Target from list.                :
     viclist   List all targets.                       :

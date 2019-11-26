@@ -12,18 +12,19 @@
 
 
 import re
-import requests
+#import requests
 import time
-from random import *
+#from random import *
 import string
 from core.Core.colors import *
+from core.methods.tor import session
 
 info = "This module detects the Apache Struts Shock vulnerability. (CVE-2017-5638)"
 searchinfo = "Struts Shock Detector"
 properties = {}
 
 def strutsshock0x00(web):
-
+	requests = session()
 	print(GR+' [*] Parsing strings...')
 	time.sleep(0.5)
 	print(GR+' [*] Configuring payloads...')

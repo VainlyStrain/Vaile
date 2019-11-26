@@ -4,8 +4,8 @@
   Conversion to Python3
   New console interface
 
-2.0.1-2 > 2.0.1-3
--------------------
+2.0.1-3
+---------
 
   Created separate file for handling credentials
   added temporar credential dropping in case of socket.gaierror
@@ -15,19 +15,17 @@ INTERMEDIATE
   phpsploit checks if path to script is valid ; else it will ask for a valid path
   nmapmain: omitted unnecessary display
 
-  
-2.0.1-3 > 2.0.1-5
--------------------
+2.0.1-5
+---------
 
   fixed: "can't cd into tmp/logs"
   fixed: XSS byte-like object is required
   fixed: PHPi xrange
   improved: automatic dropping of credentials for OSINT-passive modules where they are not needed
   fixed: autocorrect strikes again in legal disclaimer ;)
-
-  
-2.0.1-5 > 2.0.1-15
---------------------
+ 
+2.0.1-15
+----------
 
   fixed: CRLF
   fixed: Exploit invalid module error
@@ -71,8 +69,19 @@ INTERMEDIATE
   improved: list&find only dispay name, not path
   improved: interface in "ip" controlled by variable in variables.py
   improved: non-verbose port scanning is less verbose
+  
+2.1.0-15
+----------
+
+  added: CLI interface for faster interaction with one specific module
+         !!!you need to update your /bin/Vaile!!!
+         new version in tmp/Vaile
+  added: tor command to pipe attacks through the Tor network
+         right now, only for vlnysis-severe (except CSRF, subdom)
+  fixed: pathtrav exception during not-evasion attack
 
 UPCOMING
 
   fix: crash when Keyboard Interrupt in port scanner
+  add: Tor for the other modules
 

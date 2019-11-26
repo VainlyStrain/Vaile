@@ -14,7 +14,8 @@ import os
 import re
 import sys
 import socket
-import requests
+#import requests
+from core.methods.tor import session
 from time import sleep
 from bs4 import BeautifulSoup
 from tld import get_tld
@@ -30,7 +31,6 @@ searchinfo = ""
 properties = {}
 
 def subdombrute(web):
-
     try:
         try:
             print(GR+' [*] Importing wordlist path to be bruteforced... '+O+'"files/fuzz-db/subdomain_paths.lst"')
@@ -82,7 +82,7 @@ def subdombrute(web):
     return found
 
 def outer(web):
-
+    requests = session()
     global final
     final = []
     wew = []

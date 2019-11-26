@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+_____, ___
+   '+ .;    
+    , ;   
+     .   
+           
+       .    
+     .;.    
+     .;  
+      :  
+      ,   
+       
+
+┌─[Vaile]─[]
+└──╼ VainlyStrain
+"""
+
+import argparse
+import sys
+from core.methods.print import banner
+from core.Core.colors import color, RB, C, RC, R, RD
+
+class VaileParser(argparse.ArgumentParser):
+    def error(self, message):
+        banner()
+        self.print_usage(sys.stderr)
+        self.exit(2, '{}[-]\033[0m\033[1m Invalid/missing params\033[0m\n{}[HINT]\033[0m\033[0m {}\n'.format(R, R, message))
+    def print_help(self):
+        print('''{}Vsynta.:{} {}Vaile{} [-v VIC] [-p] [-a CA] [-s] [-l M] [-h] [-q]
+
+  -v VIC, --victim VIC  {}Target to attack per cli{}
+  -l M, --load M        {}Module to load per cli{}
+  -a CA, --list CA      {}List modules of CAT{}
+  -p, --tor             {}Pipe Attacks thro. Tor?{}
+  -s, --session         {}Is VIC a session file?{}
+  -q, --quiet           {}Start Console quietly{}'''.format(RC, color.END, RB, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END))
+
+class VaileFormatter(argparse.RawDescriptionHelpFormatter):
+    def add_usage(self, usage, actions, groups, prefix=None):
+        if prefix is None:
+            prefix = RD + 'Vsynta ' + color.END
+            return super(VaileFormatter, self).add_usage("{}Vaile{} [-v VIC] [-p] [-a CA] [-s] [-l M] [-h] [-q]".format(RB,color.END), actions, groups, prefix)
+
+def build_parser():
+    p = VaileParser(formatter_class=VaileFormatter, add_help=False)
+    p.add_argument('-v', '--victim',
+                   help='Target to attack (without loading entire framework)',
+                   metavar='VIC'
+                   )
+    p.add_argument('-l', '--load',
+                   help='Module to use (without loading entire framework)',
+                   metavar='M'
+                   )
+    p.add_argument('-h', '--help',
+                   help="Display this help message and exit",
+                   action="store_true"
+                   )
+    p.add_argument('-s', '--session',
+                   help="Is --victim a session file?",
+                   action="store_true"
+                   )
+    p.add_argument('-p', '--tor',
+                   help="Pipe Attacks through Tor?",
+                   action="store_true"
+                   )
+    p.add_argument('-a', '--list',
+                   help='List modules of category CA',
+                   metavar='CA'
+                   )
+    p.add_argument('-q', '--quiet',
+                   help='Start Console quietly',
+                   action='store_true'
+                   )
+    #p.epilog = "Beware, my friend. These are dark times."
+    return p

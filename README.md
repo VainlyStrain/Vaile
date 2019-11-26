@@ -26,6 +26,7 @@ Here is some light on what the framework is all about:
 - [x] And finally, Auxillaries have got 4 modules. `more under development`
 - [x] All four phases each have an `Auto-Awesome` module which automates every module for you.
 - [x] Since 2.1: huge performance boost through parallelisation in various modules
+- [x] Piping Attacks through Tor (not implemented everywhere yet)
 - [x] You just need the domain, and leave everything is to this tool.
 - [x] Vaile has full verbose out support, so you'll know whats going on.
 
@@ -34,6 +35,8 @@ The main differences between Vaile and TIDoS are:
 - [x] the programming language: Vaile is fully ported to Python3
 - [x] the interface: Vaile presents a new, Metasploit-like console interface
 - [x] Parallelisation: Vaile uses multiprocessing to speed up attacks
+- [x] An alternative CLI interface for faster interaction with one specific module
+- [x] Anonymity: Attacking through Tor is possible (not yet everywhere)
 - [x] Module Completion: Some modules have been feature-extended (e.g. more evasion, supporting more than 1 query parameter)
 - [x] Some new modules: arpscan
 
@@ -53,7 +56,7 @@ cd Vaile
 
 Vaile needs some libraries to run, which can be installed via `aptitude` or `dnf` Package Managers.
 ```
-sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev
+sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev tor
 ```
 Now after these dependencies are finished installing, we need to install the remaining Python Package dependencies, hence run:
 ```
@@ -97,6 +100,7 @@ To get started, you need to set your own `API KEYS` for various OSINT & Scanning
     q         Terminate Vaile session.                :
     sessions  Interact with cached sessions.          :
     set       Set option value of module.            [M]
+    tor       Pipe Attacks through the Tor Network.   :
     vicadd    Add Target to list.                     :
     vicdel    Delete Target from list.                :
     viclist   List all targets.                       :
@@ -299,7 +303,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.1.0-5 [latest release] [#stable]
+v2.1.0-15 [latest release] [#stable]
 ```
 
 ### Disclaimer:

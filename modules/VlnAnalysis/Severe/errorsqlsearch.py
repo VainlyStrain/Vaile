@@ -13,7 +13,7 @@
 import core.lib.mechanize as mechanize
 from re import search, sub
 import http.cookiejar
-import requests
+#import requests
 import time
 import urllib.request
 import re
@@ -22,13 +22,18 @@ import sys
 from re import *
 from urllib.request import *
 from core.Core.colors import *
+from core.methods.tor import session
+from core.variables import tor
 from time import sleep
 
 br = mechanize.Browser()
 
 cj = http.cookiejar.LWPCookieJar()
 br.set_cookiejar(cj)
-
+torproxies = {'http':'socks5h://localhost:9050', 'https':'socks5h://localhost:9050'}
+if tor:
+    br.set_proxies(torproxies)
+    
 params = []
 
 br.set_handle_equiv(True)
@@ -52,7 +57,6 @@ searchinfo = ""
 properties = {}
 
 def errorsqlsearch(web):
-
     os.system('clear')
     #print(R+'\n    ======================================')
     print(R+'\n     S Q L i   H U N T E R (Auto Awesome)')
@@ -76,6 +80,7 @@ def errorsqlsearch(web):
         for o in br.links():
             path_list.append(o.base_url+'/'+o.url)
         print(path_list)
+    requests = session()
     for bugs in path_list:
         ctr = 0
         print(B+' [*] Testing '+C+str(bugs))

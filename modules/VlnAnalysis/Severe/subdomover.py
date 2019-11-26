@@ -16,19 +16,20 @@ import sys
 import time
 import urllib3
 import urllib.parse
-import requests
+import requests as wrn
+from core.methods.tor import session
 from core.Core.colors import *
 from modules.VlnAnalysis.Severe.subdom0x00 import subdom0x00
 from modules.VlnAnalysis.Severe.signatures import services
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module searches for possibilities of subdomain takeovers, either for a single subdomain, or for all of them."
 searchinfo = "Subdomain Takeover Module"
 properties = {}
 
 def getReq0x00(url):
-
+    requests = session()
     print(GR+' [*] Setting headers...')
     headers = {
                     'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',

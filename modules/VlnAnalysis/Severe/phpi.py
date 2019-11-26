@@ -12,7 +12,7 @@
 
 import os
 import sys
-import requests
+import requests as wrn
 import time
 from re import search
 from core.Core.colors import *
@@ -21,9 +21,10 @@ from string import ascii_uppercase, ascii_lowercase
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from multiprocessing import Pool, TimeoutError
 from core.variables import processes
+from core.methods.tor import session
 from core.methods.multiproc import listsplit
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
 
 info = "This module searches for PHP injection vulnerabilities and, if found, tries to inject payloads from Vaile's payload database or from a user-specified file."
@@ -34,7 +35,7 @@ def genRandStr0x00(n):
     return ''.join([choice(ascii_uppercase+ascii_lowercase) for o in range(0,int(n))]) # fetch random string
 
 def check0x00(web0x00, pay, gen_headers):
-
+    requests = session()
     try:
         success = []
         hunt = 0x00

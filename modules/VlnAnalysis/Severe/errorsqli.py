@@ -14,12 +14,13 @@ import os
 import re
 import sys
 import urllib.request
-import requests
+#import requests
 sys.path.append('files/')
 from core.Core.colors import *
 from re import *
 import time
 from time import sleep
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
@@ -53,6 +54,7 @@ def cookiepre(pay,session,check, web):
 
 def userpre(pay, web):
     success = []
+    requests = session()
     for i in pay:
         print(B+' [*] Using payload : '+C+i)
         time.sleep(0.7)
@@ -78,20 +80,20 @@ def auto0x00(web, parallel):
         print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·–\n')
 
         sleep(0.5)
-        session = requests.Session()
-        req = session.get(web)
+        vsession = session()
+        req = vsession.get(web)
         check = ["have an error", "SQL syntax", "MySQL"]
-        if session.cookies:
+        if vsession.cookies:
             print(G+' [+] This website values session cookies...')
             success = []
             if not parallel:
                 for i in pay:
                     print(B+" [*] Trying Payload : "+C+''+ i)
                     time.sleep(0.7)
-                    for cookie in session.cookies:
+                    for cookie in vsession.cookies:
                         cookie.value += i
                         print(O+' [+] Using '+R+'!nfected'+O+' cookie : '+GR+cookie.value)
-                        r = session.get(web)
+                        r = vsession.get(web)
                         for j in range(0, len(check)):
                             if check[j] in r.text:
                                 poc = C+" [+] PoC : " +O+ cookie.name + " : " +GR+ cookie.value
@@ -102,7 +104,7 @@ def auto0x00(web, parallel):
             else:
                 paylists = listsplit(pay, round(len(pay)/processes)) 
                 with Pool(processes=processes) as pool:
-                    res = [pool.apply_async(cookiepre, args=(l,session,check,req,)) for l in paylists]
+                    res = [pool.apply_async(cookiepre, args=(l,vsession,check,req,)) for l in paylists]
                     #res1 = pool.apply_async(portloop, )
                     for i in res:
                         j = i.get()
@@ -124,6 +126,7 @@ def auto0x00(web, parallel):
         print(R+'\n     S Q L i  (User-Agent Based)')
         print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
         success = []
+        requests = session()
         if not parallel:
             for i in pay:
                 print(B+' [*] Using payload : '+C+i)
@@ -171,6 +174,7 @@ def auto0x00(web, parallel):
 
 def manualpre(pay, bugs, bug2):
     success = []
+    requests = session()
     for p in pay:
         bugged = bugs + str(p) + bug2
         print(B+" [*] Trying : "+C+bugged)
@@ -190,6 +194,7 @@ def manual0x00(web, parallel):
     #print(R+'\n    ========================')
     print(R+'\n     S Q L i  (Manual Mode)')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·\n')
+    requests = session()
     bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /sqli/fetch.php?id=x)'+O+' :> ')
     choice = ""
     if "&" in bug:

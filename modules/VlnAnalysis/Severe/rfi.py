@@ -12,7 +12,7 @@
 
 import os
 import sys
-import requests
+#import requests
 import time
 
 from googlesearch import search
@@ -22,6 +22,7 @@ import urllib.request
 from random import randint
 from time import sleep
 from core.Core.colors import *
+from core.methods.tor import session
 
 info = "This module scans the target site for Remote File Inclusion vulnerabilities by either a specific attack, or by brute force."
 searchinfo = "Remote File Inclusion Scanner"
@@ -64,7 +65,7 @@ def cust0x00(web):
         time.sleep(0.5)
 
 def test(web0, web):
-
+    requests = session()
     if (('=' in str(web0)) and ('?' in str(web0))):
         if 'http' in str(web0):
             web00 = str(web0)
@@ -172,7 +173,7 @@ def google_it (dork):
         goog.append(title)
 
 def brute0x00(web):
-
+    requests = session()
     try:
         print(GR+' [*] Importing wordlist...')
         if os.path.exists('files/fuzz-db/rfi_paths.lst') == True:
@@ -200,7 +201,7 @@ def brute0x00(web):
                     else:
                         print(O+' [*] Interesting response : '+GR+web0x00+O+' ('+c+')')
 
-                except requests.exceptions:
+                except:
                     print(R+' [-] Exception Encountered!')
                     pass
 

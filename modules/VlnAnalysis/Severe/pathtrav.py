@@ -14,15 +14,16 @@ import os
 import re
 import sys
 import urllib
-import requests
+import requests as wrn
 import time
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit, file2list
+from core.methods.tor import session
 from core.variables import processes
 from core.Core.colors import O, GR, R, G, B, C, W, color
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 global active0
 #loggy = []
@@ -66,7 +67,7 @@ def atck(evasion, filepath, owebsite, line):
     env = []
     fu2 = []
     cnf = []
-
+    requests = session()
     c = line.strip('\n')
     if evasion and filepath != "":
         c = c.replace("etc/shadow", filepath)
@@ -172,6 +173,7 @@ def check0x00(website0, gen_headers, parallel):
             fi = getFile0x00('files/fuzz-db/pathtrav_paths.lst')
         else:
             fi = getFile0x00(fi)
+        filepath = ""
     else:
         fi = getFile0x00('files/fuzz-db/pathtrav_evasion.lst')
         filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")

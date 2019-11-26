@@ -13,7 +13,7 @@
 import re
 import os
 import sys
-import requests
+import requests as wrn
 import time
 sys.path.append('files/signaturedb/')
 from core.variables import processes
@@ -22,9 +22,10 @@ from multiprocessing import Pool, TimeoutError
 from core.Core.colors import *
 from files.signaturedb.xpatherror_signatures import xpath_errors
 from random import choice
+from core.methods.tor import session
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
 
 info = "This module searches for XPATH Injection flaws using the built-in dictionary or an user-provided payload list."
@@ -33,6 +34,7 @@ properties = {}
 
 def check0x00(web0x00, pay, gen_headers):
     success = []
+    requests = session()
     try:
         print(GR+' [*] Making the request...')
         rq = requests.get(web0x00, headers=gen_headers, allow_redirects=False, verify=False)

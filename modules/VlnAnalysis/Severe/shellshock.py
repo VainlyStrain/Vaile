@@ -10,19 +10,20 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+#import requests
 import time
-from random import *
+from random import Random
 import string
 import re
 from core.Core.colors import *
+from core.methods.tor import session
 
 info = "This module tests the target for the shellshock vulnerability."
 searchinfo = "Shellshock Tester"
 properties = {}
 
 def shellshock0x00(web):
-
+    requests = session()
     print(GR+' [*] Parsing strings...')
     time.sleep(0.5)
     r_str = ''.join(Random().sample(string.ascii_letters, 30))

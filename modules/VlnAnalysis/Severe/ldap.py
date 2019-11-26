@@ -13,8 +13,9 @@
 import os
 import sys
 import time
-import requests
+import requests as wrn
 sys.path.append('files/signaturedb/')
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
@@ -22,7 +23,7 @@ from core.Core.colors import *
 from files.signaturedb.ldaperror_signatures import ldap_errors
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tests LDAP Injections using either the default payload database, or an user-provided dictionary."
 searchinfo = "LDAP Injection Scan"
@@ -42,6 +43,7 @@ def getFile0x00(fi):
 
 def check0x00(web000, headers, pays):
     success = []
+    requests = session()
     for payload in pays:
         gotcha = False
         print(B+'\n [+] Using Payload : '+C+payload)

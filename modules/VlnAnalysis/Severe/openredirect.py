@@ -12,14 +12,15 @@
 
 import os
 import time
-import requests
+import requests as wrn
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 payloads = []
 
 info = "Open Redirect Checker"
@@ -28,6 +29,7 @@ properties = {}
 
 def check0x00(web, headers, pays):
     success = []
+    requests = session()
     web000 = web.split('=')[0] + '='
     for pay in pays:
         web0x0 = web000 + pay

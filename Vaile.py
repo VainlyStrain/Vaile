@@ -23,19 +23,22 @@ import platform
 import sys
 import time
 from cmd import Cmd
+import argparse
 
 import core.methods.inputin as addtarget
 import core.methods.print as prnt
 import core.methods.select as select
-import core.variables as vars
+import core.variables as varis
 from core.Core.colors import R, B, C, color
-from core.methods.cache import *
+from core.methods.cache import load, save
 from core.methods.creds import creds
+from core.methods.tor import torpipe, initcheck
+from core.methods.parser import build_parser
 
 
 class VainShell(Cmd):
     # prompt = "\033[1;31m──·»\033[0m\033[4mVaile\033[0m\033[1;31m]─[\033[0m{}\033[1;31m]\033[0m\033[1m –› \033[
-    # 0m".format(vars.module)
+    # 0m".format(varis.module)
     intro = ""
     prompt = '\033[0m\033[1m vaile > '
     ruler = "—-"
@@ -50,7 +53,7 @@ class VainShell(Cmd):
                 super(VainShell, self).cmdloop(intro="")
                 break
             except KeyboardInterrupt:
-                if vars.module == "":
+                if varis.module == "":
                     print("^C\n" + R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Command 'q' to end session.")
                 else:
                     print("^C")
@@ -102,21 +105,21 @@ class VainShell(Cmd):
 
     def do_sessions(self, inp):
         if "load" in inp:
-            b = vars.targets
-            vars.targets = []
-            #for i in vars.targets:
-            #    vars.targets.remove(i)
+            b = varis.targets
+            varis.targets = []
+            #for i in varis.targets:
+            #    varis.targets.remove(i)
             session = inp.split("load")[1].strip()
             if session == "":
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Syntax: sessions [load|save <SESS_ID>] [list]")
-                vars.targets = b
+                varis.targets = b
             else:
                 try:
                     load(session)
                     print(" [+] Restored session: {}.".format(session))
                 except FileNotFoundError:
                     print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "{}: no such session file.".format(session))
-                    vars.targets = b
+                    varis.targets = b
         elif "save" in inp:
             session = inp.split("save")[1].strip()
             if session == "":
@@ -151,6 +154,49 @@ class VainShell(Cmd):
   -------
 
   Clear the terminal using the native 'clear' command.
+""")
+
+    def do_tor(self, inp):
+        try:
+            if varis.initip is "":
+                initcheck()
+            if "on" in inp.lower():
+                p = torpipe(True)
+                if p:
+                    print(" [+] Tor > ON")
+                else:
+                    varis.tor = False
+                    start = input(" [?] Do you want to start the Tor service? (enter if not) :> ")
+                    if start is not "":
+                        try:
+                            os.system("systemctl start tor")
+                            print(" [+] Tor service successfully started. Give it some time and run 'tor on' again.")
+                        except Exception as e:
+                            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Starting Tor service failed:"+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
+            elif "off" in inp.lower():
+                torpipe(False)
+                stop = input(" [?] Do you want to stop the Tor service? (enter if not) :> ")
+                if stop is not "":
+                    try:
+                        os.system("systemctl stop tor")
+                        print(" [+] Tor service successfully stopped.")
+                    except Exception as e:
+                        print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Stopping Tor service failed:"+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
+                print(" [+] Tor > OFF")
+            else:
+                print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Syntax: tor on|off")
+        except:
+            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Tor connection failed: IPcheck service not available.")
+
+    def help_tor(self):
+        print("""
+  tor
+  -----
+
+  Pipe attacks over the Tor Anonymity Network.
+  Syntax:
+
+    tor on|off
 """)
 
     def do_ip(self, inp):
@@ -229,19 +275,19 @@ class VainShell(Cmd):
 """)
 
     def do_attack(self, inp):
-        if vars.module == "":
+        if varis.module == "":
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
             return None
-        elif "arpscan" in vars.module:
+        elif "arpscan" in varis.module:
             select.attack("")
-        elif len(vars.targets) <= 0:
+        elif len(varis.targets) <= 0:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No target(s) set.")
             return None
         else:
             print("\n Attack")
             print(" --------")
-            for i in vars.targets:
-                if len(vars.targets) > 1:
+            for i in varis.targets:
+                if len(varis.targets) > 1:
                     print( "\n [i] Target: {}\n".format(i))
                 select.attack(i)
 
@@ -281,16 +327,16 @@ class VainShell(Cmd):
     def do_phpsploit(self, inp):
         try:
             def filecheck():
-                if not os.path.exists(vars.phpsploit):
-                    print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No phpsploit installation under {}".format(vars.phpsploit) + color.END)
+                if not os.path.exists(varis.phpsploit):
+                    print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No phpsploit installation under {}".format(varis.phpsploit) + color.END)
                     phpsplt = input(" [#] Enter path to phpsploit script :> ")
-                    vars.phpsploit = phpsplt
+                    varis.phpsploit = phpsplt
                     filecheck()
             filecheck()
             if inp == "":
-                os.system("python3 {}".format(vars.phpsploit))
+                os.system("python3 {}".format(varis.phpsploit))
             else:
-                os.system("sudo -u {} python3 {}".format(inp, vars.phpsploit))
+                os.system("sudo -u {} python3 {}".format(inp, varis.phpsploit))
         except SystemExit:
             pass
         except:
@@ -311,19 +357,19 @@ class VainShell(Cmd):
 
     def do_vicdel(self, inp):
         if inp == "all":
-            vars.targets = []
+            varis.targets = []
             print(" [+] Cleared target list.")
         else:
-            old = vars.targets
-            vars.targets = list(filter(lambda a: a != inp, vars.targets))
-            found = old != vars.targets
+            old = varis.targets
+            varis.targets = list(filter(lambda a: a != inp, varis.targets))
+            found = old != varis.targets
             if found:
                 print(" [+] Deleted Target: {}".format(inp))
             else:
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Could not find specified target: {}".format(inp))
 
     def do_viclist(self, inp):
-        for i in vars.targets:
+        for i in varis.targets:
             print(i)
 
     def help_viclist(self):
@@ -370,8 +416,8 @@ class VainShell(Cmd):
         else:
             param = listed[0]
             value = listed[1]
-            if vars.module != "":
-                select.set(vars.module, param, value)
+            if varis.module != "":
+                select.set(varis.module, param, value)
             else:
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
 
@@ -388,10 +434,10 @@ class VainShell(Cmd):
 """)
 
     def do_info(self, inp):
-        if vars.module == "":
+        if varis.module == "":
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
         else:
-            select.information(vars.module)
+            select.information(varis.module)
 
     def help_info(self):
         print("""
@@ -402,10 +448,10 @@ class VainShell(Cmd):
 """)
 
     def do_opts(self, inp):
-        if vars.module == "":
+        if varis.module == "":
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
         else:
-            select.opts(vars.module)
+            select.opts(varis.module)
 
     def help_opts(self):
         print("""
@@ -428,8 +474,8 @@ class VainShell(Cmd):
                 impmod = p[1]
                 imp.import_module(impmod)
             if success:
-                vars.module = impmod
-                self.prompt = '\033[0m\033[1m vaile(\033[1;31m{}\033[0m\033[1m) > '.format(vars.module.split(".")[-1])
+                varis.module = impmod
+                self.prompt = '\033[0m\033[1m vaile({}{}\033[0m\033[1m) > '.format(R, varis.module.split(".")[-1])
         except ImportError:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Not a valid module: {}".format(inp))
         except ValueError:
@@ -452,8 +498,8 @@ class VainShell(Cmd):
         try:
             p = int(inp.strip())
             assert p > 0
-            print(" [+] Processes: {} > {}".format(vars.processes, p))
-            vars.processes = p
+            print(" [+] Processes: {} > {}".format(varis.processes, p))
+            varis.processes = p
         except (ValueError, AssertionError):
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Not a valid (positive) integer: {}".format(inp))
 
@@ -469,7 +515,7 @@ class VainShell(Cmd):
 """)
 
     def do_leave(self, inp):
-        vars.module = ""
+        varis.module = ""
         self.prompt = '\033[0m\033[1m vaile > '
 
     def help_leave(self):
@@ -485,7 +531,10 @@ class VainShell(Cmd):
 
 # help_EOF = help_q
 
-if __name__ == '__main__':
+def main():
+    parser = build_parser()
+    opt = vars(parser.parse_args())
+    args = parser.parse_args()
     os.system('clear')
     if str(platform.system()) != "Linux":
         sys.exit(
@@ -508,10 +557,49 @@ if __name__ == '__main__':
             print(R + ' [!] ' + "\033[0m" + color.UNDERLINE + "\033[1m" + 'You have to agree!' + color.END)
             time.sleep(1)
             sys.exit(0)
-   
-    prnt.loadstyle()
-    prnt.banner()
-    prnt.bannerbelownew()
-    VainShell().cmdloop()
-    #print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
-    print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, my friend!")
+
+    try:
+        initcheck()
+    except:
+        print(" [!] IPcheck service not available. Skipping...")
+        time.sleep(2.5)
+
+    if opt["load"] and opt["victim"] and not opt["help"] and not opt["list"]:
+        s = VainShell()
+        if not opt["quiet"]:
+            prnt.banner()
+            prnt.bannerbelownew()
+        if not opt["session"]:
+            s.do_vicadd(args.victim)
+        else:
+            s.do_sessions("load {}".format(args.victim))
+        s.do_load(args.load)
+        if opt["tor"]:
+            s.do_tor("on")
+            if varis.tor:
+               s.do_attack("")
+        else:
+            s.do_attack("")
+    elif opt["help"]:
+        if not opt["quiet"]:
+            prnt.banner()
+        #prnt.bannerbelownew()
+        parser.print_help()
+    elif opt["list"]:
+        s = VainShell()
+        if not opt["quiet"]:
+            prnt.banner()
+        s.do_list(args.list)
+    elif opt["victim"] and not opt["load"] or opt["load"] and not opt["victim"]:
+        parser.error("'VIC' and 'M' are required for CLI attack.")
+    else:
+        if not opt["quiet"]:
+            prnt.loadstyle()
+            prnt.banner()
+            prnt.bannerbelownew()
+        VainShell().cmdloop()
+        #print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
+        print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, my friend!")
+
+if __name__ == '__main__':
+    main()

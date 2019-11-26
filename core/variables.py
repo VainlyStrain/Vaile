@@ -45,11 +45,13 @@ global dlist
 global interface
 
 version = "2.1"
-e_version = "2.1.0-5#dev"
+e_version = "2.1.0-15#dev"
 module = ""
 targets = []
 processes = 8
 interface = "wlp4s0"
+tor = False
+initip = ""
 
 modir = os.path.dirname(os.path.realpath(__file__)) + "/../modules/"
 sploidir = os.path.dirname(os.path.realpath(__file__)) + "/../modules/SploitLoot/"

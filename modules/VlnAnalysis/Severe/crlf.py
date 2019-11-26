@@ -14,14 +14,15 @@ import os
 import sys
 import urllib.request
 import urllib3
-import requests
+import requests as wrn
 import time
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 payloads = []
 
@@ -67,7 +68,8 @@ def check0x00(headers, pay):
 def getHeaders0x00(web0x00, headers):
 
     try:
-        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+        requests = session()
+        wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
         print(GR+' [*] Requesting headers...')
         r = requests.get(web0x00, headers=headers, timeout=7, verify=False)
         head = r.headers
@@ -138,22 +140,7 @@ def crlf(web):
     time.sleep(0.5)
     print(O+' [*] Setting header values...')
     time.sleep(0.7)
-    if "@" in web:
-        print(" [-] Check unavailable for credential-based sites. Continuing...")
-    else:
-        req = urllib.request.Request(web)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201')
-        req.add_header('Accept-Language', 'en-US;')
-        req.add_header('Accept-Encoding', 'gzip, deflate')
-        req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;')
-        req.add_header('Connection', 'close')
-        response = urllib.request.urlopen(req)
 
-        print(O+' [+] Response headers obtained!\n'+C)
-        time.sleep(1)
-        print(response.info())
-
-    time.sleep(0.8)
     print(O+' [*] Initiating '+R+'User-Agent Based Check...')
     time.sleep(0.5)
     print(B+' [+] Injecting CRLF in User-Agent Based value : '+C+'%0d%0a ...')

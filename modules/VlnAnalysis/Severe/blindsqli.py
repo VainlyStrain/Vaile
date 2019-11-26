@@ -14,12 +14,13 @@ import os
 import re
 import sys
 import urllib
-import requests
+#import requests
 sys.path.append('files/payload-db/')
 from core.Core.colors import *
 from re import *
 import time
 from time import sleep
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
@@ -51,6 +52,7 @@ def cookiepre(session, web, pay, req):
     return success
 
 def userpre(web, pay, getrq):
+    requests = session()
     success = []
     for i in pay:
         print(B+'\n [*] Using payload : '+C+i)
@@ -74,19 +76,19 @@ def auto0x00(web, parallel):
                      
 
         sleep(0.5)
-        session = requests.Session()
-        req = session.get(web)
-        if session.cookies:
+        vsession = session()
+        req = vsession.get(web)
+        if vsession.cookies:
             print(G+' [+] This website supports session cookies...')
             success = []
             if not parallel:
                 for i in pay:
                     print(B+" [*] Trying Payload : "+C+''+ i)
                     time.sleep(0.7)
-                    for cookie in session.cookies:
+                    for cookie in vsession.cookies:
                         cookie.value += i
                         print(O+' [+] Using '+R+'!nfected'+O+' cookie : '+GR+cookie.value)
-                        r = session.get(web)
+                        r = vsession.get(web)
                         if len(r.content) != len(req.content):
                             poc = C+" [+] PoC : " +O+ cookie.name + " : " +GR+ cookie.value
                             print(G+" [+] Blind Based SQli (Cookie Based) Detected! ")
@@ -96,7 +98,7 @@ def auto0x00(web, parallel):
             else:
                 paylists = listsplit(pay, round(len(pay)/processes)) 
                 with Pool(processes=processes) as pool:
-                    res = [pool.apply_async(cookiepre, args=(session,web,l,req,)) for l in paylists]
+                    res = [pool.apply_async(cookiepre, args=(vsession,web,l,req,)) for l in paylists]
                     #res1 = pool.apply_async(portloop, )
                     for i in res:
                         j = i.get()
@@ -118,7 +120,7 @@ def auto0x00(web, parallel):
         print(R+'\n     S Q L i  (User-Agent Based)')
         print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
                      
-                     
+        requests = session()           
         getrq = requests.get(web, verify=False)
         success = []
         if not parallel:
@@ -164,6 +166,7 @@ def auto0x00(web, parallel):
 
 def manualpre(bugs, bug2, pay, getrq):
     success = []
+    requests = session()
     for p in pay:
         bugged = bugs + str(p) + bug2
         print(B+" [*] Trying : "+C+bugged)
@@ -184,7 +187,7 @@ def manual0x00(web, parallel):
     print(R+'\n     S Q L i  (Manual Mode)')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·\n')
                  
-                 
+    requests = session()
     bug = input(O+' [#] Injectable Endpoint '+R+'(eg. /sqli/fetch.php?id=2)'+O+' :> ')
     bugs = web + bug
     getrq = requests.get(bugs, timeout=7, verify=False)

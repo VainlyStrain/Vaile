@@ -14,13 +14,14 @@ import os
 import re
 import sys
 import time
-import requests
+#import requests
 from core.Core.colors import *
 import sre_constants
 from time import sleep
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
+from core.methods.tor import session
 
 global pay, poly
 poly = []
@@ -50,6 +51,7 @@ def cookieatck(pays, session, web):
 
 def useratck(pays, web):
     success = []
+    requests = session()
     for j in pays:
         i = '%s' % j
         print(B+' [*] Using payload : '+C+i)
@@ -71,6 +73,7 @@ def useratck(pays, web):
 
 def refatck(pays, web):
     success = []
+    requests = session()
     for j in pays:
         i = '%s' % j
         print(B+' [*] Using payload : '+C+i)
@@ -102,17 +105,17 @@ def auto0x00(web, parallel):
                      
 
         sleep(0.5)
-        session = requests.Session()
-        req = session.get(web)
-        if session.cookies:
+        vsession = session()
+        vsession.get(web)
+        if vsession.cookies:
             print(G+' [+] This website supports session cookies...')
             success = []
             if not parallel:
-                success += cookieatck(pay, session, web)
+                success += cookieatck(pay, vsession, web)
             else:
                 paylists = listsplit(pay, round(len(pay)/processes))
                 with Pool(processes=processes) as pool:
-                    res = [pool.apply_async(cookieatck, args=(l,session,web,)) for l in paylists]
+                    res = [pool.apply_async(cookieatck, args=(l,vsession,web,)) for l in paylists]
                     for y in res:
                         i = y.get()
                         success += i
@@ -190,6 +193,7 @@ def auto0x00(web, parallel):
 
 def polyatck(polys, li, bug2):
     success = []
+    requests = session()
     for p in polys:
         bugged = li + str(p) + bug2
         print(B+"\n [*] Trying : "+C+bugged)
@@ -242,6 +246,7 @@ def xsspoly0x00(li, bug2, parallel):
 
 def manualatck(pays, bugs, bug2):
     success = []
+    requests = session()
     for p in pays:
         bugged = bugs + str(p) + bug2
         print(B+"\n [*] Trying : "+C+bugged)

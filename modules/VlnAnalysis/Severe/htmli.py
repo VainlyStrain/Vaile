@@ -12,9 +12,10 @@
 
 import os
 import sys
-import requests
+#import requests
 import time
 from re import search
+from core.methods.tor import session
 from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.Core.colors import *
@@ -28,7 +29,7 @@ searchinfo = "HTML Injection Test"
 properties = {}
 
 def check0x00(web0x00, pay, gen_headers):
-
+    requests = session()
     try:
         success = []
         hunt = 0x00

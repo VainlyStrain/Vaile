@@ -13,21 +13,26 @@
 import core.lib.mechanize as mechanize
 from re import search, sub
 import http.cookiejar
-import requests
+#import requests
 import time
 import urllib.request
 import re
 import os
 import sys
 from re import *
+from core.methods.tor import session
 from urllib.request import *
 from core.Core.colors import *
+from core.variables import tor
 from time import sleep
 
 br = mechanize.Browser()
 
 cj = http.cookiejar.LWPCookieJar()
 br.set_cookiejar(cj)
+torproxies = {'http':'socks5h://localhost:9050', 'https':'socks5h://localhost:9050'}
+if tor:
+    br.set_proxies(torproxies)
 
 params = []
 
@@ -50,7 +55,7 @@ searchinfo = ""
 properties = {}
 
 def blindsqlsearch(web):
-
+    requests = session()
     os.system('clear')
     #print(R+'\n    ======================================')
     print(R+'\n     S Q L i   H U N T E R (Auto Awesome)')
