@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+from core.methods.tor import session
 import time
 import json
 import urllib.request
@@ -21,7 +21,7 @@ searchinfo = "Google Gathering"
 properties = {}
 
 def googlenum(web):
-
+    requests = session()
     #print(R+'\n    =================================')
     #print(R+'     G O O G L E   G A T H E R I N G ')
     #print(R+'    =================================\n')

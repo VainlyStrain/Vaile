@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+from core.methods.tor import session
 from bs4 import *
 import time
 import lxml
@@ -23,7 +23,7 @@ searchinfo = "IP History lookup"
 properties = {}
 
 def iphistory(web):
-
+    requests = session()
     try:
         #print(R+'\n    =====================')
         #print(R+'     I P   H I S T O R Y')

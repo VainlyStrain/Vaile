@@ -10,7 +10,8 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests, time
+import time
+from core.methods.tor import session
 from time import sleep
 from core.Core.colors import *
 
@@ -19,7 +20,7 @@ searchinfo = "Robot/Sitemap Printer"
 properties = {}
 
 def robot(web):
-
+    requests = session()
     #print(R+'\n   =============================')
     #print(R+'    R O B O T S   C H E C K E R')
     #print(R+'   =============================\n')

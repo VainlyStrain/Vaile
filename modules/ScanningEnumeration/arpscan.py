@@ -29,11 +29,11 @@ from core.Core.colors import R, B, C, color
 
 info = "A simple ARP scanner to detect potential targets on your network (to then proceed with port scanning and web attacks)."
 searchinfo = "ARP Network Scanner"
-properties = {"IP":["IP of the network's gateway", "NA"], "NMASK":["Netmask of the network", "NA"]}
+properties = {"IP":["IP of the network's gateway", " "], "NMASK":["Netmask of the network", " "]}
 
 def arp():
     try:
-        if properties["IP"][1] is "NA" or properties["NMASK"][1] is "NA":
+        if properties["IP"][1] == " " or properties["NMASK"][1] == " ":
             ip = input("  [?] IP/Netmask :> ")
             if "/" not in ip:
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Syntax: IP/NETMASK")

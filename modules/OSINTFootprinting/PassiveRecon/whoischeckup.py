@@ -11,7 +11,7 @@
 
 
 import time
-import requests
+from core.methods.tor import session
 from core.Core.colors import *
 
 info = "Perform a WhoIS lookup on the target."
@@ -19,7 +19,7 @@ searchinfo = "WhoIS Lookup"
 properties = {}
 
 def whoischeckup(web):
-
+    requests = session()
     web = web.replace('http://','')
     web = web.replace('https://','')
     if "@" in web:

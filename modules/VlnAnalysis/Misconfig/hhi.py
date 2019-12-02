@@ -42,7 +42,7 @@ def hostheader0x00(web):
                 }
 
         print(GR+' [*] Requesting response...')
-        conn = http.client.HTTPSConnection(host)
+        conn = http.client.HTTPSConnection(web)
         conn.request("GET", "/", "", headers)
         response = conn.getresponse()
         print(' [*] Reading the response...')

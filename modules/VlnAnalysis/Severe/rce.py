@@ -23,7 +23,7 @@ payloads = []
 
 info = "This module probes the target for Command Injection vulnerabilities using Vaile's built-in payload dictionary."
 searchinfo = "Command Injection Probe"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/rce_payloads.lst)", " "]}
 
 class HTTP_HEADER:
     HOST = "Host"
@@ -92,10 +92,21 @@ def check0x00(url, pays, check):
 
 def getPayloads(url, parallel):
 
+    if properties["DICT"][1] == " ":
+        print(O+' [!] Enter path to payload file '+R+'(Default: files/payload-db/rce_payloads.lst)')
+        fi = input(O+' [#] Your input (Press Enter if default) :> ')
+    elif properties["DICT"][1].lower() == "none":
+        fi = ""
+    else:
+        fi = properties["DICT"][1]
+
+    if fi == '':
+        fi = 'files/payload-db/rce_payloads.lst'
+
     print(GR+' [*] Loading payloads...')
     time.sleep(0.8)
     try:
-        with open('files/payload-db/rce_payloads.lst') as run:
+        with open(fi) as run:
             for p in run:
                 p = p.replace('\n','')
                 p = r'%s' % p
@@ -131,7 +142,10 @@ def rce(web):
     from core.methods.print import pvln
     pvln("os command Injection") 
                  
-    web0 = input(O+' [#] Path Parameter '+R+'(eg. /ping.php?site=foo)'+O+' :> ')
+    if properties["PARAM"][1] == " ":
+        web0 = input(O+' [#] Path Parameter '+R+'(eg. /ping.php?site=foo)'+O+' :> ')
+    else:
+        web0 = properties["PARAM"][1]
     if "?" in web0 and '=' in web0:
         if web0.startswith('/'):
             m = input(GR+'\n [!] Your path starts with "/".\n [#] Do you mean root directory? (Y/n) :> ')
@@ -144,8 +158,11 @@ def rce(web):
         else:
             web00 = web + '/' + web0
 
-        pa = input(" [?] Parallel Attack? (enter if not) :> ")
-        parallel = pa is not ""
+        if properties["PARALLEL"][1] == " ":
+            pa = input(" [?] Parallel Attack? (enter if not) :> ")
+            parallel = pa is not ""
+        else:
+            parallel = properties["PARALLEL"] == "1"
         getPayloads(web00, parallel)
     else:
         print(R+" [-] Please enter the URL with parameters...")

@@ -14,7 +14,8 @@ import builtwith
 import json
 from bs4 import BeautifulSoup
 import time
-import requests
+#import requests
+from core.methods.tor import session
 from core.Core.colors import *
 
 info = "This module tries to find out what technologies the target uses."
@@ -93,7 +94,7 @@ def check0x00(domain):
         print(R+' [-] Exception : '+str(e))
 
 def apircv(web):
-
+    requests = session()
     try:
         domain = web.replace('http://','')
         domain = web.replace('https://','')

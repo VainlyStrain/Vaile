@@ -14,7 +14,7 @@ import re
 import sys
 sys.path.append('files/signaturedb/')
 import time
-import requests
+from core.methods.tor import session
 from core.Core.colors import *
 from bs4 import BeautifulSoup
 from files.signaturedb.infodisc_signatures import PHONE_NUMBER_SIGNATURE as signature
@@ -27,7 +27,7 @@ searchinfo = "Phone Number Harvester"
 properties = {}
 
 def phone0x00(url):
-
+    requests = session()
     #print(R+'\n    ========================')
     #print(R+'     PHON3 NuMBER HARVESTER')
     #print(R+'    ========================\n')

@@ -18,7 +18,7 @@ from core.Core.colors import *
 
 info = "This module scans the target for SQL Injection flaws, supporting both blind and error-based injection."
 searchinfo = "SQL Injection Scanner"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "]}
 
 def sqli(web):
 
@@ -39,9 +39,9 @@ def sqli(web):
     v = input(O+' [#] TID :> ')
 
     if v.strip() == '1':
-        errorsqli(web)
+        errorsqli(web, properties)
     elif v.strip() == '2':
-        blindsqli(web)
+        blindsqli(web, properties)
     elif v.strip() == '99':
         pass
     else:

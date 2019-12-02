@@ -25,7 +25,7 @@ payloads = []
 
 info = "Open Redirect Checker"
 searchinfo = "Open Redirect Checker"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "COOKIE":["Sets cookie if needed", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/openredirect_payloads.lst)", " "]}
 
 def check0x00(web, headers, pays):
     success = []
@@ -120,7 +120,10 @@ def openredirect(web):
                  
 
     try:
-        param = input(O+' [#] Scope parameter to test (eg. /redirect.php?site=foo) :> ')
+        if properties["PARAM"][1] == " ":
+            param = input(O+' [#] Scope parameter to test (eg. /redirect.php?site=foo) :> ')
+        else:
+            param = properties["PARAM"][1]
         if '?' in param and '=' in param:
             if param.startswith('/'):
                 m = input(GR+'\n [!] Your path starts with "/".\n [#] Do you mean root directory? (Y/n) :> ')
@@ -136,8 +139,11 @@ def openredirect(web):
             print(R+' [-] Your input does not match a parameter...')
             param = input(O+' [#] Enter paramter to test :> ')
 
-        pa = input(" [?] Parallel Attack? (enter if not) :> ")
-        parallel = pa is not ""
+        if properties["PARALLEL"][1] == " ":
+            pa = input(" [?] Parallel Attack? (enter if not) :> ")
+            parallel = pa is not ""
+        else:
+            parallel = properties["PARALLEL"][1] == "1"
 
         print(GR+' [*] Configuring relative headers...')
         time.sleep(0.8)
@@ -147,8 +153,13 @@ def openredirect(web):
                           'Accept': 'text/html,application/xhtml+xml,application/xml;',
                           'Connection':'close'}
 
-        print(O+' [!] Enter path to payload file '+R+'(Default: files/payload-db/openredirect_payloads.lst)')
-        fi = input(O+' [#] Your input (Press Enter if default) :> ')
+        if properties["DICT"][1] == " ":
+            print(O+' [!] Enter path to payload file '+R+'(Default: files/payload-db/openredirect_payloads.lst)')
+            fi = input(O+' [#] Your input (Press Enter if default) :> ')
+        elif properties["DICT"][1].lower() == "none":
+            fi = ""
+        else:
+            fi = properties["DICT"][1]
         if fi == '':
             fi = 'files/payload-db/openredirect_payloads.lst'
             getPayloads0x00(fi)
@@ -160,13 +171,18 @@ def openredirect(web):
                 print(R+' [-] File not found... Using default payload...')
                 fi = 'files/payload-db/openredirect_payloads.lst'
                 getPayloads0x00(fi)
-        input_cookie = input("\n [#] Got any cookies? [just enter if none] :> ")
+        if properties["COOKIE"][1] == " ":
+            input_cookie = input("\n [#] Got any cookies? [just enter if none] :> ")
+        elif properties["COOKIE"][1].lower() == "none":
+            input_cookie = ""
+        else:
+            input_cookie = properties["COOKIE"][1]
         if(len(input_cookie) > 0):
             gen_headers['Cookie'] = input_cookie
         print(GR+' [*] Configuring payloads with Url...')
         success = []
         if not parallel:
-            check0x00(web00, gen_headers, payloads)
+            success += check0x00(web00, gen_headers, payloads)
         else:
             paylists = listsplit(payloads, round(len(payloads)/processes))
             with Pool(processes=processes) as pool:

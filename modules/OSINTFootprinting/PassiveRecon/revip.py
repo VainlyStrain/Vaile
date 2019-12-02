@@ -11,7 +11,7 @@
 
 
 import time
-import requests
+from core.methods.tor import session
 import os
 from core.Core.colors import *
 links = []
@@ -21,7 +21,7 @@ searchinfo = "Reverse IP Lookup"
 properties = {}
 
 def revip(web):
-
+    requests = session()
     web = web.replace('http://','')
     web = web.replace('https://','')
     if "@" in web:

@@ -13,7 +13,8 @@
 import socket
 import sys
 import json
-import requests
+#import requests
+from core.methods.tor import session
 import re
 import time
 from core.Core.colors import *
@@ -23,7 +24,7 @@ searchinfo = "Webserver enumeration"
 properties = {}
 
 def webscan(web):
-
+    requests = session()
     try:
         #print(R+'\n    ===========================================')
         #print(R+'     W E B S E R V E R   E N U M E R A T I O N')
@@ -74,7 +75,7 @@ def webscan(web):
                     print(B+' [+] IP : '+C+str(ip)+O+' - Protocols : '+str(protoList))
 
                     if '80' in protoList:
-                        view(ip, base_url, CENSYS_UID, CENSYS_SECRET)
+                        view(ip, base_url, CENSYS_UID, CENSYS_SECRET, requests)
 
                 pages = payload['metadata']['pages']
                 page += 1
@@ -87,7 +88,7 @@ def webscan(web):
         print(R+' [-] Unhandled Exception Encountered!')
         print(R+' [-] Error : '+str(e))
 
-def view(server, ur, uid, sec):
+def view(server, ur, uid, sec, requests):
 
     res = requests.get(ur + ("/view/ipv4/%s" % server), auth = (uid, sec))
     payload = res.json()

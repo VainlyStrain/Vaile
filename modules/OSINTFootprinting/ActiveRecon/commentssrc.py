@@ -12,8 +12,9 @@
 
 import lxml
 import os
-import requests
+from core.methods.tor import session
 import re
+import requests as wrn
 import time
 from bs4 import BeautifulSoup
 import sys
@@ -27,7 +28,7 @@ searchinfo = "Comment Scraper"
 properties = {}
 
 def commentssrc(web):
-
+    requests = session()
     #print(R+'\n    =================================')
     #print(R+'     C O M M E N T S   S C R A P E R')
     #print(R+'    =================================')
@@ -74,7 +75,7 @@ def commentssrc(web):
                 print(C+'   '+comment)
                 time.sleep(0.03)
 
-    except requests.exceptions:
+    except wrn.exceptions:
         print(R+' [-] Outbound Query Exception...')
 
     if found == 0x00:

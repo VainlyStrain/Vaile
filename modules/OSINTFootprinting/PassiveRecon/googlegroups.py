@@ -12,7 +12,7 @@
 
 import json
 import time
-import requests
+from core.methods.tor import session
 import re
 from core.Core.colors import *
 
@@ -21,7 +21,7 @@ searchinfo = "Enumeration using Google Groups"
 properties = {}
 
 def getemails0x00(domain):
-
+    requests = session()
     global flag
     flag = False
     page_counter = 0

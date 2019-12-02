@@ -15,13 +15,13 @@ import os
 import sys
 from random import randint
 from core.Core.colors import *
-from modules.OSINTFootprinting.ActiveRecon.backupbrute import *
-from modules.OSINTFootprinting.ActiveRecon.backbrute import *
-from modules.OSINTFootprinting.ActiveRecon.dotbrute import *
-from modules.OSINTFootprinting.ActiveRecon.indexmulbrute import *
-from modules.OSINTFootprinting.ActiveRecon.logbrute import *
-from modules.OSINTFootprinting.ActiveRecon.proxybrute import *
-from modules.OSINTFootprinting.ActiveRecon.passbrute import *
+from modules.OSINTFootprinting.ActiveRecon.backupbrute import backupbrute
+from modules.OSINTFootprinting.ActiveRecon.backbrute import backbrute
+from modules.OSINTFootprinting.ActiveRecon.dotbrute import dotbrute
+from modules.OSINTFootprinting.ActiveRecon.indexmulbrute import indexmulbrute
+from modules.OSINTFootprinting.ActiveRecon.logbrute import logbrute
+from modules.OSINTFootprinting.ActiveRecon.proxybrute import proxybrute
+from modules.OSINTFootprinting.ActiveRecon.passbrute import passbrute
 
 info = "This module looks for several interesting files on the webserver, like backdoors, backups and hidden files."
 searchinfo = "Bruteforce Recon"

@@ -12,7 +12,7 @@
 
 import os
 import time
-import requests
+from core.methods.tor import session
 import urllib.parse
 from core.Core.colors import *
 
@@ -21,7 +21,7 @@ searchinfo = "Apache Status Hunter"
 properties = {}
 
 def apachestat(web):
-
+    requests = session()
     flag = 0x00
     print(GR+' [*] Loading module...')
     time.sleep(0.7)

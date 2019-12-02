@@ -27,7 +27,7 @@ wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tests LDAP Injections using either the default payload database, or an user-provided dictionary."
 searchinfo = "LDAP Injection Scan"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "COOKIE":["Sets cookie if needed", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/ldap_payloads.lst)", " "]}
 
 def getFile0x00(fi):
 
@@ -85,7 +85,10 @@ def ldap(web):
     pvln("ldap Injection") 
                   
     try:
-        web0 = input(O+' [#] Parameter path to test (eg. /lmao.php?foo=bar) :> ')
+        if properties["PARAM"][1] == " ":
+            web0 = input(O+' [#] Parameter path to test (eg. /lmao.php?foo=bar) :> ')
+        else:
+            web0 = properties["PARAM"][1]
         if "?" in web0 and '=' in web0:
             if web0.startswith('/'):
                 m = input(GR+'\n [!] Your path starts with "/".\n [#] Do you mean root directory? (Y/n) :> ')
@@ -97,12 +100,22 @@ def ldap(web):
                     print(R+' [-] U mad?')
             else:
                 web00 = web + '/' + web0
+        else:
+            sys.exit(R+" [-] Invalid parameters."+C)
         print(B+' [+] Parameterised Url : '+C+web00)
 
-        pa = input(" [?] Parallel Attack? (enter if not) :> ")
-        parallel = pa is not ""
+        if properties["PARALLEL"][1] == " ":
+            pa = input(" [?] Parallel Attack? (enter if not) :> ")
+            parallel = pa is not ""
+        else:
+            parallel = properties["PARALLEL"][1] == "1"
 
-        input_cookie = input("\n [*] Enter cookies if needed (Enter if none) :> ")
+        if properties["COOKIE"][1] == " ":
+            input_cookie = input("\n [*] Enter cookies if needed (Enter if none) :> ")
+        elif properties["COOKIE"][1].lower() == "none":
+            input_cookie = ""
+        else:
+            input_cookie = properties["COOKIE"][1]
         print(GR+' [*] Setting headers...')
         time.sleep(0.6)
         gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
@@ -113,8 +126,13 @@ def ldap(web):
 
         if(len(input_cookie) > 0):
             gen_headers['Cookie'] = input_cookie
-        print(O+' [#] Enter the payloads file '+R+'(Default: files/payload-db/ldap_payloads.lst)...')
-        fi = input(O+' [#] Your input (Press Enter for default) :> ')
+        if properties["DICT"][1] == " ":
+            print(O+' [#] Enter the payloads file '+R+'(Default: files/payload-db/ldap_payloads.lst)...')
+            fi = input(O+' [#] Your input (Press Enter for default) :> ')
+        elif properties["DICT"][1].lower() == "none":
+            fi = ""
+        else:
+            fi = properties["DICT"][1]
         if fi == '':
             fi = 'files/payload-db/ldap_payloads.lst'
             getFile0x00(fi)

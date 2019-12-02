@@ -30,9 +30,9 @@ import core.methods.print as prnt
 import core.methods.select as select
 import core.variables as varis
 from core.Core.colors import R, B, C, color
-from core.methods.cache import load, save
+from core.methods.cache import load, save, sessionparse
 from core.methods.creds import creds
-from core.methods.tor import torpipe, initcheck
+from core.methods.tor import torpipe, initcheck, session
 from core.methods.parser import build_parser
 
 
@@ -103,6 +103,17 @@ class VainShell(Cmd):
   [!] The session is not cached, use command 'sessions' for this.
 """)
 
+    def sessionhelper(self, inp):
+        print()
+        options = sessionparse(inp)[1]
+        for module, props in options.items():
+            self.do_load(module)
+            print("{}{}{}\n".format(color.UNDERLINE, module, C))
+            for opt, val in props.items():
+                self.do_set("{} {}".format(opt, val))
+            self.do_leave("")
+            print()
+
     def do_sessions(self, inp):
         if "load" in inp:
             b = varis.targets
@@ -115,8 +126,14 @@ class VainShell(Cmd):
                 varis.targets = b
             else:
                 try:
-                    load(session)
-                    print(" [+] Restored session: {}.".format(session))
+                    if ".val" in session or "--val" in session:
+                        session = session.replace("--val","").strip()
+                        print(session)
+                        self.sessionhelper(session)
+                        print(" [+] Restored VAL session: {}".format(session))
+                    else:
+                        load(session)
+                        print(" [+] Restored session: {}.".format(session))
                 except FileNotFoundError:
                     print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "{}: no such session file.".format(session))
                     varis.targets = b
@@ -158,21 +175,31 @@ class VainShell(Cmd):
 
     def do_tor(self, inp):
         try:
-            if varis.initip is "":
-                initcheck()
+            initv = varis.initip == ""
+            acc = False
+            if initv:
+                try:
+                    initcheck()
+                    acc = True
+                except:
+                    acc = False
             if "on" in inp.lower():
-                p = torpipe(True)
-                if p:
-                    print(" [+] Tor > ON")
+                if acc or not initv:
+                    p = torpipe(True)
+                    if p:
+                        print(" [+] Tor > ON")
+                    else:
+                        varis.tor = False
+                        start = input(" [?] Do you want to start the Tor service? (enter if not) :> ")
+                        if start is not "":
+                            try:
+                                os.system("systemctl start tor")
+                                print(" [+] Tor service successfully started.")
+                                self.do_tor("on")
+                            except Exception as e:
+                                print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Starting Tor service failed:"+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
                 else:
-                    varis.tor = False
-                    start = input(" [?] Do you want to start the Tor service? (enter if not) :> ")
-                    if start is not "":
-                        try:
-                            os.system("systemctl start tor")
-                            print(" [+] Tor service successfully started. Give it some time and run 'tor on' again.")
-                        except Exception as e:
-                            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Starting Tor service failed:"+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
+                    print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Starting Tor service failed: Initial IP not set."+"\033[0m" + C)
             elif "off" in inp.lower():
                 torpipe(False)
                 stop = input(" [?] Do you want to stop the Tor service? (enter if not) :> ")
@@ -278,14 +305,14 @@ class VainShell(Cmd):
         if varis.module == "":
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
             return None
-        elif "arpscan" in varis.module:
+        elif "arpscan" in varis.module or "shellcraft" in varis.module or "encodeall" in varis.module or "hashes" in varis.module or "imgext" in varis.module:
             select.attack("")
         elif len(varis.targets) <= 0:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No target(s) set.")
             return None
         else:
-            print("\n Attack")
-            print(" --------")
+            #print("\n Attack")
+            #print(" --------")
             for i in varis.targets:
                 if len(varis.targets) > 1:
                     print( "\n [i] Target: {}\n".format(i))
@@ -431,6 +458,8 @@ class VainShell(Cmd):
 
     OPT  name of the option to be modified
     VAL  value the option will take
+
+  [!] VAL "none" for no value ("")
 """)
 
     def do_info(self, inp):
@@ -528,6 +557,47 @@ class VainShell(Cmd):
 
     do_EOF = do_q
 
+    def do_fetch(self, inp):
+        try:
+            localver = varis.e_version.split("#")[0]
+            s = session()
+            onver = s.get("https://raw.githubusercontent.com/VainlyStrain/Vaile/master/core/doc/version").text.strip()
+            localmain = localver.split("-")[0]
+            localrev = localver.split("-")[1]
+            locallist = localmain.split(".")
+            onmain = onver.split("-")[0]
+            onrev = onver.split("-")[1]
+            onlist = onmain.split(".")
+            uptodate = True
+            for i in range(0, len(locallist)):
+                if int(locallist[i]) < int(onlist[i]):
+                    uptodate = False
+            if uptodate:
+                if int(localrev) < int(onrev):
+                    uptodate = False
+            if not uptodate:
+                print(" [!] An update is available! Last version is: {}, installed version is: {}.".format(onver, localver))
+                d = input(" [?] Do you want to update the framework? (enter if not) :> ")
+                if d is not "":
+                    path = os.path.dirname(os.path.realpath(__file__))
+                    if "/home/" in path:
+                        user = path.split("/")[2]
+                        os.system("sudo -u {} git pull".format(user))
+                    else:
+                        os.system("git pull ; cp tmp/Vaile /bin/Vaile ; chmod +x /bin/Vaile")
+                    print(" [+] Update installed successfully.")
+            else:
+                print(" [+] You are running the latest version of Vaile-framework ({}).".format(localver))
+        except:
+            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "An error occurred fetching...")
+
+    def help_fetch(self):
+        print("""
+  fetch
+  -------
+
+  Check for and install updates of the framework.
+""")
 
 # help_EOF = help_q
 
@@ -558,11 +628,6 @@ def main():
             time.sleep(1)
             sys.exit(0)
 
-    try:
-        initcheck()
-    except:
-        print(" [!] IPcheck service not available. Skipping...")
-        time.sleep(2.5)
 
     if opt["load"] and opt["victim"] and not opt["help"] and not opt["list"]:
         s = VainShell()
@@ -590,6 +655,9 @@ def main():
         if not opt["quiet"]:
             prnt.banner()
         s.do_list(args.list)
+    elif opt["fetch"]:
+        s = VainShell()
+        s.do_fetch("")
     elif opt["victim"] and not opt["load"] or opt["load"] and not opt["victim"]:
         parser.error("'VIC' and 'M' are required for CLI attack.")
     else:
@@ -599,7 +667,7 @@ def main():
             prnt.bannerbelownew()
         VainShell().cmdloop()
         #print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
-        print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, my friend!")
+        print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, mind strider")
 
 if __name__ == '__main__':
     main()

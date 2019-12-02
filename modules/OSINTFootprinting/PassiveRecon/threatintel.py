@@ -10,20 +10,21 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+import requests as wrn
+from core.methods.tor import session
 import socket
 import time
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "Find out if the target site is harmful or not."
 searchinfo = "Threat Intelligence Module"
 properties = {}
 
 def usom(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'Usom threatlist...')
     try:
         print(GR+' [*] Making a reverse DNS query...')
@@ -44,7 +45,7 @@ def usom(web,ip):
         pass
 
 def badip(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'Bad IPs threatlist...')
     try:
         flag= False
@@ -73,7 +74,7 @@ def badip(web,ip):
         pass
 
 def blocklistssh(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists SSH threatlist...')
     try:
         flag= False
@@ -94,7 +95,7 @@ def blocklistssh(web,ip):
         pass
 
 def blocklistmail(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists Mail threatlist...')
     try:
         flag= False
@@ -115,7 +116,7 @@ def blocklistmail(web,ip):
         pass
 
 def blocklistapache(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists APACHE threatlist...')
     try:
         flag= False
@@ -136,7 +137,7 @@ def blocklistapache(web,ip):
         pass
 
 def blocklistimap(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists IMAP threatlist...')
     try:
         flag= False
@@ -157,7 +158,7 @@ def blocklistimap(web,ip):
         pass
 
 def blocklistpop3(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists POP3 threatlist...')
     try:
         flag= False
@@ -178,7 +179,7 @@ def blocklistpop3(web,ip):
         pass
 
 def blocklistftp(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists FTP threatlist...')
     try:
         flag= False
@@ -199,7 +200,7 @@ def blocklistftp(web,ip):
         pass
 
 def blocklistsip(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists SIP & VoIP threatlist...')
     try:
         flag= False
@@ -220,7 +221,7 @@ def blocklistsip(web,ip):
         pass
 
 def blocklistbots(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists Bots threatlist...')
     try:
         flag= False
@@ -241,7 +242,7 @@ def blocklistbots(web,ip):
         pass
 
 def blocklistirc(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists IRC threatlist...')
     try:
         flag= False
@@ -262,7 +263,7 @@ def blocklistirc(web,ip):
         pass
 
 def blockliststrong(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists Strong threatlist...')
     try:
         flag= False
@@ -283,7 +284,7 @@ def blockliststrong(web,ip):
         pass
 
 def blocklistbrute(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'BlockLists Bruteforce Login IPs threatlist...')
     try:
         flag= False
@@ -304,7 +305,7 @@ def blocklistbrute(web,ip):
         pass
 
 def emergethreats(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'Emerging Threats latest threatlist...')
     try:
         flag= False
@@ -325,7 +326,7 @@ def emergethreats(web,ip):
         pass
 
 def emergecompro(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'Emerging Threats comrpmised IPs threatlist...')
     try:
         flag= False
@@ -346,7 +347,7 @@ def emergecompro(web,ip):
         pass
 
 def binarydefense(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'Binary Defense threatlist...')
     try:
         flag= False
@@ -367,7 +368,7 @@ def binarydefense(web,ip):
         pass
 
 def openphish(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'openphish.com threatlist...')
     try:
         flag= False
@@ -388,7 +389,7 @@ def openphish(web,ip):
         pass
 
 def zeustracker(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'zeustracker.com threatlist...')
     try:
         flag= False
@@ -410,7 +411,7 @@ def zeustracker(web,ip):
         pass
 
 def projecthoneypot(web,ip):
-
+    requests = session()
     print(O+'\n [!] Checking on '+G+'Project HoneyPot threatlist...')
     try:
         flag= False

@@ -26,6 +26,8 @@ from socket import gaierror
 import texttable as table
 
 import core.variables as vars
+import core.methods.print as prnt
+from core.methods.print import cprint
 
 from core.Core.colors import R, B, C, color
 from core.methods.creds import attackdrop
@@ -96,6 +98,16 @@ def display(i, names: list, descriptions: list, values: list):
     print(s + "\n")
     return names, descriptions, values
 
+def listdisplay(names, descs):
+    t = table.Texttable()
+    headings = ["Modvle", "Desc."]
+    t.header(headings)
+    t.set_chars(["—","|","+","—"])
+    t.set_deco(table.Texttable.HEADER)
+    for row in zip(names, descs):
+        t.add_row(row)
+    s = t.draw()
+    print("\n" + s + "\n")
 
 def information(mod):
     names = []
@@ -130,6 +142,29 @@ def list(arg,display):
     descs = []
     dir = ""
 
+    passivenames = []
+    passivedescs = []
+    activenames = []
+    activedescs = []
+    discnames = []
+    discdescs = []
+    scannames = []
+    scandescs = []
+    portnames = []
+    portdescs = []
+    crawlnames = []
+    crawldescs = []
+    misnames = []
+    misdescs = []
+    brutenames = []
+    brutedescs = []
+    severenames = []
+    severedescs = []
+    sploitnames = []
+    sploitdescs = []
+    aidnames = []
+    aiddescs = []
+
     if arg == "all":
         dir = vars.modir
     elif arg == "aid":
@@ -150,7 +185,7 @@ def list(arg,display):
         print(catlist)
         return
 
-    for filen in Path(dir).glob("**/*.py"):
+    for filen in sorted(Path(dir).glob("**/*.py")):
         module1 = str(filen).split(".py")[0]
         if os.name == 'nt':
             module2 = module1.split("modules/")[-1]
@@ -161,23 +196,91 @@ def list(arg,display):
         module2 = "modules." + module2
         try:
             if (
-                    "__init__" not in module2 and "colors" not in module2 and "wafimpo" not in module2 and "DNSDumpsterAPI" not in module2 and "Form" not in module2 and "uri" not in module2 and "Crawler" not in module2 and "subdom0x00" not in module2 and "errorsql" not in module2 and "blindsql" not in module2 and "files.subdom" not in module2 and "fileo.subdom" not in module2):
+                    "__init__" not in module2 and "colors" not in module2 and "wafimpo" not in module2 and "DNSDumpsterAPI" not in module2 and "Form" not in module2 and "uri" not in module2 and "Crawler" not in module2 and "subdom0x00" not in module2 and "errorsql" not in module2 and "blindsql" not in module2 and "files.subdom" not in module2 and "fileo.subdom" not in module2 and "signatures" not in module2):
                 j = imp.import_module(module2)
                 i = j.searchinfo
                 names.append(module2.split(".")[-1])
                 descs.append(i)
+                if "ActiveRecon" in module2:
+                    activenames.append(module2.split(".")[-1])
+                    activedescs.append(i)
+                elif "PassiveRecon" in module2:
+                    passivenames.append(module2.split(".")[-1])
+                    passivedescs.append(i)
+                elif "InfoDisclose" in module2:
+                    discnames.append(module2.split(".")[-1])
+                    discdescs.append(i)
+                elif "ScanningEnumeration" in module2 and "0x01-PortScanning" not in module2 and "0x02-WebCrawling" not in module2:
+                    scannames.append(module2.split(".")[-1])
+                    scandescs.append(i)
+                elif "ScanningEnumeration" in module2 and "0x01-PortScanning" in module2:
+                    portnames.append(module2.split(".")[-1])
+                    portdescs.append(i)
+                elif "ScanningEnumeration" in module2 and "0x02-WebCrawling" in module2:
+                    crawlnames.append(module2.split(".")[-1])
+                    crawldescs.append(i)
+                elif "PassiveRecon" in module2:
+                    names.append(module2.split(".")[-1])
+                    descs.append(i)
+                elif "SploitLoot" in module2:
+                    sploitnames.append(module2.split(".")[-1])
+                    sploitdescs.append(i)
+                elif "Aid" in module2:
+                    aidnames.append(module2.split(".")[-1])
+                    aiddescs.append(i)
+                elif "VlnAnalysis.Severe" in module2:
+                    severenames.append(module2.split(".")[-1])
+                    severedescs.append(i)
+                elif "VlnAnalysis.Other" in module2:
+                    brutenames.append(module2.split(".")[-1])
+                    brutedescs.append(i)
+                elif "VlnAnalysis.Misconfig" in module2:
+                    misnames.append(module2.split(".")[-1])
+                    misdescs.append(i)
+
         except ImportError:
             pass
     if display:
-        t = table.Texttable()
-        headings = ["Modvle", "Desc."]
-        t.header(headings)
-        t.set_chars(["—","|","+","—"])
-        t.set_deco(table.Texttable.HEADER)
-        for row in zip(names, descs):
-            t.add_row(row)
-        s = t.draw()
-        print("\n" + s + "\n")
+        if len(passivenames) > 0 or len(activenames) > 0 or len(discdescs) > 0:
+            prnt.posint("Phase 1")
+            if len(passivenames) > 0:
+                cprint("OSINT/Footprinting: ","Passive Recon")
+                listdisplay(passivenames, passivedescs)
+            if len(activenames) > 0:
+                cprint("OSINT/Footprinting: ","Active Recon")
+                listdisplay(activenames, activedescs)
+            if len(discnames) > 0:
+                cprint("OSINT/Footprinting: ","Information Disclosure")
+                listdisplay(discnames, discdescs)
+        if len(scannames) > 0 or len(portnames) > 0 or len(crawldescs) > 0:
+            prnt.pscan("Phase 2")
+            if len(scannames) > 0:
+                cprint("Scanning/Enumeration: ","General Scanning")
+                listdisplay(scannames, scandescs)
+            if len(portnames) > 0:
+                cprint("Scanning/Enumeration: ","Port Scanners")
+                listdisplay(portnames, portdescs)
+            if len(crawldescs) > 0:
+                cprint("Scanning/Enumeration: ","Web Crawlers")
+                listdisplay(crawlnames, crawldescs)
+        if len(severenames) > 0 or len(misnames) > 0 or len(brutedescs) > 0:
+            prnt.pvln("Phase 3")
+            if len(misnames) > 0:
+                cprint("Vulnerability Analysis: ","Misconfiguration")
+                listdisplay(misnames, misdescs)
+            if len(severenames) > 0:
+                cprint("Vulnerability Analysis: ","Severe Issues")
+                listdisplay(severenames, severedescs)
+            if len(brutedescs) > 0:
+                cprint("Vulnerability Analysis: ","Weak Credentials")
+                listdisplay(brutenames, brutedescs)
+        if len(sploitdescs) > 0:
+            prnt.psploit("Phase 4")
+            cprint("Exploitation: ","Exploits")
+            listdisplay(sploitnames, sploitdescs)
+        if len(aidnames) > 0:
+            print("\nAdditional Modules")
+            listdisplay(aidnames, aiddescs)
     return names
 
 
@@ -213,7 +316,7 @@ def search(inp):
         # print(module2)
         try:
             if (
-                    "__init__" not in module2 and "colors" not in module2 and "wafimpo" not in module2 and "DNSDumpsterAPI" not in module2 and "Form" not in module2 and "uri" not in module2 and "Crawler" not in module2 and "subdom0x00" not in module2 and "errorsql" not in module2 and "blindsql" not in module2 and "files.subdom" not in module2 and "fileo.subdom" not in module2):
+                    "__init__" not in module2 and "colors" not in module2 and "wafimpo" not in module2 and "DNSDumpsterAPI" not in module2 and "Form" not in module2 and "uri" not in module2 and "Crawler" not in module2 and "subdom0x00" not in module2 and "errorsql" not in module2 and "blindsql" not in module2 and "files.subdom" not in module2 and "fileo.subdom" not in module2 and "signatures" not in module2):
                 module = imp.import_module(module2)
                 j = module.info
                 for id in idlist:
@@ -236,7 +339,7 @@ def search(inp):
             parsedfile = parsedfile.replace("\\", ".")
             try:
                 if (
-                        "__init__" not in parsedfile and "colors" not in parsedfile and "wafimpo" not in parsedfile and "DNSDumpsterAPI" not in parsedfile and "Form" not in parsedfile and "uri" not in parsedfile and "Crawler" not in parsedfile and "subdom0x00" not in parsedfile and "errorsql" not in parsedfile and "blindsql" not in parsedfile and "files.subdom" not in parsedfile and "fileo.subdom" not in parsedfile):
+                        "__init__" not in parsedfile and "colors" not in parsedfile and "wafimpo" not in parsedfile and "DNSDumpsterAPI" not in parsedfile and "Form" not in parsedfile and "uri" not in parsedfile and "Crawler" not in parsedfile and "subdom0x00" not in parsedfile and "errorsql" not in parsedfile and "blindsql" not in parsedfile and "files.subdom" not in parsedfile and "fileo.subdom" not in parsedfile and "signatures" not in parsedfile):
                     j = imp.import_module(parsedfile)
                     i = j.searchinfo
                     names.append(parsedfile.split(".")[-1])

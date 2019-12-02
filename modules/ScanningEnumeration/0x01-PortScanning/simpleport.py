@@ -23,7 +23,7 @@ from core.Core.colors import *
 
 info = "A simple port scanner."
 searchinfo = "Simple Port Scanner"
-properties = {}
+properties = {"INIT":["Start of port range to scan.", " "], "FIN":["End of the port range to scan.", " "], "VERBOSE":["Verbose Output? [1/0]", " "]}
 
 def portloop(portlist, host, verbose):
     open = []
@@ -85,8 +85,14 @@ def scan0x00(host):
     #print(R + '   =======================================\n')
     from core.methods.print import pscan
     pscan("simple port scanner")
-    start_port = input(O+' [#] Enter initial port :> ')
-    end_port = input(O+' [#] Enter ending port :> ')
+    if properties["INIT"][1] == " ":
+        start_port = input(O+' [#] Enter initial port :> ')
+    else:
+        start_port = properties["INIT"][1]
+    if properties["FIN"][1] == " ":
+        end_port = input(O+' [#] Enter ending port :> ')
+    else:
+        end_port = properties["FIN"][1]
 
     start_port = int(start_port)
     end_port = int(end_port)
@@ -105,8 +111,11 @@ def scan0x00(host):
     open_ports = []
     closed_ports = []
 
-    mn = input(O+'\n [*] Do you want a verbose output (enter if not) :> ')
-    verbose = mn is not ""
+    if properties["VERBOSE"][1] == " ":
+        mn = input(O+'\n [*] Do you want a verbose output (enter if not) :> ')
+        verbose = mn is not ""
+    else:
+        verbose = properties["VERBOSE"][1] == "1"
     if verbose:
         print(''+G+'\n [+] Verbose mode selected !\n')
         print(GR+" [!] Scanning %s from port %s - %s: " % (host, start_port, end_port))
@@ -131,12 +140,10 @@ def scan0x00(host):
         total_time = ending_time - starting_time
         print(G+' [*] Preparing report...\n')
         time.sleep(1)
-        #print(O+'    +-------------+')
-        #print(O+'    | '+R+'SCAN REPORT '+O+'|')
-        print(O+'      '+R+'SCAN REPORT '+O+' ')
-        #print(O+'    +-------------+')
-        print(O+'    ––·‹›·––·‹›·–––')
-        #print(O+'    |')
+        print(O+' ——·+-------------+')
+        print(O+'    [ SCAN REPORT ]    simplescan')
+        print(O+'    +-------------+   -------------')
+        print(O+'             ')
         print()
         print(O+'    +--------+----------+')
         print(O+'    |  '+GR+'PORT  '+O+'|  '+GR+'STATE   '+O+'|')

@@ -11,7 +11,7 @@
 
 
 import time
-import requests
+from core.methods.tor import session
 import os
 from os import system
 from core.Core.colors import *
@@ -21,7 +21,7 @@ searchinfo = "DNS Shared Hostnames"
 properties = {}
 
 def sharedns(web):
-
+    requests = session()
     web = web.split('//')[1]
     #print(R+'\n    =========================================')
     #print(R+'     S H A R E D   D N S   H O S T N A M E S ')

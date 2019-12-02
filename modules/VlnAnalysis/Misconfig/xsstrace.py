@@ -19,7 +19,7 @@ from core.Core.colors import *
 
 info = "This module searches Cross Site Tracing vulnerabilities."
 searchinfo = "Cross Site Tracing"
-properties = {}
+properties = {"PORT":["Port to use", " "]}
 
 def xsstrace0x00(target):
 
@@ -30,8 +30,12 @@ def xsstrace0x00(target):
     from core.methods.print import pvln
     pvln("xss tracer") 
                  
+    if properties["PORT"][1] == " ":
+        port = input(O+' [#] Enter the port number to use (eg. 80) :> ')
+    else:
+        port = properties["PORT"][1]
 
-    port = input(O+' [#] Enter the port number to use (eg. 80) :> ')
+    port = int(port)
 
     if port == 443:
         print(O+" [!] Using HTTPS <port 443>...")

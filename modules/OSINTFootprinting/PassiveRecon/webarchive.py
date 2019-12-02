@@ -12,25 +12,35 @@
 
 import os
 import sys
-import requests
+import requests as wrn
+from core.methods.tor import session
 import re
 import time
 import json
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "Find past versions of a website using the Wayback Machine."
 searchinfo = "Wayback Machine Lookup"
-properties = {}
+properties = {"START":["Year from when results to be fetched", " "], "END":["Year till when results to be fetched", " "], "LIMIT":["No. of results", " "]}
 
 def getRes0x00(web):
-
+    requests = session()
     error = 0
-    fdate = input(O+' [#] Year from when results to be fetched (eg. 2010) :> '+C)
-    tdate = input(GR+' [#] Year till when results to be fetched (eg. 2017) :> '+C)
-    limit = input(O+' [#] No. of results (eg. 50) :> '+C)
+    if properties["START"][1] == " ":
+        fdate = input(O+' [#] Year from when results to be fetched (eg. 2010) :> '+C)
+    else:
+        fdate = properties["START"][1]
+    if properties["END"][1] == " ":
+        tdate = input(GR+' [#] Year till when results to be fetched (eg. 2017) :> '+C)
+    else:
+        tdate = properties["END"][1]
+    if properties["LIMIT"][1] == " ":
+        limit = input(O+' [#] No. of results (eg. 50) :> '+C)
+    else:
+        limit = properties["LIMIT"][1]
 
     if "://" in web:
         web = web.split('://')[1]

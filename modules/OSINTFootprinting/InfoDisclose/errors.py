@@ -14,7 +14,7 @@ import re
 import sys
 sys.path.append('files/signaturedb/')
 import time
-import requests
+from core.methods.tor import session
 from core.Core.colors import *
 from re import search
 from bs4 import BeautifulSoup
@@ -38,7 +38,7 @@ def check0x00(content,url):
             found = 0x01
 
 def request(url):
-
+    requests = session()
     time.sleep(0.5)
     links = [url]
     po = url.split('//')[1]

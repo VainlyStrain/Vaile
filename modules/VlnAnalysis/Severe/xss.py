@@ -29,7 +29,7 @@ pay = []
 
 info = "This module looks for Cross Site Scripting (XSS) vulnerabilites, either manually or automatically."
 searchinfo = "Cross Site Sripting"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "]}
 
 def cookieatck(pays, session, web):
     success = []
@@ -275,7 +275,10 @@ def manual0x00(web, parallel):
     print(R+'\n     X S S  (Manual Mode)')
     print(R+'    ——·‹›·––·‹›·——·‹›·––·‹\n')
                  
-    bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /xss/search.php?q=drake)'+O+' :> ')
+    if properties["PARAM"][1] == " ":
+        bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /xss/search.php?q=drake)'+O+' :> ')
+    else:
+        bug = properties["PARAM"][1]
     choice = ""
     if "&" in bug:
         ln = len(bug.split("&"))
@@ -339,6 +342,7 @@ def xss(web):
             sleep(0.8)
             try:
                 with open('files/payload-db/xss_payloads.lst','r') as payloads:
+                    pay.clear()
                     for payload in payloads:
                         payload = payload.replace('\n','')
                         pi = r'%s' % (payload)
@@ -352,6 +356,7 @@ def xss(web):
                 first = False
                 sleep(0.2)
                 with open('files/payload-db/polyglot_payloads.lst','r') as polyy:
+                    poly.clear()
                     for payload in polyy:
                         payload = payload.replace('\n','')
                         poy = r'%s' % (payload)
@@ -361,8 +366,11 @@ def xss(web):
             except IOError:
                 print(R+' [-] Payloads file does not exist!')
 
-        pa = input(" [?] Parallel Attack? (enter if not) :> ")
-        parallel = pa is not ""
+        if properties["PARALLEL"][1] == " ":
+            pa = input(" [?] Parallel Attack? (enter if not) :> ")
+            parallel = pa is not ""
+        else:
+            parallel = properties["PARALLEL"][1] == "1"
         print(O+'\n [#] Enter the type you want to proceed:\n')
         print(B+'   [1] '+C+'Manual Mode')
         print(B+'   [2] '+C+'Automatic Mode\n')

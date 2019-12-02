@@ -26,7 +26,7 @@ wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module searches for possibilities of subdomain takeovers, either for a single subdomain, or for all of them."
 searchinfo = "Subdomain Takeover Module"
-properties = {}
+properties = {"SUBDOM":["Subdomain to attack in single mode", " "]}
 
 def getReq0x00(url):
     requests = session()
@@ -83,14 +83,16 @@ def subdomover(web):
                  
 
     time.sleep(0.6)
-    print(O+' Choose from the folowing:\n')
+    print(O+' Choose from the following:\n')
     print(B+'  [1] '+C+'Single Subdomain '+W+'(Manual)')
     print(B+'  [2] '+C+'All Subdomains '+W+'(Automated)')
     v = input(O+'\n [#] Enter type :> '+GR)
 
     if v.strip() == '1':
-
-        su = input(C+' [#] Enter the subdomain :> '+GR)
+        if properties["SUBDOM"][1] == " ":
+            su = input(C+' [#] Enter the subdomain :> '+GR)
+        else:
+            su = properties["SUBDOM"][1]
         if su.startswith('http'):
             pass
         else:

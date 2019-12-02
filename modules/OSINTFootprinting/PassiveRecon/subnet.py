@@ -10,7 +10,8 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests, time
+import time
+from core.methods.tor import session
 from time import sleep
 from core.Core.colors import *
 
@@ -19,7 +20,7 @@ searchinfo = "Subnet Enumeration"
 properties = {}
 
 def subnet(web):
-
+    requests = session()
     web = web.replace('http://','')
     web = web.replace('https://','')
     if "@" in web:

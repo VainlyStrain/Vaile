@@ -14,7 +14,7 @@ import time
 import os
 import sys
 sys.path.append('tmp/')
-import requests
+from core.methods.tor import session
 from core.Core.colors import *
 
 final_links = []
@@ -24,7 +24,7 @@ searchinfo = "Page Links"
 properties = {}
 
 def links(web):
-
+    requests = session()
     #print(R+'\n   =====================')
     #print(R+'    P A G E   L I N K S ')
     #print(R+'   =====================\n')

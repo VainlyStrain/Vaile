@@ -12,20 +12,21 @@
 
 import os
 import sys
-import requests
+import requests as wrn
+from core.methods.tor import session
 import re
 import time
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tries to find the domain for a given email address."
 searchinfo = "Find domain from email"
 properties = {}
 
 def getRes0x00():
-
+    requests = session()
     email = input(O+' [#] Enter the email :> '+R)
     if '@' in email and '.' in email:
         pass

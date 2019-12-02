@@ -31,7 +31,8 @@ def loadstyle():
     os.system('clear')
     red_bold = R
     reset = W
-    loading = "Vaile Attack Load."
+    #loading = "Vaile Attack Load."
+    loading = "——·‹› Vaile ‹›·——"
     action = 0
     while action < 2:
         for i, char in enumerate(loading):
@@ -50,7 +51,7 @@ def loadstyle():
 
 
 
-vaile = """{}
+vaile = """{}                      .
                       .   
                       .   
                       .   
@@ -67,19 +68,19 @@ vaile = """{}
      ;         .;;. ;     
      ’      ;  . ;..      
           ';. '           
-         .;...,           
-    ~   Vaile Attack : saarsec   ~        
+         .;...,          
+    ~   Vaile ·›» {}"msf-python"   ~{}       
     {}~  fork from{} Infected Drake  ~    
               .'.         
-  5 Phases  |  {}v {}  |  {}108 Modules
-                ;.        
+  5 Phases  |  {}v {}  |  {}108++ Modls
+                ;.               
                  .,.      
                    .'.    
                   ''.;:     
                     ...   
                      : .  
                      .    
-""".format(color.BOLD, color.END, color.BOLD, R, C, R, vars.version, C)
+""".format(color.BOLD, color.END, color.BOLD, R, C, R, C, R, vars.version, C)
 
 sp00k70b3r = """
       ___
@@ -125,7 +126,6 @@ currentMonth = datetime.now().month
 currentDay = datetime.now().day
 
 def f00l():
-    #add some stuff here when time has come ;)
     return
 
 def banner():
@@ -176,34 +176,35 @@ def printLegal():
 
 
 def info():
-    print('''
- \033[4mVaile\033[4;1m {} \033[0m\033[1m
-
-  Avail. Cmds (M needs loaded modvle):
-
-    attack    Attack specified target(s)             [M]
-    clear     Clear terminal.                         :
-    creds     Handle target credentials.              
-    find      Search a module.                        :
+  print('''\033[4m  \033[0m\033[1m                                                    \033[4m  \033[0m\033[1m
+ !  attack    Attack specified target(s)              M
+ :  clear     Clear terminal.                         :
+ V  creds     Handle target credentials.              
+ :  fetch     Check for and install updates.          :
+ :  find      Search a module.                        :
     help      Show help message.                      :
-    info      Show description of current module.    [M]
-    intro     Display Intro.                          :
-    ip        Show network information.               :
-    leave     Leave module.                          [M]
-    list      List all modules of a category.         :
-    load      Load module.                            :
-    opts      Show options of current module.        [M]
+    info      Show description of current module.     M
+ :  intro     Display Intro.                          :
+ :  ip        Show network information.               :
+    leave     Leave module.                           M
+ :  list      List all modules of a category.         :
+ :  load      Load module.                            :
+ :  opts      Show options of current module.         M
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
-    processes Set number of processes in parallelis.  :
+ :  processes Set number of processes in parallelis.  :
     q         Terminate Vaile session.                :
-    sessions  Interact with cached sessions.          :
-    set       Set option value of module.            [M]
-    tor       Pipe Attacks through the Tor Network.   :
+ :  sessions  Interact with cached sessions.          :
+ :  set       Set option value of module.             M
+ :  tor       Pipe Attacks through the Tor Network.   :
     vicadd    Add Target to list.                     :
     vicdel    Delete Target from list.                :
     viclist   List all targets.                       :
-'''.format(vars.e_version))
+
+  \033[4mAvail. Cmds\033[0m\033[1m
+    M needs loaded modvle
+    V [! potentially] need loaded target(s)
+''')
 
 
 def disclaimer():
@@ -223,6 +224,18 @@ def posintpas(mod):
  ,'  `\\,_   
  |_,-'_)    
  /##c '\\  (   {}O S I N T   P A S S I V E{}
+' |'  -{{.  )
+  /\\__-' \\[]        {}{}{}
+ /`-_`\\     
+ '     \\    
+""".format(color.END, C, RC, title(mod), C))
+
+def posint(mod):
+    print("""
+   ,_       
+ ,'  `\\,_   
+ |_,-'_)    
+ /##c '\\  (   {}O S I N T{}
 ' |'  -{{.  )
   /\\__-' \\[]        {}{}{}
  /`-_`\\     
@@ -290,3 +303,28 @@ def pleak(mod):
 .▀    {}{}{}
  ▀ 
 """.format(color.END, C, RC, title(mod), C))
+
+def cprint(text1, text2):
+    print(RC + text1 + color.END + RB + text2 + color.END)
+
+
+def progressbar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print('\r%s [%s] %s%% %s' % (prefix, bar, percent, suffix), end = printEnd)
+    # Print New Line on Complete
+    if iteration == total: 
+        print()

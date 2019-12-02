@@ -12,7 +12,8 @@
 
 import os
 import sys
-import requests
+import requests as wrn
+from core.methods.tor import session
 import re
 import time
 import json
@@ -20,14 +21,14 @@ from colorama import Style
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module looks up if an email address was found in a data breach."
 searchinfo = "Data Breach Checker"
 properties = {}
 
 def getRes0x00():
-
+    requests = session()
     email = input(O+' [#] Enter the email :> '+R)
     if '@' in email and '.' in email:
         pass

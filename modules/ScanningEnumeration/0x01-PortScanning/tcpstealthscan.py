@@ -25,7 +25,7 @@ from core.Core.colors import *
 
 info = "TCP Stealth Scanner."
 searchinfo = "TCP Stealth Scan"
-properties = {}
+properties = {"INIT":["Start of port range to scan.", " "], "FIN":["End of the port range to scan.", " "], "VERBOSE":["Verbose Output? [1/0]", " "]}
 
 
 def checkhost(ip): # Function to check if target is up
@@ -104,13 +104,22 @@ def scan0x00(target):
         #print(R+'    =================================\n')
         from core.methods.print import pscan
         pscan("tcp stealth scan")
-        min_port = input(O+" [#] Enter Minumum Port Number -> ")
-        max_port = input(O+" [#] Enter Maximum Port Number -> ")
+        if properties["INIT"][1] == " ":
+            min_port = input(O+' [#] Enter initial port :> ')
+        else:
+            min_port = properties["INIT"][1]
+        if properties["FIN"][1] == " ":
+            max_port = input(O+' [#] Enter ending port :> ')
+        else:
+            max_port = properties["FIN"][1]
         open_ports = []
         closed_ports = []
         ip_host = socket.gethostbyname(target)
-        chk = input(C+' [#] Do you want a verbose output? (enter if not) :> ')
-        verbose = chk is not ""
+        if properties["VERBOSE"][1] == " ":
+            chk = input(C+' [#] Do you want a verbose output? (enter if not) :> ')
+            verbose = chk is not ""
+        else:
+            verbose = properties["VERBOSE"][1] == "1"
 
         try:
             print(GR+' [*] Checking port range...')
@@ -150,13 +159,10 @@ def scan0x00(target):
         total_time = ending_time - starting_time
         print(GR+' [*] Preparing report...\n')
         time.sleep(1)
-        #print(O+'    +-------------+')
-        #print(O+'    | '+R+'SCAN REPORT '+O+'|')
-        print(O+'      '+R+'SCAN REPORT '+O+' ')
-        #print(O+'    +-------------+')
-        print(O+'    ––·‹›·––·‹›·–––')
-        #print(O+'    |')
-        print()
+        print(O+' ——·+-------------+')
+        print(O+'    [ SCAN REPORT ]    stealthscan')
+        print(O+'    +-------------+   --------------')
+        print(O+'             ')
         print(O+'    +--------+------------------+')
         print(O+'    |  '+GR+'PORT  '+O+'|       '+GR+'STATE      '+O+'|')
         print(O+'    +--------+------------------+')

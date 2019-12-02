@@ -11,13 +11,15 @@
 
 
 import os
-import requests
+#import requests
+from core.methods.tor import session
 import core.lib.mechanize as mechanize
 import http.cookiejar
 from urllib.request import urlparse
 import time
 from time import sleep
 from core.Core.colors import *
+from core.variables import tor
 
 br = mechanize.Browser()
 
@@ -28,6 +30,10 @@ br.set_handle_equiv(True)
 br.set_handle_redirect(True)
 br.set_handle_referer(True)
 br.set_handle_robots(False)
+
+torproxies = {'http':'socks5h://localhost:9050', 'https':'socks5h://localhost:9050'}
+if tor:
+    br.set_proxies(torproxies)
 
 br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
 br.addheaders = [
@@ -42,7 +48,7 @@ searchinfo = "Depth 1 Crawler"
 properties = {}
 
 def crawler10x00(web):
-
+    requests = session()
     time.sleep(0.5)
     #print(R+'\n    ===========================')
     #print(R+'     C R A W L E R  (Depth 1)')

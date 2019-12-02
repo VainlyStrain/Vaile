@@ -13,7 +13,7 @@
 import time
 import os
 import sys
-import requests
+from core.methods.tor import session
 from time import sleep
 from tld import get_fld
 from core.Core.colors import *
@@ -28,7 +28,6 @@ searchinfo = "Subdomain Gatherer"
 properties = {}
 
 def subdombrute(web):
-
     try:
         print(GR+' [*] Importing wordlist path to be bruteforced... "files/subdomains.lst"')
         with open('files/fuzz-db/subdomain_paths.lst','r') as lol:
@@ -77,7 +76,7 @@ def subdombrute(web):
     return found
 
 def outer(web):
-
+    requests = session()
     global final
     final = []
     wew = []

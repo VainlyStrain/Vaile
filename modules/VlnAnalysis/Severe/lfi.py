@@ -32,7 +32,7 @@ ev = [""]
 
 info = "This module checks the presence of local file inclusion vulnerabilities."
 searchinfo = "Local File Inclusion Scanner"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "EVASION":["Try to evade sanitisations (specific file lookup) [1/0]", " "], "FILE":["File to be searched by EVASION (default: /etc/shadow)", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/lfi_paths.lst)", " "]}
 
 def check0x00(web0x00, pay, gen_headers):
     gotcha = []
@@ -122,18 +122,28 @@ def outto0x00(toPrint,stack):
 def getFile0x00():
 
     try:
-        ev[0] = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
+        if properties["EVASION"][1] == " ":
+            ev[0] = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
+        elif properties["EVASION"][1] == "0":
+            ev[0] = ""
+        else:
+            ev[0] = "1"
         evasion = ev[0] != ""
         if not evasion:
             print(GR+' [*] Importing filepath...')
-            print(O+' [#] Enter path to file (default: files/fuzz-db/lfi_paths.lst)...')
-            w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+            if properties["DICT"][1] == " ":
+                print(O+' [#] Enter path to file (default: files/fuzz-db/lfi_paths.lst)...')
+                w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+            elif properties["DICT"][1].lower() == "none":
+                w = ""
+            else:
+                w = properties["DICT"][1]
             if w == '':
                 fi = 'files/fuzz-db/lfi_paths.lst'
                 print(GR+' [*] Importing payloads...')
                 with open(fi,'r') as q0:
                     for q in q0:
-                        q = q.replace('\n','')
+                        q = q.strip("\n")
                         payloads.append(q)
             else:
                 fi = w
@@ -142,13 +152,13 @@ def getFile0x00():
                     print(GR+' [*] Importing payloads...')
                     with open(fi,'r') as q0:
                         for q in q0:
-                            q = q.replace('\n','')
+                            q = q.strip("\n")
                             payloads.append(q)
         else:
             fi = 'files/fuzz-db/pathtrav_evasion.lst'
             with open(fi,'r') as q0:
                 for q in q0:
-                    q = q.replace('\n','')
+                    q = q.strip("\n")
                     payloads.append(q)
     except IOError:
         print(R+' [-] File path '+O+fi+R+' not found!')
@@ -199,6 +209,7 @@ def atck(evasion, filepath, payloads, web00, bug2, parallel, gen_headers):
             fud += paths[4]
             cnfy += paths[5]
     else:
+        print(round(len(payloads)/processes))
         paylists = listsplit(payloads, round(len(payloads)/processes))
         with Pool(processes=processes) as pool:
             res = [pool.apply_async(chkpre, args=(evasion,filepath,l,web00,bug2,gen_headers,)) for l in paylists]
@@ -228,6 +239,8 @@ def atck(evasion, filepath, payloads, web00, bug2, parallel, gen_headers):
 def lfi(web):
 
     print(GR+' [*] Loading module...')
+    ev[0] = ""
+    payloads.clear()
     time.sleep(0.5)
     #print(R+'\n     =========================================')
     #print(R+'\n      L O C A L   F I L E   I N C L U S I O N')
@@ -238,7 +251,10 @@ def lfi(web):
                   
 
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
-    param = input(O+' [#] Parameter Path (eg. /vuln/fetch.php?q=lmao) :> ')
+    if properties["PARAM"][1] == " ":
+        param = input(O+' [#] Parameter Path (eg. /vuln/fetch.php?q=lmao) :> ')
+    else:
+        param = properties["PARAM"][1]
     if not param.startswith('/'):
         param = '/' + param
     choice = ""
@@ -255,8 +271,11 @@ def lfi(web):
             bug2 = param.split(choice)[1]
             tmp = bug2.split("&")[0]
             bug2 = bug2.replace(tmp,"")
-    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
-    parallel = pa is not ""
+    if properties["PARALLEL"][1] == " ":
+        pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+        parallel = pa is not ""
+    else:
+        parallel = properties["PARALLEL"][1] == "1"
     getFile0x00()
     print(GR+' [*] Setting headers...')
     gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
@@ -272,7 +291,12 @@ def lfi(web):
         evasion = ev[0] != ""
         filepath = ""
         if evasion:
-            filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
+            if properties["FILE"][1] == " ":
+                filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
+            elif properties["FILE"][1].lower() == "none":
+                filepath = ""
+            else:
+                filepath = properties["FILE"][1]
         
         atck(evasion, filepath, payloads, web00, bug2, parallel, gen_headers)
 

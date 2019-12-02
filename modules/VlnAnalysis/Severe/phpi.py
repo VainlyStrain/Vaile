@@ -29,7 +29,7 @@ payloads = []
 
 info = "This module searches for PHP injection vulnerabilities and, if found, tries to inject payloads from Vaile's payload database or from a user-specified file."
 searchinfo = "PHP Injection Module"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/php_payloads.lst)", " "]}
 
 def genRandStr0x00(n):
     return ''.join([choice(ascii_uppercase+ascii_lowercase) for o in range(0,int(n))]) # fetch random string
@@ -68,8 +68,13 @@ def getFile0x00():
 
     try:
         print(GR+' [*] Importing filepath...')
-        print(O+' [#] Enter path to file (default: files/payload-db/php_payloads.lst)...')
-        w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+        if properties["DICT"][1] == " ":
+            print(O+' [#] Enter path to file (default: files/payload-db/php_payloads.lst)...')
+            w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+        elif properties["DICT"][1].lower() == "none":
+            w = ""
+        else:
+            w = properties["DICT"][1]
         if w == '':
             fi = 'files/payload-db/php_payloads.lst'
             print(GR+' [*] Importing payloads...')
@@ -121,7 +126,10 @@ def phpi(web):
                       'Connection':'close'}
 
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
-    param = input(O+' [#] Scope parameter (eg. /vuln/page.php?q=lmao) :> ')
+    if properties["PARAM"][1] == " ":
+        param = input(O+' [#] Scope parameter (eg. /vuln/page.php?q=lmao) :> ')
+    else:
+        param = properties["PARAM"][1]
     if param.startswith('/') == False:
         param = '/' + param
 
@@ -140,8 +148,11 @@ def phpi(web):
             tmp = bug2.split("&")[0]
             bug2 = bug2.replace(tmp,"")
 
-    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
-    parallel = pa is not ""
+    if properties["PARALLEL"][1] == " ":
+        pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+        parallel = pa is not ""
+    else:
+        parallel = properties["PARALLEL"][1] == "1"
 
     getFile0x00() # get the file with payloads
     web00 = web + param.split(choice + '=')[0] + choice + '='

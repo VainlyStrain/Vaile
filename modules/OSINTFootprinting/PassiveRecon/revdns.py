@@ -12,7 +12,7 @@
 
 import os
 import time
-import requests
+from core.methods.tor import session
 from core.Core.colors import *
 links = []
 
@@ -21,7 +21,7 @@ searchinfo = "Reverse DNS Lookup"
 properties = {}
 
 def revdns(web):
-
+    requests = session()
     web = web.split('//')[1]
     if "@" in web:
         web = web.split("@")[1]

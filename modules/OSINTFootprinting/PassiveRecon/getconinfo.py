@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+from core.methods.tor import session
 import time
 from core.Core.colors import *
 
@@ -19,6 +19,7 @@ searchinfo = "Domain Contact Info"
 properties = {}
 
 def getconinfo(domain):
+    requests = session()
     web = domain
     if "@" in web:
         domain = domain.split("@")[1]

@@ -15,7 +15,8 @@ import sys
 sys.path.append('files/signaturedb/')
 import lxml
 import time
-import requests
+import requests as wrn
+from core.methods.tor import session
 from core.Core.colors import *
 urls = []
 links = []
@@ -26,14 +27,14 @@ from files.signaturedb.infodisc_signatures import VISA_MASTERCARD_SIGNATURE
 from files.signaturedb.infodisc_signatures import MASTERCARD_SIGNATURE, DISCOVER_CARD_SIGNATURE
 from files.signaturedb.infodisc_signatures import VISA_SIGNATURE, AMEX_CARD_SIGNATURE
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tries to find credit cards disclosed in the target's source code."
 searchinfo = "Credit Card hunter"
 properties = {}
 
 def credit0x00(url):
-
+    requests = session()
     print(G+' [+] Importing credit card signatures...')
     time.sleep(0.5)
     links = [url]

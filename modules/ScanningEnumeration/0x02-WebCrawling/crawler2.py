@@ -13,16 +13,22 @@
 import os
 import re
 import time
-import requests
+import requests as wrn
+from core.methods.tor import session
 import core.lib.mechanize as mechanize
 import http.cookiejar
 from bs4 import BeautifulSoup
 from core.Core.colors import *
+from core.variables import tor
 
 br = mechanize.Browser()
 
 cj = http.cookiejar.LWPCookieJar()
 br.set_cookiejar(cj)
+
+torproxies = {'http':'socks5h://localhost:9050', 'https':'socks5h://localhost:9050'}
+if tor:
+    br.set_proxies(torproxies)
 
 br.set_handle_equiv(True)
 br.set_handle_redirect(True)
@@ -34,7 +40,7 @@ br.addheaders = [
     ('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "Depth 2 Crawler."
 searchinfo = "Depth 2 Crawler"
@@ -54,12 +60,14 @@ def parseurl(address):
     return addr
 
 def externalcrawl(startpg):
+    requests = session()
     html = requests.get(startpg).text
     toparse = BeautifulSoup(html,"html.parser")
     extlinks = external(startpg, toparse, parseurl(startpg)[0])
     return extlinks
 
 def internalcrawl(startpg):
+    requests = session()
     html = requests.get(startpg).text
     toparse = BeautifulSoup(html,"html.parser")
     intlinks = internal(startpg, toparse, parseurl(startpg)[0])

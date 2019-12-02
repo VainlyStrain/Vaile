@@ -14,7 +14,7 @@
 
 import os
 import tld
-import requests
+from core.methods.tor import session
 import json
 import time
 import urllib
@@ -26,7 +26,7 @@ searchinfo = "Alias Check"
 properties = {}
 
 def check0x00(alias,web):
-
+    requests = session()
     print(GR+" [*] Searching alias "+O+alias+GR+" on 160 websites...\n")
     print(GR+' [¬] Result : \n')
     headers = {'X-Requested-With':'XMLHttpRequest'}

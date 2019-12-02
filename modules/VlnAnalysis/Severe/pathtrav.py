@@ -40,7 +40,7 @@ sitecontent = [None]
 
 info = "This module tries to find path traversal vulnerabilities on the target webpage. It is capable of in-path, as well as query attacks, and features two modes: a simple mode, recovering all possible paths, and a powerful evasion engine, attacking a specific path. Also, the user can provide cookies and his own dictionary."
 searchinfo = "Path Traversal Finder"
-properties = {}
+properties = {"DIRECTORY":["Sensitive directory. Attack target will be http://site.com/sensitive", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "COOKIE":["Cookie to be used for the attack", " "], "QUERY":["Query-parameter based attack? [1/0]", " "], "PARAM":["Parameter to be used with QUERY", " "], "EVASION":["Try to evade sanitisations (specific file lookup) [1/0]", " "], "FILE":["File to be searched by EVASION (default: /etc/shadow)", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/pathtrav_paths.lst)", " "]}
 
 def atckpre(evasion, filepath, owebsite, plist):
     go = []
@@ -163,11 +163,19 @@ def check0x00(website0, gen_headers, parallel):
     generic = []
     cnfy = []
     gotcha = []
-    ev = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
-    evasion = ev != ""
+    if properties["EVASION"][1] == " ":
+        ev = input(O+"\n [?] Perform Evasion Attack? (specific file ; enter for no) :> ")
+        evasion = ev != ""
+    else:
+        evasion = properties["EVASION"][1] == "1"
     if not evasion:
-        print(O+' [!] Enter the filename containing paths '+R+'(Default: files/pathtrav_paths.lst)')
-        fi = input(O+" [*] Custom filepath (press Enter for default) :> ")
+        if properties["DICT"][1] == " ":
+            print(O+' [!] Enter the filename containing paths '+R+'(Default: files/pathtrav_paths.lst)')
+            fi = input(O+" [*] Custom filepath (press Enter for default) :> ")
+        elif properties["DICT"][1].lower() == "none":
+            fi = ""
+        else:
+            fi = properties["DICT"][1]
         if fi == '':
             print(GR+' [*] Using default filepath...')
             fi = getFile0x00('files/fuzz-db/pathtrav_paths.lst')
@@ -176,7 +184,12 @@ def check0x00(website0, gen_headers, parallel):
         filepath = ""
     else:
         fi = getFile0x00('files/fuzz-db/pathtrav_evasion.lst')
-        filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
+        if properties["FILE"][1] == " ":
+            filepath = input(" [!] Enter file and path to search (Default: etc/shadow) :> ")
+        elif properties["FILE"][1].lower() == "none":
+            filepath = ""
+        else:
+            filepath = properties["FILE"][1]
 
     if(active0 is False):
         owebsite = website0
@@ -252,11 +265,24 @@ def pathtrav(web):
     pvln("path traversal") 
                   
     try:
-        print(GR+' [!] Input the directory to be used... Final Url will be like '+O+'"http://site.com/sensitive"')
-        param = input(O+' [!] Enter directory asssociated (eg. /sensitive) [Enter for None] :> ')
-        pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
-        parallel = pa is not ""
-        input_cookie = input("\n [#] Got cookies? [Enter if none] :> ")
+        if properties["DIRECTORY"][1] == " ":
+            print(GR+' [!] Input the directory to be used... Final Url will be like '+O+'"http://site.com/sensitive"')
+            param = input(O+' [!] Enter directory asssociated (eg. /sensitive) [Enter for None] :> ')
+        elif properties["DIRECTORY"][1].lower() == "none":
+            param = ""
+        else:
+            param = properties["DIRECTORY"][1]
+        if properties["PARALLEL"][1] == " ":
+            pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+            parallel = pa is not ""
+        else:
+            parallel = properties["PARALLEL"][1] == "1"
+        if properties["COOKIE"][1] == " ":
+            input_cookie = input("\n [#] Got cookies? [Enter if none] :> ")
+        elif properties["COOKIE"][1].lower() == "none":
+            input_cookie = ""
+        else:
+            input_cookie = properties["COOKIE"][1]
         global gen_headers
         gen_headers =    {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
                           'Accept-Language':'en-US;',
@@ -273,11 +299,19 @@ def pathtrav(web):
         else:
             web00 = web + '/' + param
 
-        input_query = input("\n [#] Query Attack? [Enter if not] :> ")
+        if properties["QUERY"][1] == " ":
+            input_query = input("\n [#] Query Attack? [Enter if not] :> ")
+        elif properties["QUERY"][1] == "0":
+            input_query = ""
+        else:
+            input_query = "1"
         #print(input_query)
         if input_query != "":
             query[0] = True
-            param = input(" [#] Enter parameter :> ")
+            if properties["PARAM"][1] == " ":
+                param = input(" [#] Enter parameter :> ")
+            else:
+                param = properties["PARAM"][1]
             web00 = web00 + "?" + param + "="
         siteinput[0] = web00
 

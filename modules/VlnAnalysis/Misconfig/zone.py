@@ -17,7 +17,7 @@ from core.Core.colors import *
 
 info = "Zone Transfer module."
 searchinfo = "Zone Transfer module"
-properties = {}
+properties = {"DNSV":["DNS server to test for", " "]}
 
 def zone(web):
 
@@ -34,7 +34,10 @@ def zone(web):
         print(O+' [!] Looking up for name servers on which website is hosted...\n'+G)
         time.sleep(0.7)
         os.system('dig +nocmd '+web+' ns +noall +answer')
-        h = input(O+'\n [*] Enter the DNS Server you want to test for :> ')
+        if properties["DNSV"][1] == " ":
+            h = input(O+'\n [*] Enter the DNS Server you want to test for :> ')
+        else:
+            h = properties["DNSV"][1]
         time.sleep(0.4)
         print(GR+' {*] Attempting zone transfer...')
         time.sleep(0.9)

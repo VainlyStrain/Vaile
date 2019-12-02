@@ -14,7 +14,8 @@ import re
 import sys
 sys.path.append('files/signaturedb/')
 import time
-import requests
+import requests as wrn
+from core.methods.tor import session
 from core.Core.colors import *
 links = []
 urls = []
@@ -22,14 +23,14 @@ found = 0x00
 from bs4 import BeautifulSoup
 from files.signaturedb.infodisc_signatures import EMAIL_HARVESTER_SIGNATURE as signature
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tries to find email addresses disclosed in target's source code."
 searchinfo = "Email hunter"
 properties = {}
 
 def mail0x00(url):
-
+    requests = session()
     #print(R+'\n    ======================')
     #print(R+'     EMAIl INFO HARVESTER')
     #print(R+'    ======================\n')

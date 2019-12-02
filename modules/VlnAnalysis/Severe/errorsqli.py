@@ -189,13 +189,16 @@ def manualpre(pay, bugs, bug2):
             success.append(p)
     return success
 
-def manual0x00(web, parallel):
+def manual0x00(web, parallel, properties):
 
     #print(R+'\n    ========================')
     print(R+'\n     S Q L i  (Manual Mode)')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·\n')
     requests = session()
-    bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /sqli/fetch.php?id=x)'+O+' :> ')
+    if properties["PARAM"][1] == " ":
+        bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /sqli/fetch.php?id=x)'+O+' :> ')
+    else:
+        bug = properties["PARAM"][1]
     choice = ""
     if "&" in bug:
         ln = len(bug.split("&"))
@@ -245,9 +248,9 @@ def manual0x00(web, parallel):
             print(R + "\n [-] No payload succeeded."+C)
     else:
         print(R+' [-] Enter an URL with scope parameter...')
-        manual0x00(web, parallel)
+        manual0x00(web, parallel, properties)
 
-def errorsqli(web):
+def errorsqli(web, properties):
     begin = True
     while True:
         print(GR+' [*] Loading module SQLi...')
@@ -268,8 +271,11 @@ def errorsqli(web):
                         pay.append(payload)
                         begin = False
 
-            pa = input(" [?] Parallel Attack? (enter for not) :> ")
-            parallel = pa is not ""
+            if properties["PARALLEL"][1] == " ":
+                pa = input(" [?] Parallel Attack? (enter for not) :> ")
+                parallel = pa is not ""
+            else:
+                parallel = properties["PARALLEL"][1] == "1"
 
             print(O+'\n [#] Enter the type you want to proceed:\n')
             print(B+'   [1] '+C+'Manual Mode')
@@ -277,7 +283,7 @@ def errorsqli(web):
             p = input(O+' [#] TID :> ')
             if p == '1':
                 print(GR+' [*] Initializing manual mode...')
-                manual0x00(web, parallel)
+                manual0x00(web, parallel, properties)
             if p == '2':
                 print(GR+' [*] Loading automatic mode...')
                 auto0x00(web, parallel)
@@ -286,4 +292,4 @@ def errorsqli(web):
             print(R+' [-] Payloads file does not exist!')
 
 def attack(web):
-    errorsqli(web)
+    errorsqli(web, properties)

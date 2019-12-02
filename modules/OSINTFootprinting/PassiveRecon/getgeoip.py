@@ -11,7 +11,7 @@
 
 
 import time
-import requests
+from core.methods.tor import session
 import socket
 from core.Core.colors import *
 
@@ -20,7 +20,7 @@ searchinfo = "GeoIP Lookup"
 properties = {}
 
 def getgeoip(web):
-
+    requests = session()
     web = web.replace('http://','')
     web = web.replace('https://','')
     if "@" in web:

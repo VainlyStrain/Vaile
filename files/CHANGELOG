@@ -50,7 +50,7 @@ INTERMEDIATE
   new module: arpscan
 
 
-[·= VERSION 2.1 - parallelisation update =·]
+[·= VERSION 2.1 - parallelisation ; tor ; options =·]
 
 2.1.0-5
 ---------
@@ -80,8 +80,26 @@ INTERMEDIATE
          right now, only for vlnysis-severe (except CSRF, subdom)
   fixed: pathtrav exception during not-evasion attack
 
+2.1.0-51
+----------
+
+  added: set-options for all vlnysis-severe modules and port scanners
+  added: new .val file format for sessions with module properties
+  added: "fetch" command to check and install updates
+  added: cli option for fetch
+  added: parallelisation for more modules
+  added: Tor support for Web crawlers and other scanning modules (port scanners excluded)
+  added: Tor and options for OSINT modules
+  added: stub for upcoming shellcraft module
+  added: parallelisation and options for finscan
+  fixed: payload duplication in XSS
+  fixed: placed finscan in portscanning category
+  fixed: an error in listsplit potentially causing parallelised attacks to crash
+  fixed: Brute Recon method already defined
+  improved: target not necessary when using most aid modules
+  improved: list command divides output in different categories, and sorts it alphabetically
+
 UPCOMING
 
-  fix: crash when Keyboard Interrupt in port scanner
   add: Tor for the other modules
-
+  add: cli for options

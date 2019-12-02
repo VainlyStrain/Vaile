@@ -12,7 +12,7 @@
 
 import os
 import json
-import requests
+from core.methods.tor import session
 import time
 from core.Core.colors import *
 
@@ -21,7 +21,7 @@ searchinfo = "CENSYS Domain Recon"
 properties = {}
 
 def censysdom(web):
-
+    requests = session()
     #print(R+'\n    =======================================')
     #print(R+'     C E N S Y S   D O M A I N   R E C O N')
     #print(R+'    =======================================\n')

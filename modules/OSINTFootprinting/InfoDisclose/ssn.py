@@ -14,7 +14,8 @@ import re
 import sys
 sys.path.append('files/signaturedb/')
 import time
-import requests
+import requests as wrn
+from core.methods.tor import session
 from core.Core.colors import *
 from bs4 import BeautifulSoup
 from files.signaturedb.infodisc_signatures import SOCIAL_SECURITY_SIGNATURE as signature
@@ -22,14 +23,14 @@ found = 0x00
 urls = []
 links = []
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tries to find social security numbers disclosed in target's source code."
 searchinfo = "SSN Hunter"
 properties = {}
 
 def ssn0x00(url):
-
+    requests = session()
     #print(R+'\n    =================================')
     #print(R+'     SOCIAL SECURITY INFO DISCLOSURE')
     #print(R+'    =================================\n')

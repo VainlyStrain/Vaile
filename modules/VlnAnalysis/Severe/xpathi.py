@@ -30,7 +30,7 @@ payloads = []
 
 info = "This module searches for XPATH Injection flaws using the built-in dictionary or an user-provided payload list."
 searchinfo = "XPATH Injection Scanner"
-properties = {}
+properties = {"PARAM":["Directory and Parameter to attack (eg /vuln/page.php?q=lmao)", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/xpath_payloads.lst)", " "]}
 
 def check0x00(web0x00, pay, gen_headers):
     success = []
@@ -65,8 +65,13 @@ def check0x00(web0x00, pay, gen_headers):
 def getFile0x00():
 
     try:
-        print(O+' [#] Enter path to file (default: files/payload-db/xpath_payloads.lst)...')
-        w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+        if properties["DICT"][1] == " ":
+            print(O+' [#] Enter path to file (default: files/payload-db/xpath_payloads.lst)...')
+            w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+        elif properties["DICT"][1].lower() == "none":
+            w = ""
+        else:
+            w = properties["DICT"][1]
         if w == '':
             fi = 'files/payload-db/xpath_payloads.lst'
             print(GR+' [*] Importing payloads...')
@@ -115,7 +120,10 @@ def xpathi(web):
                       'Connection':'close'}
 
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
-    param = input(O+' [#] Parameter Path (eg. /vuln/page.php?q=input) :> ')
+    if properties["PARAM"][1] == " ":
+        param = input(O+' [#] Parameter Path (eg. /vuln/page.php?q=input) :> ')
+    else:
+        param = properties["PARAM"][1]
     if param.startswith('/') == False:
         param = '/' + param
 
@@ -134,8 +142,11 @@ def xpathi(web):
             tmp = bug2.split("&")[0]
             bug2 = bug2.replace(tmp,"")
 
-    pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
-    parallel = pa is not ""
+    if properties["PARALLEL"][1] == " ":
+        pa = input("\n [?] Parallelise Attack? (enter if not) :> ")
+        parallel = pa is not ""
+    else:
+        parallel = properties["PARALLEL"][1] == "1"
 
     print(GR+' [*] Importing filepath...')
     getFile0x00()

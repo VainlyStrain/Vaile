@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+from core.methods.tor import session
 import time
 import re
 import socket
@@ -19,11 +19,16 @@ import http.cookiejar
 from urllib.parse import urlencode
 from re import search
 from core.Core.colors import *
+from core.variables import tor
 br = mechanize.Browser()
 
 # Cookie Jar
 cj = http.cookiejar.LWPCookieJar()
 br.set_cookiejar(cj)
+
+torproxies = {'http':'socks5h://localhost:9050', 'https':'socks5h://localhost:9050'}
+if tor:
+    br.set_proxies(torproxies)
 
 # Browser options
 br.set_handle_equiv(True)
@@ -41,7 +46,7 @@ searchinfo = "Server Detection module"
 properties = {}
 
 def serverdetect(web):
-
+    requests = session()
     #print(R+'\n   ===========================')
     #print(R+'    D E T E C T   S E R V E R')
     #print(R+'   ===========================\n')

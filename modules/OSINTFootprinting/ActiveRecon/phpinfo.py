@@ -13,18 +13,19 @@
 import re
 import time
 import os
-import requests
+import requests as wrn
+from core.methods.tor import session
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 pathsinfo = []
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 info = "This module tries to find PHPInfo files on the target's webserver."
 searchinfo = "PHPInfo search"
 properties = {}
 
 def phpinfo(web):
-
+    requests = session()
     found = 0x00
     #print(R+'\n    =============================')
     #print(R+'     P H P I N F O   F I N D E R')

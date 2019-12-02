@@ -11,15 +11,15 @@
 
 
 import time
-import requests
+from core.methods.tor import session
 from core.Core.colors import *
 
 info = "This module hunts for Session Fixation vulnerabilities."
 searchinfo = "Session Fixation Check"
-properties = {}
+properties = {"COOKIE":["Cookie used in the request ['none' if none]", " "]}
 
 def sessionfix(url):
-
+    requests = session()
     #print(R+'\n   =================================')
     #print(R+'\n    S E S S I O N   F I X A T I O N')
     #print(R+'   ——·‹›·––·‹›·——·‹›·——·‹›·––·‹›·——·\n')
@@ -28,8 +28,13 @@ def sessionfix(url):
     pvln("session fixation") 
                 
     print(GR+' [*] Making the request...')
-    coo = input(O+' [#] Got any cookies? [Just Enter if None] :> ')
-    if coo:
+    if properties["COOKIE"][1] == " ":
+        coo = input(O+' [#] Got any cookies? [Just Enter if None] :> ')
+    elif properties["COOKIE"][1].lower() == "none":
+        coo = ""
+    else:
+        coo = properties["COOKIE"][1]
+    if coo is not "":
         req = requests.get(url, cookies=coo, verify=True, timeout=7)
     else:
         req = requests.get(url, verify=True, timeout=7)

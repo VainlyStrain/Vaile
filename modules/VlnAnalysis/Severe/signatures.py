@@ -9,8 +9,8 @@
 #https://github.com/VainlyStrain/Vaile
 #Added some of my own :)
 
-info = ""
 searchinfo = ""
+info = ""
 properties = {}
 
 services = {

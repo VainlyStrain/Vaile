@@ -15,7 +15,7 @@ import re
 import sys
 import tld
 import socket
-import requests
+from core.methods.tor import session
 from time import sleep
 from bs4 import BeautifulSoup
 from tld import get_tld
@@ -83,7 +83,7 @@ def subdombrute(web):
     return found
 
 def outer(web):
-
+    requests = session()
     global final
     final = []
     wew = []

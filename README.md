@@ -82,31 +82,35 @@ To get started, you need to set your own `API KEYS` for various OSINT & Scanning
 #### Commands :-
 
 ```
-    attack    Attack specified target(s)             [M]
-    clear     Clear terminal.                         :
-    creds     Handle target credentials.
-    find      Search a module.                        :
+__                                                    __                                                        
+ !  attack    Attack specified target(s)              M
+ :  clear     Clear terminal.                         :
+ V  creds     Handle target credentials.              
+ :  fetch     Check for and install updates.          :
+ :  find      Search a module.                        :
     help      Show help message.                      :
-    info      Show description of current module.    [M]
-    intro     Display Intro.                          :
-    ip        Show network information.               :
-    leave     Leave module.                          [M]
-    list      List all modules of a category.         :
-    load      Load module.                            :
-    opts      Show options of current module.        [M]
+    info      Show description of current module.     M
+ :  intro     Display Intro.                          :
+ :  ip        Show network information.               :
+    leave     Leave module.                           M
+ :  list      List all modules of a category.         :
+ :  load      Load module.                            :
+ :  opts      Show options of current module.         M
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
-    processes Set number of processes in parallelis.  :
+ :  processes Set number of processes in parallelis.  :
     q         Terminate Vaile session.                :
-    sessions  Interact with cached sessions.          :
-    set       Set option value of module.            [M]
-    tor       Pipe Attacks through the Tor Network.   :
+ :  sessions  Interact with cached sessions.          :
+ :  set       Set option value of module.             M
+ :  tor       Pipe Attacks through the Tor Network.   :
     vicadd    Add Target to list.                     :
     vicdel    Delete Target from list.                :
     viclist   List all targets.                       :
-```
 
-[M] means that you must have loaded a module before using the command.
+  Avail. Cmds
+    M needs loaded modvle
+    V [! potentially] need loaded target(s)
+```
 
 ### Flawless Features :-
 
@@ -303,7 +307,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.1.0-15 [latest release] [#stable]
+v2.1.0-51 [latest release] [#stable]
 ```
 
 ### Disclaimer:

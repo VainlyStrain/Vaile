@@ -12,13 +12,14 @@
 
 import os
 import time
-import requests
+import requests as wrn
+from core.methods.tor import session
 import sys
 sys.path.append('lib/fileutils_mod/')
 from core.lib.FileUtils import FileUtils
 from core.Core.colors import *
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+wrn.packages.urllib3.disable_warnings(InsecureRequestWarning)
 file_paths = []
 dir_path = []
 
@@ -27,7 +28,7 @@ searchinfo = "Logfile Bruteforce"
 properties = {}
 
 def check0x00(web, dirpath, headers):
-
+    requests = session()
     try:
         for dirs in dirpath:
             web0x00 = web + dirs

@@ -10,7 +10,8 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import os, requests, time
+import os, time
+from core.methods.tor import session
 from time import sleep
 from core.Core.colors import *
 
@@ -19,7 +20,7 @@ searchinfo = "(N)Ping Enumeration"
 properties = {}
 
 def piwebenum(web):
-
+    requests = session()
     time.sleep(0.4)
     web = web.split('//')[1]
     #print(R+'\n   =============================================')

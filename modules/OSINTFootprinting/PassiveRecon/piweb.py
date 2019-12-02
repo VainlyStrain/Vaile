@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+from core.methods.tor import session
 import time
 from core.Core.colors import *
 
@@ -19,7 +19,7 @@ searchinfo = "Ping Check"
 properties = {}
 
 def piweb(web):
-
+    requests = session()
     dom = web.split('//')[1]
     if "@" in dom:
         dom = dom.split("@")[1]
