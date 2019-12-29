@@ -98,8 +98,9 @@ INTERMEDIATE
   fixed: Brute Recon method already defined
   improved: target not necessary when using most aid modules
   improved: list command divides output in different categories, and sorts it alphabetically
+  
+2.1.5-0
+---------
 
-UPCOMING
-
-  add: Tor for the other modules
-  add: cli for options
+  fixed: import error in automation modules
+  added: Tor for almost all modules

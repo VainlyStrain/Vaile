@@ -30,21 +30,60 @@ from core.Core.colors import *
 def loadstyle():
     os.system('clear')
     red_bold = R
-    reset = W
-    #loading = "Vaile Attack Load."
-    loading = "——·‹› Vaile ‹›·——"
+    cursive = color.END + "\033[3m"
+    reset = cursive
+    loading = "Loading console.."
+    swappy = "Loading console.."
+    display = """
+
+
+
+
+
+____, __{}
+   + ;    
+   .:,    
+     ’    
+    .     {}‹›{}  {}V A I L E{}  {}‹›{}
+    + ;   {}{}{}
+    ;.    
+     ;
+     ;
+     ’   
+    """.format(color.END, R, color.END, RB, color.END, R, C, cursive, swappy, color.END)
+    #loading = "——·‹› Vaile ‹›·——"
     action = 0
     while action < 2:
         for i, char in enumerate(loading):
             if i == 0:
-                print("%s%s%s%s" % (red_bold, char.swapcase(), reset, loading[1:]))
+                swappy = "%s%s%s%s" % (red_bold, char.swapcase(), reset, loading[1:])
+                #print("%s%s%s%s" % (red_bold, char.swapcase(), reset, loading[1:]))
             elif i == 1:
                 old_loading = loading[0].swapcase()
-                print("%s%s%s%s%s" % (old_loading, red_bold, char.swapcase(), reset, loading[2:]))
+                swappy = "%s%s%s%s%s" % (old_loading, red_bold, char.swapcase(), reset, loading[2:])
+                #print("%s%s%s%s%s" % (old_loading, red_bold, char.swapcase(), reset, loading[2:]))
             elif i == i:
-                # old_loading = loading[-0:i].swapcase()
                 old_loading = loading[-0:i]
-                print("%s%s%s%s%s" % (old_loading, red_bold, char.swapcase(), reset, loading[i + 1:]))
+                swappy = "%s%s%s%s%s" % (old_loading, red_bold, char.swapcase(), reset, loading[i + 1:])
+                #print("%s%s%s%s%s" % (old_loading, red_bold, char.swapcase(), reset, loading[i + 1:]))
+            display = """
+
+
+
+
+
+____, __{}
+   + ;    
+   .:,    
+     ’    
+    .     {}‹›{}  {}V A I L E{}  {}‹›{}
+    + ;   {}{}{}
+    ;.    
+     ;
+     ;
+     ’   
+            """.format(color.END, R, color.END, RB, color.END, R, C, cursive, swappy, color.END)
+            print(display)
             time.sleep(0.1)
             os.system('clear')
         action += 1
@@ -297,11 +336,14 @@ def pbrute(mod):
 
 def pleak(mod):
     print("""
-▄▄ 
-██▌  {}I N F D I S C{}
-▐█·  
-.▀    {}{}{}
- ▀ 
+   ,_       
+ ,'  `\\,_   
+ |_,-'_)    
+ /##c '\\  (   {}I N F D I S C{}
+' |'  -{{.  )
+  /\\__-' \\[]        {}{}{}
+ /`-_`\\     
+ '     \\ 
 """.format(color.END, C, RC, title(mod), C))
 
 def cprint(text1, text2):

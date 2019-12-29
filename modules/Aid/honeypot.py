@@ -10,7 +10,8 @@
 
 
 import socket
-import requests
+#import requests
+from core.methods.tor import session
 import time
 from core.Core.colors import *
 from files.API_KEYS import SHODAN_API_KEY
@@ -19,15 +20,30 @@ info = "This module calculates the probability that the target is a honeypot usi
 searchinfo = "HoneyScore Calculator"
 properties = {}
 
-def honeypot(web):
+def title():
+    print("""{}
+                __/   _
+        {}.__  __.{}  \\__/   __
+         {}.-`'-.{}   /  \\__/
+     {}.-.(  oo  ).-.{} _/  \\__/   {}H O N E Y P O T{}
+ __ {}:   \\".~~."/   ;{} \\__/
+/  \\_{}`.  Y`--'Y  .'{} _/  \\__   {}D E T E C T O R{}
+ __/  {}`./======\\.'{}   \\__/  \\_
+/  \\__/ {}\\======/{}  \\__/  \\__/
+\\__/   {}(_`----'_){}    \\__/  \\ ({}shodan{}){}
+    """.format(color.END,C, color.END,C, color.END,C, color.END,RC,color.END,C, color.END,C, color.END,RC,color.END,C, color.END,C, color.END,C, color.END,RB,color.END,C))
 
+
+def honeypot(web):
+    title()
     #print(R+'    ===================================')
-    print(R+'\n     H O N E Y P O T   D E T E C T O R')
-    print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›')
+    #print(R+'\n     H O N E Y P O T   D E T E C T O R')
+    #print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·‹›')
                  
     print(GR+' [*] Configuring APi request...')
     time.sleep(0.7)
     print(O+' [!] Reading APi Key...')
+    requests = session()
     if SHODAN_API_KEY != '':
         print(G+' [+] Key Found : '+O+SHODAN_API_KEY)
         web0 = web.split('//')[1]

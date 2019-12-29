@@ -128,7 +128,7 @@ class VainShell(Cmd):
                 try:
                     if ".val" in session or "--val" in session:
                         session = session.replace("--val","").strip()
-                        print(session)
+                        #print(session)
                         self.sessionhelper(session)
                         print(" [+] Restored VAL session: {}".format(session))
                     else:
@@ -667,7 +667,7 @@ def main():
             prnt.bannerbelownew()
         VainShell().cmdloop()
         #print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
-        print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, mind strider")
+        print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, my chosen")
 
 if __name__ == '__main__':
     main()

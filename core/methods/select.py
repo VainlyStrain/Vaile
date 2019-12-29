@@ -199,7 +199,8 @@ def list(arg,display):
                     "__init__" not in module2 and "colors" not in module2 and "wafimpo" not in module2 and "DNSDumpsterAPI" not in module2 and "Form" not in module2 and "uri" not in module2 and "Crawler" not in module2 and "subdom0x00" not in module2 and "errorsql" not in module2 and "blindsql" not in module2 and "files.subdom" not in module2 and "fileo.subdom" not in module2 and "signatures" not in module2):
                 j = imp.import_module(module2)
                 i = j.searchinfo
-                names.append(module2.split(".")[-1])
+                #names.append(module2.split(".")[-1])
+                names.append(module2)
                 descs.append(i)
                 if "ActiveRecon" in module2:
                     activenames.append(module2.split(".")[-1])
@@ -288,6 +289,29 @@ def search(inp):
     names = []
     descs = []
 
+    passivenames = []
+    passivedescs = []
+    activenames = []
+    activedescs = []
+    discnames = []
+    discdescs = []
+    scannames = []
+    scandescs = []
+    portnames = []
+    portdescs = []
+    crawlnames = []
+    crawldescs = []
+    misnames = []
+    misdescs = []
+    brutenames = []
+    brutedescs = []
+    severenames = []
+    severedescs = []
+    sploitnames = []
+    sploitdescs = []
+    aidnames = []
+    aiddescs = []
+
     def filematch(id, filenames):
         patt = '.*{}.*'.format(id)
         found = []
@@ -344,18 +368,85 @@ def search(inp):
                     i = j.searchinfo
                     names.append(parsedfile.split(".")[-1])
                     descs.append(i)
+                    if "ActiveRecon" in parsedfile:
+                        activenames.append(parsedfile.split(".")[-1])
+                        activedescs.append(i)
+                    elif "PassiveRecon" in parsedfile:
+                        passivenames.append(parsedfile.split(".")[-1])
+                        passivedescs.append(i)
+                    elif "InfoDisclose" in parsedfile:
+                        discnames.append(parsedfile.split(".")[-1])
+                        discdescs.append(i)
+                    elif "ScanningEnumeration" in parsedfile and "0x01-PortScanning" not in parsedfile and "0x02-WebCrawling" not in parsedfile:
+                        scannames.append(parsedfile.split(".")[-1])
+                        scandescs.append(i)
+                    elif "ScanningEnumeration" in parsedfile and "0x01-PortScanning" in parsedfile:
+                        portnames.append(parsedfile.split(".")[-1])
+                        portdescs.append(i)
+                    elif "ScanningEnumeration" in parsedfile and "0x02-WebCrawling" in parsedfile:
+                        crawlnames.append(parsedfile.split(".")[-1])
+                        crawldescs.append(i)
+                    elif "PassiveRecon" in parsedfile:
+                        names.append(parsedfile.split(".")[-1])
+                        descs.append(i)
+                    elif "SploitLoot" in parsedfile:
+                        sploitnames.append(parsedfile.split(".")[-1])
+                        sploitdescs.append(i)
+                    elif "Aid" in parsedfile:
+                        aidnames.append(parsedfile.split(".")[-1])
+                        aiddescs.append(i)
+                    elif "VlnAnalysis.Severe" in parsedfile:
+                        severenames.append(parsedfile.split(".")[-1])
+                        severedescs.append(i)
+                    elif "VlnAnalysis.Other" in parsedfile:
+                        brutenames.append(parsedfile.split(".")[-1])
+                        brutedescs.append(i)
+                    elif "VlnAnalysis.Misconfig" in parsedfile:
+                        misnames.append(parsedfile.split(".")[-1])
+                        misdescs.append(i)
             except ImportError:
                 pass
 
-    t = table.Texttable()
-    headings = ["Modvle", "Desc."]
-    t.header(headings)
-    t.set_chars(["—","|","+","—"])
-    t.set_deco(table.Texttable.HEADER)
-    for row in zip(names, descs):
-        t.add_row(row)
-    s = t.draw()
-    print("\n" + s + "\n")
+    if len(passivenames) > 0 or len(activenames) > 0 or len(discdescs) > 0:
+        prnt.posint("Phase 1")
+        if len(passivenames) > 0:
+            cprint("OSINT/Footprinting: ","Passive Recon")
+            listdisplay(passivenames, passivedescs)
+        if len(activenames) > 0:
+            cprint("OSINT/Footprinting: ","Active Recon")
+            listdisplay(activenames, activedescs)
+        if len(discnames) > 0:
+            cprint("OSINT/Footprinting: ","Information Disclosure")
+            listdisplay(discnames, discdescs)
+    if len(scannames) > 0 or len(portnames) > 0 or len(crawldescs) > 0:
+        prnt.pscan("Phase 2")
+        if len(scannames) > 0:
+            cprint("Scanning/Enumeration: ","General Scanning")
+            listdisplay(scannames, scandescs)
+        if len(portnames) > 0:
+            cprint("Scanning/Enumeration: ","Port Scanners")
+            listdisplay(portnames, portdescs)
+        if len(crawldescs) > 0:
+            cprint("Scanning/Enumeration: ","Web Crawlers")
+            listdisplay(crawlnames, crawldescs)
+    if len(severenames) > 0 or len(misnames) > 0 or len(brutedescs) > 0:
+        prnt.pvln("Phase 3")
+        if len(misnames) > 0:
+            cprint("Vulnerability Analysis: ","Misconfiguration")
+            listdisplay(misnames, misdescs)
+        if len(severenames) > 0:
+            cprint("Vulnerability Analysis: ","Severe Issues")
+            listdisplay(severenames, severedescs)
+        if len(brutedescs) > 0:
+            cprint("Vulnerability Analysis: ","Weak Credentials")
+            listdisplay(brutenames, brutedescs)
+    if len(sploitdescs) > 0:
+        prnt.psploit("Phase 4")
+        cprint("Exploitation: ","Exploits")
+        listdisplay(sploitnames, sploitdescs)
+    if len(aidnames) > 0:
+        print("\nAdditional Modules")
+        listdisplay(aidnames, aiddescs)
 
 def bareimport(inp):
     success = False
