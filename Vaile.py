@@ -117,6 +117,7 @@ class VainShell(Cmd):
     def do_sessions(self, inp):
         if "load" in inp:
             b = varis.targets
+            om = varis.module
             varis.targets = []
             #for i in varis.targets:
             #    varis.targets.remove(i)
@@ -131,6 +132,8 @@ class VainShell(Cmd):
                         #print(session)
                         self.sessionhelper(session)
                         print(" [+] Restored VAL session: {}".format(session))
+                        if om is not "":
+                            self.do_load(om)
                     else:
                         load(session)
                         print(" [+] Restored session: {}.".format(session))
