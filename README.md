@@ -307,7 +307,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.1.5-0 [latest release] [#stable]
+v2.1.5-1 [latest release] [#stable]
 ```
 
 ### Disclaimer:
