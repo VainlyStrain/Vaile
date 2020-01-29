@@ -120,6 +120,7 @@ def information(mod):
         print(i + "\n\n\033[4mOptions\033[0m\n")
         i = j.properties
         names, descs, vals = display(i, names, descs, vals)
+        return (j.info, j.properties)
     except ImportError:
         print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Incorrect module: 'info' string missing.")
 
@@ -137,7 +138,10 @@ def opts(mod):
         print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Incorrect module: 'properties' dictionary missing.")
 
 
-def list(arg,display):
+def mlist(arg,display):
+    return list(arg,display,single=False)
+
+def list(arg,display,single=True):
     names = []
     descs = []
     dir = ""
@@ -282,7 +286,10 @@ def list(arg,display):
         if len(aidnames) > 0:
             print("\nAdditional Modules")
             listdisplay(aidnames, aiddescs)
-    return names
+    if single:
+        return names
+    else:
+        return (passivenames, activenames, discnames, scannames, portnames, crawlnames, misnames, severenames, brutenames, sploitnames, aidnames)
 
 
 def search(inp):

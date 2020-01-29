@@ -44,8 +44,9 @@ global vas
 global dlist
 global interface
 
-version = "2.1"
-e_version = "2.1.5-1#dev"
+version = "2.2"
+e_version = "2.2.1-5#pre"
+r_version = "2.2.1-5"
 module = ""
 targets = []
 processes = 8

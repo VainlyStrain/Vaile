@@ -20,11 +20,15 @@ _____, ___
 import os 
 import sys
 
-script = "Vaile.py"
+script = "vsconsole.py"
+app = "Vaile"
 
 if len(sys.argv) > 1:
-    for i in range(1, len(sys.argv)):
-        script += " {}".format(sys.argv[i])
-        
-os.system("cd /opt/Vaile ; python3 {}".format(script))
- 
+    if "--app" not in sys.argv:
+        for i in range(1, len(sys.argv)):
+            script += " {}".format(sys.argv[i])
+        os.system("cd /opt/Vaile ; sudo python3 -B {}".format(script))
+    else:
+        os.system("cd /opt/Vaile ; python3 -B {}".format(app))
+else:
+    os.system("cd /opt/Vaile ; sudo python3 -B {}".format(script))

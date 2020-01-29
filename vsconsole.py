@@ -176,7 +176,7 @@ class VainShell(Cmd):
   Clear the terminal using the native 'clear' command.
 """)
 
-    def do_tor(self, inp):
+    def do_tor(self, inp, shell=True):
         try:
             initv = varis.initip == ""
             acc = False
@@ -193,7 +193,10 @@ class VainShell(Cmd):
                         print(" [+] Tor > ON")
                     else:
                         varis.tor = False
-                        start = input(" [?] Do you want to start the Tor service? (enter if not) :> ")
+                        if shell:
+                            start = input(" [?] Do you want to start the Tor service? (enter if not) :> ")
+                        else:
+                            start = "yes"
                         if start is not "":
                             try:
                                 os.system("systemctl start tor")
@@ -205,7 +208,10 @@ class VainShell(Cmd):
                     print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Starting Tor service failed: Initial IP not set."+"\033[0m" + C)
             elif "off" in inp.lower():
                 torpipe(False)
-                stop = input(" [?] Do you want to stop the Tor service? (enter if not) :> ")
+                if shell:
+                    stop = input(" [?] Do you want to stop the Tor service? (enter if not) :> ")
+                else:
+                    stop = "yes"
                 if stop is not "":
                     try:
                         os.system("systemctl stop tor")
@@ -465,11 +471,13 @@ class VainShell(Cmd):
   [!] VAL "none" for no value ("")
 """)
 
-    def do_info(self, inp):
+    def do_info(self, inp, gui=False):
         if varis.module == "":
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No module loaded.")
         else:
-            select.information(varis.module)
+            info = select.information(varis.module)
+            if gui:
+                return info
 
     def help_info(self):
         print("""

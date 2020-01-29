@@ -14,6 +14,9 @@
   Pentest framework based on TIDoS.
 </p>
 
+> __IMPORTANT__:
+>
+> The new Qt5 interface is WIP and preview only ; there are still unimplemented features, making it impossible to attack. Use vsconsole for serious use.
 
 ### Highlights :-
 Here is some light on what the framework is all about:
@@ -39,6 +42,7 @@ The main differences between Vaile and TIDoS are:
 - [x] Anonymity: Attacking through Tor is possible (not yet everywhere)
 - [x] Module Completion: Some modules have been feature-extended (e.g. more evasion, supporting more than 1 query parameter)
 - [x] Some new modules: arpscan
+- [x] A Graphical User Interface for easier interaction with the toolkit
 
 ### Installation :-
 
@@ -307,7 +311,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.1.5-1 [latest release] [#stable]
+v2.2.1-5 [latest release] [#stable]
 ```
 
 ### Disclaimer:

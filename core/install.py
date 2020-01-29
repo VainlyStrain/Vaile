@@ -37,8 +37,8 @@ os.system("pip3 install -r requirements.txt")
 
 print(" [+] Installing Vaile...")
 os.system('mkdir -v -p /opt/Vaile/')
-os.system('cp -r -v * /opt/Vaile/')
-os.system('cp -v tmp/Vaile /usr/bin/Vaile')
+os.system('cp -r -v ../* /opt/Vaile/')
+os.system('cp -v ../tmp/Vaile /usr/bin/Vaile')
 os.system('chmod -R 755 /opt/Vaile/*')
 os.system('chmod -v 755 /usr/bin/Vaile')
 
