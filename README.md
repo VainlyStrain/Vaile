@@ -24,9 +24,9 @@ Here is some light on what the framework is all about:
 - [x] Has 5 main phases, subdivided into __14 sub-phases__ consisting a total of __108 modules__.
 - [x] Reconnaissance Phase has 50 modules of its own (including active and passive recon, information disclosure modules).
 - [x] Scanning & Enumeration Phase has got 16 modules (including port scans, WAF analysis, etc)
-- [x] Vulnerability Analysis Phase has 37 modules (including most common vulnerabilites in action).
+- [x] Vulnerability Analysis Phase has 37 modules (including most common vulnerabilities in action).
 - [x] Exploits Castle has only 1 exploit. `(purely developmental)`
-- [x] And finally, Auxillaries have got 4 modules. `more under development`
+- [x] And finally, Auxiliaries have got 4 modules. `more under development`
 - [x] All four phases each have an `Auto-Awesome` module which automates every module for you.
 - [x] Since 2.1: huge performance boost through parallelisation in various modules
 - [x] Piping Attacks through Tor (not implemented everywhere yet)
