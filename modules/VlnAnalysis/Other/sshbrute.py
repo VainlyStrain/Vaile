@@ -33,14 +33,14 @@ def sshbrute(web):
     try:
         print(GR+' [*] Testing target...')
         ip = socket.gethostbyname(web)
-        m = input(O+' [#] Use IP '+R+str(ip)+O+'? (y/n) :> ')
+        m = input(O+' [§] Use IP '+R+str(ip)+O+'? (y/n) :> ')
         if m == 'y' or m == 'Y':
             pass
         elif m == 'n' or m == 'N':
-            ip = input(O+' [#] Enter IP :> ')
+            ip = input(O+' [§] Enter IP :> ')
 
         print(G+' [+] Target appears online...')
-        port = input(GR+' [#] Enter the port (eg. 22) :> ')
+        port = input(GR+' [§] Enter the port (eg. 22) :> ')
 
         try:
             with open('files/brute-db/ssh/ssh_defuser.lst','r') as users:

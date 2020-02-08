@@ -42,7 +42,7 @@ def getconinfo(domain):
     try:
 
         if FULLCONTACT_API_KEY != '':
-            print(G+' [+] Found API Key : '+O+FULLCONTACT_API_KEY)
+            print(O+' [+] Found API Key :'+C+color.TR3+C+G+FULLCONTACT_API_KEY+C+color.TR2+C)
             base_url = 'https://api.fullcontact.com/v2/company/lookup.json'
             print(GR+' [*] Looking up info...')
             time.sleep(0.7)
@@ -51,10 +51,10 @@ def getconinfo(domain):
 
             if resp.status_code == 200:
 
-                print(G+' [+] Found domain info!')
+                print(G+' [+] Found domain info!'+C+color.TR2+C)
                 w = resp.text.encode('ascii', 'ignore')
                 quest = w.splitlines()
-                print(O+' [!] Parsing info...\n')
+                print(O+' [!] Parsing info...'+C+'\n')
                 print(R+' [+] REPORT :-\n')
                 time.sleep(1)
                 for q in quest:
@@ -74,10 +74,10 @@ def getconinfo(domain):
                         if w1.lower() == 'keywords':
                             print(C+'\n   [+] '+w1+' : '+GR+w2)
                         else:
-                            print(O+'\n [+] '+w1+' :-'+'\n')
+                            print(C+'\n [+] '+w1+' :-'+'\n')
 
             else:
-                print(R+' [-] Did not find any info about domain '+O+domain)
+                print(R+' [-] Did not find any info about domain '+O+domain+C)
                 print(R+' [+] Try with another one...')
 
         else:
@@ -87,7 +87,7 @@ def getconinfo(domain):
     except Exception as e:
         print(R+' [-] Encountered Exception : '+str(e))
 
-    print(G+'\n [+] Public Contact Info Module Completed!\n')
+    print(G+'\n [+] Public Contact Info Module Completed!'+C+color.TR2+C+'\n')
 
 def attack(web):
     getconinfo(web)

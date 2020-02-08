@@ -121,12 +121,12 @@ def openredirect(web):
 
     try:
         if properties["PARAM"][1] == " ":
-            param = input(O+' [#] Scope parameter to test (eg. /redirect.php?site=foo) :> ')
+            param = input(O+' [§] Scope parameter to test (eg. /redirect.php?site=foo) :> ')
         else:
             param = properties["PARAM"][1]
         if '?' in param and '=' in param:
             if param.startswith('/'):
-                m = input(GR+'\n [!] Your path starts with "/".\n [#] Do you mean root directory? (Y/n) :> ')
+                m = input(GR+'\n [!] Your path starts with "/".\n [§] Do you mean root directory? (Y/n) :> ')
                 if m == 'y':
                     web00 = web + param
                 elif m == 'n':
@@ -137,7 +137,7 @@ def openredirect(web):
                 web00 = web + '/' + param
         else:
             print(R+' [-] Your input does not match a parameter...')
-            param = input(O+' [#] Enter paramter to test :> ')
+            param = input(O+' [§] Enter paramter to test :> ')
 
         if properties["PARALLEL"][1] == " ":
             pa = input(" [?] Parallel Attack? (enter if not) :> ")
@@ -155,7 +155,7 @@ def openredirect(web):
 
         if properties["DICT"][1] == " ":
             print(O+' [!] Enter path to payload file '+R+'(Default: files/payload-db/openredirect_payloads.lst)')
-            fi = input(O+' [#] Your input (Press Enter if default) :> ')
+            fi = input(O+' [§] Your input (Press Enter if default) :> ')
         elif properties["DICT"][1].lower() == "none":
             fi = ""
         else:
@@ -172,7 +172,7 @@ def openredirect(web):
                 fi = 'files/payload-db/openredirect_payloads.lst'
                 getPayloads0x00(fi)
         if properties["COOKIE"][1] == " ":
-            input_cookie = input("\n [#] Got any cookies? [just enter if none] :> ")
+            input_cookie = input("\n [§] Got any cookies? [just enter if none] :> ")
         elif properties["COOKIE"][1].lower() == "none":
             input_cookie = ""
         else:

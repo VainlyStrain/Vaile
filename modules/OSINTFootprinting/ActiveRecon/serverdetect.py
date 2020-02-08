@@ -58,9 +58,9 @@ def serverdetect(web):
     web = web.replace('http://','')
     try:
         ip_addr = socket.gethostbyname(web)
-        print(G+' [+] Server detected online...')
+        print(G+' [+] Server detected online...'+C+color.TR2+C)
         time.sleep(0.5)
-        print(G+' [+] Server IP :> '+ip_addr)
+        print(O+' [+] Server IP :>'+C+color.TR3+C+G+ip_addr+C+color.TR2+C)
     except:
         print(R+' [-] Server seems down...')
 
@@ -71,15 +71,15 @@ def serverdetect(web):
         r = requests.get(web)
         header = r.headers['Server']
         if 'cloudflare' in header:
-            print(O+' [+] The website is behind Cloudflare.')
-            print(G+' [+] Server : Cloudflare')
+            print(C+' [+] The website is behind Cloudflare.')
+            print(G+' [+] Server : Cloudflare'+C+color.TR2+C)
             time.sleep(0.4)
-            print(O+' [+] Use the "Cloudflare" VulnLysis module to try bypassing Clouflare...')
+            print(O+' [+] Use the "Cloudflare" VulnLysis module to try bypassing Clouflare...'+C)
 
         else:
-            print(B+' [+] Server : ' +C+header)
+            print(G+' [+] Server : '+header+C+color.TR2+C)
         try:
-            print(O+' [+] Running On : ' +G+ r.headers['X-Powered-By'])
+            print(O+' [+] Running On :'+C+color.TR3+C+G+ r.headers['X-Powered-By']+C+color.TR2+C)
         except:
             pass
     except:

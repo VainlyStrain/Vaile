@@ -29,7 +29,7 @@ import core.variables as vars
 import core.methods.print as prnt
 from core.methods.print import cprint
 
-from core.Core.colors import R, B, C, color
+from core.Core.colors import R, B, C, color, O, G
 from core.methods.creds import attackdrop
 
 info = "Core methods for module handling."
@@ -74,7 +74,8 @@ def set(mod, param, value):
         try:
             j = imp.import_module(vars.module)
             j.properties[param][1] = value
-            print("{} > {}".format(param, value))
+            #print("{} > {}".format(param, value))
+            print(O+param+C+color.TR3+C+G+value+C+color.TR2+C)
         except ImportError:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Incorrect module: 'properties' dictionary missing.")
     except KeyError:

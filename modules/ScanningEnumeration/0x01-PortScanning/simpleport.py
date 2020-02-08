@@ -20,6 +20,7 @@ from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
 from core.Core.colors import *
+from core.methods.print import summary
 
 info = "A simple port scanner."
 searchinfo = "Simple Port Scanner"
@@ -34,7 +35,7 @@ def portloop(portlist, host, verbose):
         else:
             response = check_port(host, p)
         if response == 0:
-            print(''+G+' [!] Port ' +O+ str(p) +G+ ' detected Open !')
+            print(''+O+' [!] Port ' + str(p)+color.TR3 +G+ ' detected Open !'+color.TR2 + C)
             open.append(p)
         else:
             if verbose:
@@ -86,11 +87,11 @@ def scan0x00(host):
     from core.methods.print import pscan
     pscan("simple port scanner")
     if properties["INIT"][1] == " ":
-        start_port = input(O+' [#] Enter initial port :> ')
+        start_port = input(C+' [§] Enter initial port :> ')
     else:
         start_port = properties["INIT"][1]
     if properties["FIN"][1] == " ":
-        end_port = input(O+' [#] Enter ending port :> ')
+        end_port = input(C+' [§] Enter ending port :> ')
     else:
         end_port = properties["FIN"][1]
 
@@ -99,8 +100,8 @@ def scan0x00(host):
 
     try:
         ip = socket.gethostbyname(host)
-        print(G+'\n [+] Target server detected up and running...')
-        print(GR+' [*] Preparing for scan...')
+        print(G+'\n [+] Target server detected up and running...'+C+color.TR2+C)
+        print(O+' [*] Preparing for scan...'+C)
         pass
     except:
         print(R+' [-] Server not responding...')
@@ -112,18 +113,18 @@ def scan0x00(host):
     closed_ports = []
 
     if properties["VERBOSE"][1] == " ":
-        mn = input(O+'\n [*] Do you want a verbose output (enter if not) :> ')
+        mn = input(C+'\n [?] Do you want a verbose output (enter if not) :> ')
         verbose = mn is not ""
     else:
         verbose = properties["VERBOSE"][1] == "1"
     if verbose:
-        print(''+G+'\n [+] Verbose mode selected !\n')
+        print(''+P+'\n [+] Verbose mode selected !\n')
         print(GR+" [!] Scanning %s from port %s - %s: " % (host, start_port, end_port))
-    print(B+" [*] Scanning started at %s" %(time.strftime("%I:%M:%S %p")))
+    print(G+" [*] Scanning started at %s" %(time.strftime("%I:%M:%S %p"))+C+color.TR2+C)
     starting_time = time.time()
     try:
         if verbose:
-            print(O+" [*] Scan in progress..")
+            print(O+" [*] Scan in progress.."+C)
             time.sleep(0.8)
         portrange = range(start_port, end_port+1)
         prtlst = listsplit(portrange, round(len(portrange)/processes))
@@ -135,47 +136,50 @@ def scan0x00(host):
                 open_ports += j[0]
                 closed_ports += j[1]
 
-        print(G+"\n [+] Scanning completed at %s" %(time.strftime("%I:%M:%S %p")))
+        print(G+"\n [+] Scanning completed at %s" %(time.strftime("%I:%M:%S %p"))+C+color.TR2+C)
         ending_time = time.time()
         total_time = ending_time - starting_time
-        print(G+' [*] Preparing report...\n')
+        print(P+' [*] Preparing report...\n'+C)
         time.sleep(1)
-        print(O+' ——·+-------------+')
-        print(O+'    [ SCAN REPORT ]    simplescan')
-        print(O+'    +-------------+   -------------')
-        print(O+'             ')
+        #print(O+' ——·+-------------+')
+        #print(O+'    [ SCAN REPORT ]    simplescan')
+        #print(O+'    +-------------+   -------------')
+        #print(O+'             ')
+        #print()
+        openports = "   {}{}{}{}{}{}{}{} ports open.".format(color.TR5,C, G, str(len(open_ports)), color.END, color.TR2, color.END, color.CURSIVE)
+        summary("simpleport", openports)
         print()
-        print(O+'    +--------+----------+')
-        print(O+'    |  '+GR+'PORT  '+O+'|  '+GR+'STATE   '+O+'|')
-        print(O+'    +--------+----------+')
+        print(P+'    +--------+----------+')
+        print(P+'    |  '+C+'PORT'+P+'  '+'|  '+C+'STATE'+P+'   '+'|')
+        print(P+'    +--------+----------+')
 
         if open_ports:
             for i in sorted(open_ports):
                 c = str(i)
                 if len(c) == 1:
-                    print(O+'    |   '+C+c+O+'    |   '+G+'OPEN   '+O+'|')
-                    print(O+'    +--------+----------+')
+                    print(P+'    |   '+C+c+P+'    |   '+C+'OPEN'+P+'   '+'|')
+                    print(P+'    +--------+----------+')
                     time.sleep(0.2)
                 elif len(c) == 2:
-                    print(O+'    |   '+C+c+'   '+O+'|   '+G+'OPEN   '+O+'| ')
-                    print(O+'    +--------+----------+')
+                    print(P+'    |   '+C+c+P+'   '+P+'|   '+C+'OPEN'+P+'   '+'| ')
+                    print(P+'    +--------+----------+')
                     time.sleep(0.2)
                 elif len(c) == 3:
-                    print(O+'    |  '+C+c+'   '+O+'|   '+G+'OPEN   '+O+'| ')
-                    print(O+'    +--------+----------+')
+                    print(P+'    |  '+C+c+P+'   '+'|   '+C+'OPEN'+P+'   '+'| ')
+                    print(P+'    +--------+----------+')
                     time.sleep(0.2)
                 elif len(c) == 4:
-                    print(O+'    |  '+C+c+'  '+O+'|   '+G+'OPEN   '+O+'| ')
-                    print(O+'    +--------+----------+')
+                    print(P+'    |  '+C+c+P+'  '+'|   '+C+'OPEN'+P+'   '+'| ')
+                    print(P+'    +--------+----------+')
                     time.sleep(0.2)
                 elif len(c) == 5:
-                    print(O+'    | '+C+c+'  '+O+'|   '+G+'OPEN   '+O+'| ')
-                    print(O+'    +--------+----------+')
+                    print(P+'    | '+C+c+P+'  '+'|   '+C+'OPEN'+P+'   '+'| ')
+                    print(P+'    +--------+----------+')
                     time.sleep(0.2)
         else:
             print(R+"\n [-] No open ports found.!!\n")
         print(B+'\n [!] ' + str(len(closed_ports)) + ' closed ports not shown')
-        print(G+" [+] Host %s scanned in %s seconds\n" %(host, total_time))
+        print(G+" [+] Host %s scanned in %s seconds" %(host, total_time)+C+color.TR2+C+"\n")
 
     except KeyboardInterrupt:
         print(R+"\n [-] User requested shutdown... ")

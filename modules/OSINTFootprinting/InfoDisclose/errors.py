@@ -33,8 +33,8 @@ def check0x00(content,url):
         print(C+' [!] Finding '+B+pattern+C+' ...')
         time.sleep(0.005)
         if search(pattern, content):
-            print(G+' [!] Possible error at '+O+url)
-            print(G+" [+] Found : \"%s\" at %s" % (pattern,url))
+            print(O+' [!] Possible error at '+C+color.TR3+C+G+url+C+color.TR2+C)
+            print(G+" [+] Found : \"%s\" at %s" % (pattern,url)+C+color.TR2+C)
             found = 0x01
 
 def request(url):
@@ -43,7 +43,7 @@ def request(url):
     links = [url]
     po = url.split('//')[1]
     for w in links:
-        print(GR+' [*] Scraping Page: '+O+url)
+        print(GR+' [*] Scraping Page: '+O+url+C)
         req = requests.get(w).text
         check0x00(req, url)
 
@@ -62,7 +62,7 @@ def request(url):
 
     try:
         for uurl in urls:
-            print(G+"\n [+] Scraping Page: "+O+uurl)
+            print("\n"+O+" [+] Scraping Page: "+C+color.TR3+C+G+uurl+C+color.TR2+C)
             req = requests.get(uurl).text
             check0x00(req, url)
 
@@ -72,7 +72,7 @@ def request(url):
     if found == 0x00:
         print(R+'\n [-] No Errors found in Source Code!\n')
 
-    print(G+' [+] Scraping Done!')
+    print(G+' [+] Scraping Done!'+C+color.TR2+C)
 
 def errors(web):
 
@@ -81,7 +81,7 @@ def errors(web):
     #print(R+'       =========================')
     from core.methods.print import pleak
     pleak("error hunter")
-    print(O+'  [This module covers up Full Path Disclosures]\n')
+    print(C+'  [This module covers up Full Path Disclosures]\n')
     print(GR+' [*] Making the request...')
     time.sleep(0.5)
     request(web)

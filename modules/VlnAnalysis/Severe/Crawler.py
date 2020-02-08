@@ -12,7 +12,7 @@
 
 import urllib.request
 from bs4 import BeautifulSoup
-import modules.VlnAnalysis.Severe.uri
+import modules.VlnAnalysis.Severe.uri as uri
 import re
 from core.Core.colors import *
 

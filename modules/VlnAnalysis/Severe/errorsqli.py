@@ -161,7 +161,7 @@ def auto0x00(web, parallel):
     print(B+'   [1] '+C+'Cookie Error Based Injection')
     print(B+'   [2] '+C+'User-Agent Error Based Injection')
     print(B+'   [3] '+C+'Auto Awesome Module (automated searching and exploiting)\n')
-    q = input(O+' [#] TID :> ')
+    q = input(O+' [§] TID :> ')
     if q == '3':
         print(GR+' [*] Launching Auto-Awesome Module...')
         errorsqlsearch(web)
@@ -196,7 +196,7 @@ def manual0x00(web, parallel, properties):
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·\n')
     requests = session()
     if properties["PARAM"][1] == " ":
-        bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /sqli/fetch.php?id=x)'+O+' :> ')
+        bug = input(O+' [§] Injectable Endpoint'+R+' (eg. /sqli/fetch.php?id=x)'+O+' :> ')
     else:
         bug = properties["PARAM"][1]
     choice = ""
@@ -277,10 +277,10 @@ def errorsqli(web, properties):
             else:
                 parallel = properties["PARALLEL"][1] == "1"
 
-            print(O+'\n [#] Enter the type you want to proceed:\n')
+            print(O+'\n [§] Enter the type you want to proceed:\n')
             print(B+'   [1] '+C+'Manual Mode')
             print(B+'   [2] '+C+'Automatic Mode\n')
-            p = input(O+' [#] TID :> ')
+            p = input(O+' [§] TID :> ')
             if p == '1':
                 print(GR+' [*] Initializing manual mode...')
                 manual0x00(web, parallel, properties)

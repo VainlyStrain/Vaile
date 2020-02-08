@@ -86,12 +86,12 @@ def ldap(web):
                   
     try:
         if properties["PARAM"][1] == " ":
-            web0 = input(O+' [#] Parameter path to test (eg. /lmao.php?foo=bar) :> ')
+            web0 = input(O+' [§] Parameter path to test (eg. /lmao.php?foo=bar) :> ')
         else:
             web0 = properties["PARAM"][1]
         if "?" in web0 and '=' in web0:
             if web0.startswith('/'):
-                m = input(GR+'\n [!] Your path starts with "/".\n [#] Do you mean root directory? (Y/n) :> ')
+                m = input(GR+'\n [!] Your path starts with "/".\n [§] Do you mean root directory? (Y/n) :> ')
                 if m.lower() == 'y':
                     web00 = web + web0
                 elif m.lower() == 'n':
@@ -127,8 +127,8 @@ def ldap(web):
         if(len(input_cookie) > 0):
             gen_headers['Cookie'] = input_cookie
         if properties["DICT"][1] == " ":
-            print(O+' [#] Enter the payloads file '+R+'(Default: files/payload-db/ldap_payloads.lst)...')
-            fi = input(O+' [#] Your input (Press Enter for default) :> ')
+            print(O+' [§] Enter the payloads file '+R+'(Default: files/payload-db/ldap_payloads.lst)...')
+            fi = input(O+' [§] Your input (Press Enter for default) :> ')
         elif properties["DICT"][1].lower() == "none":
             fi = ""
         else:

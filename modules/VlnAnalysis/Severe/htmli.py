@@ -62,8 +62,8 @@ def getFile0x00():
     try:
         print(GR+" [*] Importing filepath...")
         if properties["DICT"][1] == " ":
-            print(O+' [#] Enter path to file (default: files/payload-db/html_payloads.lst)...')
-            w = input(O+' [#] Your input (Press Enter if default) :> ')
+            print(O+' [§] Enter path to file (default: files/payload-db/html_payloads.lst)...')
+            w = input(O+' [§] Your input (Press Enter if default) :> ')
         elif properties["DICT"][1].lower() == "none":
             w = ""
         else:
@@ -119,7 +119,7 @@ def htmli(web):
 
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
     if properties["PARAM"][1] == " ":
-        param = input(O+' [#] Scope parameter (eg. /vuln/page.php?q=lmao) :> ')
+        param = input(O+' [§] Scope parameter (eg. /vuln/page.php?q=lmao) :> ')
     else:
         param = properties["PARAM"][1]
     if param.startswith('/') == False:

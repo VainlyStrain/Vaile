@@ -40,7 +40,7 @@ def mail0x00(url):
     links = [url]
     po = url.split('//')[1]
     for w in links:
-        print(GR+' [*] Scraping Page: '+O+url)
+        print(O+' [*] Scraping Page:'+C+color.TR3+C+G+url+C+color.TR2+C)
         req = requests.get(w).text
         check0x00(req)
 
@@ -59,7 +59,7 @@ def mail0x00(url):
 
     try:
         for uurl in urls:
-            print(G+"\n [+] Scraping Page: "+O+uurl)
+            print("\n"+O+" [+] Scraping Page:"+C+color.TR3+C+G+uurl+C+color.TR2+C)
             req = requests.get(uurl).text
             check0x00(req)
 
@@ -69,13 +69,13 @@ def mail0x00(url):
     if found == 0x00:
         print(R+'\n [-] No Emails found disclosed in plaintext in source code!\n')
 
-    print(G+' [+] Scraping Done!')
+    print(G+' [+] Scraping Done!'+C+color.TR2+C)
 
 def check0x00(req):
     comments = re.findall(signature,req)
     print(GR+" [*] Searching for Emails...")
     if comments:
-        print(G+'\n [+] Found Email(s):')
+        print('\n'+G+' [+] Found Email(s):'+C+color.TR2+C)
         for comment in comments:
             print(C+'   - '+comment)
             time.sleep(0.03)

@@ -31,7 +31,7 @@ def xsstrace0x00(target):
     pvln("xss tracer") 
                  
     if properties["PORT"][1] == " ":
-        port = input(O+' [#] Enter the port number to use (eg. 80) :> ')
+        port = input(O+' [§] Enter the port number to use (eg. 80) :> ')
     else:
         port = properties["PORT"][1]
 

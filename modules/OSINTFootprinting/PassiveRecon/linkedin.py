@@ -43,7 +43,7 @@ def getposts(web):
     try:
         print(GR+" [*] Finding LinkedIn Employees ...\n")
         google_it("site:linkedin.com employees "+site+"")
-        print(O+' [!] Pausing to avoid captcha...')
+        print(O+' [!] Pausing to avoid captcha...'+C)
         time.sleep(10)
 
         print(GR+' [*] Finding Linkedin company profiles...\n')

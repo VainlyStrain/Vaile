@@ -34,8 +34,8 @@ def commentssrc(web):
     #print(R+'    =================================')
     from core.methods.print import posintact
     posintact("comment scraper") 
-    print(O+' [It is recommended to run ScanEnum/Crawlers')
-    print(O+'       before running this module]\n')
+    print(C+' [It is recommended to run ScanEnum/Crawlers')
+    print(C+'       before running this module]\n')
     print(GR+' [*] Importing links...')
     po = web.split('//')[1]
     p = 'tmp/logs/'+po+'-logs/'+po+'-links.lst'
@@ -44,9 +44,9 @@ def commentssrc(web):
     for w in links:
         print(GR+' [*] Making the request...')
         req = requests.get(w).content
-        print(O+' [!] Setting parse parameters...')
+        print(C+' [!] Setting parse parameters...')
         comments = re.findall('<!--(.*)-->',req)
-        print(G+" [+] Searching for comments on page: "+O+web+'\n')
+        print(O+" [+] Searching for comments on page:"+C+color.TR3+C+G+web+C+color.TR2+C+'\n')
         for comment in comments:
             print(C+'   '+comment)
             time.sleep(0.03)
@@ -68,7 +68,7 @@ def commentssrc(web):
 
     try:
         for uurl in urls:
-            print(G+"\n [+] Searching for comments on page: "+O+uurl+'\n')
+            print(O+"\n [+] Searching for comments on page: "+C+color.TR3+C+G+uurl+C+color.TR2+C+'\n')
             req = requests.get(uurl)
             comments = re.findall('<!--(.*)-->',req.text)
             for comment in comments:
@@ -81,7 +81,7 @@ def commentssrc(web):
     if found == 0x00:
         print(R+' [-] No comments found in source code!')
 
-    print(G+' [+] Comments Scraping Done!')
+    print(G+' [+] Comments Scraping Done!'+C+color.TR2+C)
 
 def attack(web):
     commentssrc(web)

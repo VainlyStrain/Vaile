@@ -40,13 +40,13 @@ def revdns(web):
         res = result.splitlines()
         for r in res:
             print(r)
-            print(B+' [+] Received : '+O+r.split(',')[0].strip()+' => '+C+'('+r.split(',')[1].strip()+')')
+            print(O+' [+] Received :'+C+color.TR3+C+G+r.split(',')[0].strip()+' => '+C+'('+r.split(',')[1].strip()+')'+C+color.TR2+C)
             time.sleep(0.04)
             links.append(r)
 
         p = 'tmp/logs/'+web+'-logs/'+web+'-reverse-dns.lst'
         open(p,'w+')
-        print(B+' [!] Saving links...')
+        print(P+' [!] Saving links...'+C)
         time.sleep(1)
         for m in links:
             m = m + '\n'
@@ -54,7 +54,7 @@ def revdns(web):
             ile.write(m)
             ile.close()
         pa = os.getcwd()
-        print(G+' [+] Links saved under '+pa+'/'+p+'!')
+        print(C+' [+] Links saved under '+pa+'/'+p+'!')
         print('')
 
     else:

@@ -83,8 +83,8 @@ def getFile0x00():
     try:
         print(GR+' [*] Importing filepath...')
         if properties["DICT"][1] == " ":
-            print(O+' [#] Enter path to file (default: files/payload-db/crlf_payloads.lst)...')
-            w = input(O+' [#] Your input (Press Enter if default) :> ')
+            print(O+' [§] Enter path to file (default: files/payload-db/crlf_payloads.lst)...')
+            w = input(O+' [§] Your input (Press Enter if default) :> ')
         elif properties["DICT"][1].lower() == "none":
             w = ""
         else:
@@ -157,7 +157,7 @@ def crlf(web):
     success += check0x00(m, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201%0d%0aSet-Cookie: Infected_by=Drake')
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
     if properties["PARAM"][1] == " ":
-        param = input(O+' [#] Scope parameter (eg. /vuln/page.php?crlf=x) :> ')
+        param = input(O+' [§] Scope parameter (eg. /vuln/page.php?crlf=x) :> ')
     else:
         param = properties["PARAM"][1]
     if not param.startswith('/'):

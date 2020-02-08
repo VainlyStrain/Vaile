@@ -30,18 +30,18 @@ def piwebenum(web):
     posintact("(n)ping enumeration") 
     print(GR + ' [!] Pinging website...')
     time.sleep(0.5)
-    print(O+' [*] Using adaptative ping and debug mode with count 5...')
+    print(C+' [*] Using adaptative ping and debug mode with count 5...')
     time.sleep(0.4)
-    print(GR+' [!] Press Ctrl+C to stop\n'+C)
+    print(GR+' [!] Press Ctrl+C to stop\n'+color.END)
     os.system('ping -D -c 5 '+ web)
     print('')
     time.sleep(0.6)
-    print(O+' [*] Trying NPing (NMap Ping)...')
+    print(C+' [*] Trying NPing (NMap Ping)...')
     print(C+" [~] Result: \n")
     print('')
     text = requests.get('http://api.hackertarget.com/nping/?q=' + web).text
     nping = str(text)
-    print(G+ nping +'\n')
+    print(color.END+ nping +C+'\n')
 
 def attack(web):
     piwebenum(web)

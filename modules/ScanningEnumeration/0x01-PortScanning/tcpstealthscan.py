@@ -22,6 +22,7 @@ from multiprocessing import Pool, TimeoutError
 from core.methods.multiproc import listsplit
 from core.variables import processes
 from core.Core.colors import *
+from core.methods.print import summary
 
 info = "TCP Stealth Scanner."
 searchinfo = "TCP Stealth Scan"
@@ -32,11 +33,11 @@ def checkhost(ip): # Function to check if target is up
     conf.verb = 0 # Hide output
     try:
         ping = sr1(IP(dst = ip)/ICMP()) # Ping the target
-        print("\n\033[1;32m [+] Target server detected online...")
+        print("\n"+G+" [+] Target server detected online..."+C+color.TR2+C)
         time.sleep(0.6)
-        print(O+' [*] Beginning scan...')
+        print(O+' [*] Beginning scan...'+C)
     except Exception: # If ping fails
-        print("\n\033[91m [!] Couldn't Resolve Target")
+        print(R+"\n [!] Couldn't Resolve Target")
         print(" [!] Exiting...")
         quit()
 
@@ -56,16 +57,16 @@ def scanport(port, verbose, target):
         try:
             pktflags = SYNACKpkt.getlayer(TCP).flags
             if pktflags == SYNACK:
-                print(G+' [+] Cross Reference Flag SYN-ACK detected!')
+                print(G+' [+] Cross Reference Flag SYN-ACK detected!'+C+color.TR2+C)
                 ret = True
             else:
                 if verbose:
-                    print(R+' [!] No cross reference flag detected, port possibly closed...'+R+'')
+                    print(R+' [!] No cross reference flag detected, port possibly '+O+'closed'+C+R+'...'+'')
                 ret = False
         except:
             pass
         if verbose:
-            print(O+' [!] Constructing the RST flagged packet to be sent to reset the connection...')
+            print(P+' [!] Constructing the RST flagged packet to be sent to reset the connection...'+C)
             time.sleep(0.2)
         RSTpkt = IP(dst = target)/TCP(sport = srcport, dport = port, flags = "R")
         if verbose:
@@ -75,7 +76,7 @@ def scanport(port, verbose, target):
     except KeyboardInterrupt:
         print(''+R+' [-] User requested shutdown...')
         time.sleep(0.2)
-        print(O+' [*] Stopping jobs...')
+        print(O+' [*] Stopping jobs...'+C)
         RSTpkt = IP(dst = target)/TCP(sport = srcport, dport = port, flags = "R")
         send(RSTpkt)
         print(R+" [*] Exiting...")
@@ -87,11 +88,11 @@ def portloop(ports, verbose, target):
     for port in ports:
         status = scanport(port, verbose, target)
         if status == True:
-            print(G+" [+] Port " + O + str(port) + G+" detected Open !")
+            print(''+O+' [!] Port ' + str(port)+color.TR3 +G+ ' detected Open !'+color.TR2 + C)
             open.append(port)
         else:
             if verbose:
-                print(''+R+' [!] Port ' + str(port) + ' Closed')
+                print(''+R+' [!] Port ' +O+ str(port) +R+ ' detected Closed !')
             closed.append(port)
     return (open, closed)
 
@@ -105,18 +106,18 @@ def scan0x00(target):
         from core.methods.print import pscan
         pscan("tcp stealth scan")
         if properties["INIT"][1] == " ":
-            min_port = input(O+' [#] Enter initial port :> ')
+            min_port = input(C+' [§] Enter initial port :> ')
         else:
             min_port = properties["INIT"][1]
         if properties["FIN"][1] == " ":
-            max_port = input(O+' [#] Enter ending port :> ')
+            max_port = input(C+' [§] Enter ending port :> ')
         else:
             max_port = properties["FIN"][1]
         open_ports = []
         closed_ports = []
         ip_host = socket.gethostbyname(target)
         if properties["VERBOSE"][1] == " ":
-            chk = input(C+' [#] Do you want a verbose output? (enter if not) :> ')
+            chk = input(C+' [?] Do you want a verbose output? (enter if not) :> ')
             verbose = chk is not ""
         else:
             verbose = properties["VERBOSE"][1] == "1"
@@ -124,16 +125,16 @@ def scan0x00(target):
         try:
             print(GR+' [*] Checking port range...')
             if int(min_port) >= 0 and int(max_port) >= 0 and int(max_port) >= int(min_port) and int(max_port) <= 65536:
-                print('\033[1;32m [!] Port range detected valid...')
+                print(P+' [!] Port range detected valid...'+C)
                 time.sleep(0.3)
-                print(GR+' [*] Preparing for the the Scan...')
+                print(GR+' [*] Preparing for the scan...')
                 pass
             else:
-                print("\n\033[91m [!] Invalid Range of Ports")
+                print(R+"\n [!] Invalid Range of Ports")
                 print(" [!] Exiting...")
                 quit()
         except Exception:
-            print("\n\033[91m [!] Invalid Range of Ports")
+            print(R+"\n [!] Invalid Range of Ports")
             print(" [!] Exiting...")
             quit()
 
@@ -144,7 +145,7 @@ def scan0x00(target):
         RSTACK = 0x14
 
         checkhost(target)
-        print(O+" [*] Scanning initiated at " + strftime("%H:%M:%S") + "!\n")
+        print(G+" [!] Scanning initiated at " + strftime("%H:%M:%S") + "!"+C+color.TR2+C+"\n") # Confirm scan start
 
         with Pool(processes=processes) as pool:
             res = [pool.apply_async(portloop, args=(l,verbose,ip_host,)) for l in prtlst]
@@ -154,49 +155,47 @@ def scan0x00(target):
                 open_ports += j[0]
                 closed_ports += j[1]
 
-        print(O+"\n [!] Scanning completed at %s" %(time.strftime("%I:%M:%S %p")))
+        print(G+"\n [!] Scanning completed at %s" %(time.strftime("%I:%M:%S %p"))+C+color.TR2+C)
         ending_time = time.time()
         total_time = ending_time - starting_time
-        print(GR+' [*] Preparing report...\n')
+        print(P+' [*] Preparing report...\n'+C)
         time.sleep(1)
-        print(O+' ——·+-------------+')
-        print(O+'    [ SCAN REPORT ]    stealthscan')
-        print(O+'    +-------------+   --------------')
-        print(O+'             ')
-        print(O+'    +--------+------------------+')
-        print(O+'    |  '+GR+'PORT  '+O+'|       '+GR+'STATE      '+O+'|')
-        print(O+'    +--------+------------------+')
-
+        openports = "   {}{}{}{}{}{}{}{} ports open.".format(color.TR5,C, G, str(len(open_ports)), color.END, color.TR2, color.END, color.CURSIVE)
+        summary("tcp stealth", openports)
+        print()
+        print(P+'    +--------+------------------+')
+        print(P+'    |  '+GR+'PORT  '+P+'|       '+C+'STATE      '+P+'|')
+        print(P+'    +--------+------------------+')
         if open_ports:
 
             for i in sorted(open_ports):
 
                 c = str(i)
                 if len(c) == 1:
-                    print(O+'    |   '+C+c+O+'    |       '+G+'OPEN       '+O+'|')
-                    print(O+'    +--------+------------------+')
+                    print(P+'    |   '+C+c+P+'    |       '+C+'OPEN       '+P+'|')
+                    print(P+'    +--------+------------------+')
                     time.sleep(0.2)
                 elif len(c) == 2:
-                    print(O+'    |   '+C+c+'   '+O+'|       '+G+'OPEN       '+O+'|')
-                    print(O+'    +--------+------------------+')
+                    print(P+'    |   '+C+c+'   '+P+'|       '+C+'OPEN       '+P+'|')
+                    print(P+'    +--------+------------------+')
                     time.sleep(0.2)
                 elif len(c) == 3:
-                    print(O+'    |  '+C+c+'   '+O+'|       '+G+'OPEN       '+O+'|')
-                    print(O+'    +--------+------------------+')
+                    print(P+'    |  '+C+c+'   '+P+'|       '+C+'OPEN       '+P+'|')
+                    print(P+'    +--------+------------------+')
                     time.sleep(0.2)
                 elif len(c) == 4:
-                    print(O+'    |  '+C+c+'  '+O+'|       '+G+'OPEN       '+O+'|')
-                    print(O+'    +--------+------------------+')
+                    print(P+'    |  '+C+c+'  '+P+'|       '+C+'OPEN       '+P+'|')
+                    print(P+'    +--------+------------------+')
                     time.sleep(0.2)
                 elif len(c) == 5:
-                    print(O+'    | '+C+c+'  '+O+'|       '+G+'OPEN       '+O+'|')
-                    print(O+'    +--------+------------------+')
+                    print(P+'    | '+C+c+'  '+P+'|       '+C+'OPEN       '+P+'|')
+                    print(P+'    +--------+------------------+')
                     time.sleep(0.2)
-
+            print('')
         else:
             print(''+R+" [-] Sorry, No open ports found.!!")
-        print(O+'\n [!] ' + str(len(closed_ports)) + ' closed ports not shown')
-        print(C+" [!] Host %s scanned in %s seconds" %(target, total_time))
+        print(C+'\n [!] ' + str(len(closed_ports)) + ' closed ports not shown')
+        print(G+" [+] Host %s scanned in %s seconds" %(target, total_time)+C+color.TR2+C+"\n")
 
     except KeyboardInterrupt:
         print(R+"\n [-] User Requested Shutdown...")

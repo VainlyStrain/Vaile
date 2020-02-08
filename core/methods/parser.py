@@ -28,11 +28,13 @@ class VaileParser(argparse.ArgumentParser):
         self.print_usage(sys.stderr)
         self.exit(2, '{}[-]\033[0m\033[1m Invalid/missing params\033[0m\n{}[HINT]\033[0m\033[0m {}\n'.format(R, R, message))
     def print_help(self):
-        print('''{}Vsynta.:{} {}Vaile{} [-v VIC] [-p] [-a CA] [-s] [-f] [-l M] [-h] [-q] [--app]
+        print('''{}Vsynta.:{} {}Vaile{} [-v VIC] [-p] [-a CA] [-s] 
+          [-f] [-l M] [-h] [-q] 
+        [--app]
 
   -v VIC, --victim VIC  {}Target to attack per cli{}
   -l M, --load M        {}Module to load per cli{}
-  -a CA, --list CA      {}List modules of CAT{}
+  -a CA, --list CA      {}List modules of CA{}
   -p, --tor             {}Pipe Attacks thro. Tor?{}
   -s, --session         {}Is VIC a session file?{}
   -q, --quiet           {}Start Console quietly{}
@@ -43,7 +45,7 @@ class VaileFormatter(argparse.RawDescriptionHelpFormatter):
     def add_usage(self, usage, actions, groups, prefix=None):
         if prefix is None:
             prefix = RD + 'Vsynta ' + color.END
-            return super(VaileFormatter, self).add_usage("{}Vaile{} [-v VIC] [-p] [-a CA] [-s] [-f] [-l M] [-h] [-q] [--app]".format(RB,color.END), actions, groups, prefix)
+            return super(VaileFormatter, self).add_usage("{}Vaile{} [-v VIC] [-p] [-a CA] [-s]\n          [-f] [-l M] [-h] [-q]\n        [--app]".format(RB,color.END), actions, groups, prefix)
 
 def build_parser():
     p = VaileParser(formatter_class=VaileFormatter, add_help=False)

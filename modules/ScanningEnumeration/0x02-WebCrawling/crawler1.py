@@ -55,9 +55,9 @@ def crawler10x00(web):
     #print(R+'    ==========================\n')
     from core.methods.print import pscan
     pscan("crawler (depth 1)")
-    print(O+' [This module will fetch all links')
-    print(O+' from an online API and then crawl ')
-    print(O+'         them one by one]      ')
+    print(C+' [This module will fetch all links')
+    print(C+' from an online API and then crawl ')
+    print(C+'         them one by one]      ')
     time.sleep(0.4)
     print(''+GR+' [*] Parsing the web URL... ')
     time.sleep(0.3)
@@ -74,7 +74,7 @@ def crawler10x00(web):
     flag = 0x00
     for x in cis:
         try:
-            print(G+' [+] Crawling link :> '+ O + str(x))
+            print(O+' [+] Crawling link :>'+ C+color.TR3+C+G + str(x)+C+color.TR2+C)
             br.open(x)
             flag = 0x01
             crawled.append(x)
@@ -84,7 +84,7 @@ def crawler10x00(web):
 
     if flag == 0x00:
         print(R+' [-] Unable to find any links...')
-        print(O+' [+] Please use the second crawler... :)')
+        print(C+' [+] Please use the second crawler... :)')
 
     return crawled
 
@@ -94,23 +94,23 @@ def out(web, list0):
     print(GR+' [*] Writing found URLs to a file...')
     if os.path.exists('tmp/logs/'+web+'-logs/'+web+'-links.lst'):
         fil = open('tmp/logs/'+web+'-logs/'+web+'-links.lst','w+')
-        print(O+' [!] Sorting only scope urls...')
+        print(P+' [!] Sorting only scope urls...'+C)
         time.sleep(1)
         for lists in list0:
             if str(web) in lists:
                 fil.write("%s\n" % lists)
         mq = os.getcwd()
-        print(G+' [+] Links saved under '+O+mq+'tmp/logs/'+web+'-logs/'+web+'-links.lst')
+        print(O+' [+] Links saved under'+C+color.TR3+C+G+mq+'tmp/logs/'+web+'-logs/'+web+'-links.lst'+C+color.TR2+C)
 
     else:
         fil = open('tmp/logs/'+web+'-logs/'+web+'-links.lst','a')
-        print(O+' [!] Sorting only scope urls...')
+        print(C+' [!] Sorting only scope urls...')
         time.sleep(1)
         for lists in list0:
             if str(web) in lists:
                 fil.write("%s\n" % lists)
         mq = os.getcwd()
-        print(G+' [+] Links saved under '+O+mq+'tmp/logs/'+web+'-logs/'+web+'-links.lst')
+        print(O+' [+] Links saved under'+C+color.TR3+C+G+mq+'tmp/logs/'+web+'-logs/'+web+'-links.lst'+C+color.TR2+C)
 
 def crawler1(web):
 
@@ -118,7 +118,7 @@ def crawler1(web):
     time.sleep(0.5)
     q = crawler10x00(web)
     out(web, q)
-    print(G+' [+] Done!')
+    print(G+' [+] Done!'+C+color.TR2+C)
 
 def attack(web):
     crawler1(web)

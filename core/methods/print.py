@@ -90,36 +90,67 @@ ____, __{}
 
 
 
-vaile = """{}                      .
+vaile = '''{}                      |
+                      :   
+                      |   
                       .   
                       .   
                       .   
-                      .   
-                      .   
-{}____, __            {} ..   
-   + ;               ..   
-   .:,                       
+____, __             .|   
+   + ;               .|   
+   .{}:,                       
      ’                      
-    .              ;      
+    .              /      
     + ;           :,      
-    ;.           ,,       
-     ;          ,;, ' .   
-     ;         .;;. ;     
-     ’      ;  . ;..      
-          ';. '           
-         .;...,          
-    ~   Vaile ·›» {}"msf-python"   ~{}       
-    {}~  fork from{} Infected Drake  ~    
-              .'.         
-  5 Phases  |  {}v {}  |  {}108++ Modls
-                ;.               
+    ;.           /,       
+   {}  ;          /;' ;    
+     ;         /;{}|{}  : ^  
+     ’      /  . ;..  °   
+          '/; '           
+         ./ '.        
+          '.  ’
+         {}   '.
+              \\
+              .\\.    
+                \\.               
                  .,.      
                    .'.    
                   ''.;:     
-                    ...   
-                     : .  
+                    .|.   
+                     | .  
                      .    
-""".format(color.BOLD, color.END, color.BOLD, R, C, R, C, R, vars.version, C)
+'''.format(color.END, color.BOLD, color.END, color.CURSIVE, color.END, color.BOLD)
+
+vaile = '''{}                      |
+                      :   
+                      |   
+                      .   
+                      .   
+                      .   
+____, __             .|   
+   + ;               .|   
+   .{}:,                       
+     ’                      
+    .              /      
+    + ;           :,      
+    ;.           /,       
+   {}  ;          /;' ;    
+     ;         /;{}|{}  : ^  
+     ’      / {}:{}  ;..  °   
+          '/; \\           
+         ./ '. \\      {}|{}
+          '.  ’·    __\\,_
+         {}   '.      {}\\{}`{};{}{} 
+              \\      {}\\ {}
+              .\\.     {}V{}   
+                \\.               
+                 .,.      
+                   .'.    
+                  ''.;:     
+                    .|.   
+                     | .  
+                     .    
+'''.format(color.END, color.BOLD, color.END, color.CURSIVE, color.END, color.CURSIVE, color.END, color.CURSIVE, color.END, color.BOLD, color.END, color.BOLD, color.CURSIVE, color.END, color.BOLD, color.END, color.BOLD, color.END, color.BOLD)
 
 sp00k70b3r = """
       ___
@@ -183,7 +214,8 @@ def randomsg():
         return random.choice(msg_list.readlines()).strip()
 
 def bannerbelownew():
-    print("   Vaile {}{}{}".format(color.END, RB, vars.e_version) + C)
+    #print("   Vaile {}{}{}".format(color.END, RB, vars.e_version) + C)
+    print("   Vaile{}{}{}{}{}{}{}{}{}{}".format(color.END, color.TR6, color.END, RB, vars.e_version.split("#")[0],C,color.TR3,G,vars.e_version.split("#")[1],color.TR2) + C)
     print("  {}{}{}".format(RC, randomsg(), color.END))
 
 def bannerbelow():
@@ -224,10 +256,10 @@ def info():
     help      Show help message.                      :
     info      Show description of current module.     M
  :  intro     Display Intro.                          :
- :  ip        Show network information.               :
-    leave     Leave module.                           M
- :  list      List all modules of a category.         :
+ :  leave     Leave module.                           M
+    list      List all modules of a category.         :
  :  load      Load module.                            :
+ :  netinfo   Show network information.               :
  :  opts      Show options of current module.         M
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
@@ -370,3 +402,23 @@ def progressbar (iteration, total, prefix = '', suffix = '', decimals = 1, lengt
     # Print New Line on Complete
     if iteration == total: 
         print()
+
+def summary(module, msg):
+    display = """
+
+
+
+
+
+{}____, __
+   + ;    
+   .:,    
+     ’    
+    .     {}‹›{}  {}{}{}  {}‹›{}
+    + ;   {}{}{}
+    ;.    
+     ;
+     ;
+     ’   
+    """.format(color.END, R, color.END, RB, title(module), color.END, R, C, color.CURSIVE, msg, color.END)
+    print(display)

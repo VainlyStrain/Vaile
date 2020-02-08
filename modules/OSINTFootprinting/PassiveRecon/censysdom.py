@@ -39,8 +39,8 @@ def censysdom(web):
     if "@" in web:
         web = web.split("@")[1]
     if CENSYS_SECRET != '' and CENSYS_UID != '':
-        print(G+' [+] Found Censys UID Key : '+O+CENSYS_UID)
-        print(G+' [+] Found Censys Secret Token : '+O+CENSYS_SECRET)
+        print(O+' [+] Found Censys UID Key : '+C+color.TR3+C+G+CENSYS_UID+C+color.TR2+C)
+        print(O+' [+] Found Censys Secret Token : '+C+color.TR3+C+G+CENSYS_SECRET+C+color.TR2+C)
         base_url = 'https://www.censys.io/api/v1'
         print(GR+' [*] Looking up info...')
         time.sleep(0.7)
@@ -50,11 +50,11 @@ def censysdom(web):
 
         if resp.status_code == 200:
 
-            print(G+' [+] Found domain info!')
+            print(G+' [+] Found domain info!'+C+color.TR2+C)
             w = resp.text.encode('utf-8')
             asio = json.dumps(resp.json(), indent=4)
             quest = asio.splitlines()
-            print(O+' [!] Parsing info...\n')
+            print(O+' [!] Parsing info...'+C+'\n')
             time.sleep(1)
             for q in quest:
                 q = q.replace('"','')
@@ -67,20 +67,20 @@ def censysdom(web):
                 elif ('{' or '[' in q) and (':' in q):
                     w1 = q.split(':',1)[0].strip().upper()
                     w2 = q.split(':',1)[1].strip()
-                    print(O+'\n [+] '+w1+' :-'+'\n')
+                    print(C+'\n [+] '+w1+' :-'+'\n')
 
                 elif '{' not in q and '[' not in q and ']' not in q and '}' not in q:
                     print(GR+'   [+] '+q.replace(',','').strip())
 
-            print(O+' [!] Saving retrieved CENSYS data...')
+            print(C+' [!] Saving retrieved CENSYS data...')
             time.sleep(1)
             with open('tmp/logs/'+web+'-logs/'+web+'-censys-data.json', 'w+') as file:
                 json.dump(resp.json(), file, ensure_ascii=True,indent=4)
                 eq = os.getcwd()
-                print(G+' [+] Censys Data stored '+eq+'/tmp/logs/'+web+'-logs/'+web+'-censys-data.json')
+                print(C+' [+] Censys Data stored '+eq+'/tmp/logs/'+web+'-logs/'+web+'-censys-data.json')
 
         else:
-            print(R+' [-] Did not find any info about domain '+O+web)
+            print(R+' [-] Did not find any info about domain '+O+web+C)
             print(R+' [+] Try with another one...')
 
     else:

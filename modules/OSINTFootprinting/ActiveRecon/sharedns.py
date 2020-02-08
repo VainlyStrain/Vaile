@@ -28,10 +28,10 @@ def sharedns(web):
     #print(R+'    =========================================\n')
     from core.methods.print import posintact
     posintact("shared dns hostnames") 
-    print(O+' [!] Looking up for name servers on which website is hosted...\n'+G)
+    print(C+' [!] Looking up for name servers on which website is hosted...\n'+G)
     time.sleep(0.7)
     system('dig +nocmd '+web+' ns +noall +answer')
-    h = input(O+'\n [*] Enter any DNS Server from above :> ')
+    h = input(C+'\n [*] Enter any DNS Server from above :> ')
     time.sleep(0.4)
     print(GR + ' [!] Discovering hosts on same DNS Server...')
     time.sleep(0.4)
@@ -48,7 +48,7 @@ def sharedns(web):
         else:
             p = dns.splitlines()
             for i in p:
-                print(O+' [+] Site found :> '+G+i)
+                print(O+' [+] Site found :>'+C+color.TR3+C+G+i+C+color.TR2+C)
                 time.sleep(0.02)
 
 def attack(web):

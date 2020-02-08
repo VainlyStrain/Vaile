@@ -32,16 +32,16 @@ def httpmethods(web):
         time.sleep(0.7)
         web = web.replace('https://','')
         web = web.replace('http://','')
-        print(O+' [!] Making the connection...')
+        print(C+' [!] Making the connection...')
         conn = http.client.HTTPConnection(web)
         conn.request('OPTIONS','/')
         response = conn.getresponse()
         q = str(response.getheader('allow'))
         if 'None' not in q:
-            print(G+' [+] The following HTTP methods are allowed...')
+            print(G+' [+] The following HTTP methods are allowed...'+C+color.TR2+C)
             methods = q.split(',')
             for method in methods:
-                print(O+'     '+method)
+                print(O+'     '+method+C)
         else:
             print(R+' [-] HTTP Method Options Request Unsuccessful...')
 

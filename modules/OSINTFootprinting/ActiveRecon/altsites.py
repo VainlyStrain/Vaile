@@ -50,23 +50,23 @@ def altsites(web):
         req = requests.get(web, headers=headers, allow_redirects=True, verify=True)
         responses[name] = req
 
-    print(O+'\n [!] Comparing base value standards...')
+    print(C+'\n [!] Comparing base value standards...')
     time.sleep(0.5)
     for name, response in responses.items():
-        print(B+' [+] User-Agent : '+C+name)
-        print(GR+' [+] Response : '+O+str(response))
+        print(O+' [+] User-Agent :'+C+color.TR3+C+G+name+C+color.TR2+C)
+        print(O+' [+] Response :'+C+color.TR3+C+G+str(response)+C+color.TR2+C)
         md5s[name] = hashlib.md5(response.text.encode('utf-8')).hexdigest()
 
-    print(O+'\n [!] Matching hexdigest signatures...')
+    print(C+'\n [!] Matching hexdigest signatures...')
     for name, md5 in md5s.items():
-        print(B+'\n [+] User-Agent : '+C+name)
-        print(GR+' [+] Hex-Digest : '+O+str(md5))
+        print(O+' [+] User-Agent :'+C+color.TR3+C+G+name+C+color.TR2+C)
+        print(O+' [+] Hex-Digest :'+C+color.TR3+C+G+str(md5)+C+color.TR2+C)
         if name != 'Chrome on Windows 8.1':
             if md5 != md5s['Chrome on Windows 8.1']:
-                print(G+' [+] '+O+str(name)+G+' differs fromk baseline!')
+                print(G+' [+] '+str(name)+' differs fromk baseline!'+C+color.TR2+C)
             else:
                 print(R+' [-] No alternative site found via User-Agent spoofing:'+ str(md5))
-    print(G+'\n [+] Alternate Site Discovery Completed!\n')
+    print(C+'\n [+] Alternate Site Discovery Completed!\n')
 
 def attack(web):
     altsites(web)

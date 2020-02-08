@@ -58,7 +58,7 @@ def RetrieveHeader(Target):
     print(O+' [*] Making request to retrieve HHTP headers...')
     if "https" in Target[:5]:
         sslcontext = ssl.create_default_context()
-        n = input(O+' [#] Ignore SSL certificate errors? (Y/n) :> ')
+        n = input(O+' [§] Ignore SSL certificate errors? (Y/n) :> ')
         if n == 'y' or n == 'Y':
             print(GR+" [*] Ignoring certificate errors...")
             sslcontext = ssl._create_unverified_context()

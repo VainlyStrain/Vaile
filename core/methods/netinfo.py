@@ -4,44 +4,47 @@ import os
 import platform
 import socket
 import time
-from urllib.request import urlopen
+import requests
 
 from core.Core.colors import *
 from core.variables import interface
 
-mac_address = os.popen("cat /sys/class/net/{}/address".format(interface)).read()
+mac_address = os.popen("cat /sys/class/net/{}/address".format(interface)).read().strip()
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(('google.com', 0))
-localaddr = s.getsockname()[0]  # local subnet
-ipaddr = urlopen('http://ip.42.pl/raw').read()
-def_gw_device = os.popen("route | grep '^default' | grep -o '[^ ]*$'").read()
+localaddr = s.getsockname()[0].strip()  # local subnet
+ipaddr = requests.get('http://ip.42.pl/raw').text.strip()
+def_gw_device = os.popen("route | grep '^default' | grep -o '[^ ]*$'").read().strip()
 
 
 def info():
-    print("\n" + O + "                     +======================================================+" + color.END)
-    print("" + GR + "                             +------------------------------------+")
+    print()
+    #print("\n" + O + "                     +======================================================+" + color.END)
+    #print("" + GR + "                             +------------------------------------+")
     time.sleep(0.1)
-    print("                               |" + O + color.BOLD + "  Mac Address: " + mac_address)
+    print("  |:  " + O + "Mac Address:" + C + color.TR3 +C + G + mac_address + C + color.TR2 + C)
+    #print("                               |:  " + O + "Mac Address:" + C + color.TR3 +C + G + mac_address + C + color.TR2 + C)
     # time.sleep (0.1)
-    print("" + GR + "                             +------------------------------------+")
+    #print("" + GR + "                             +------------------------------------+")
     time.sleep(0.1)
-    print("                               |" + O + color.BOLD + "  Local address: " + localaddr)
+    print("  |:  " + O  + "Local address:" + C + color.TR3 +C + G + localaddr + C + color.TR2 + C)
     # time.sleep (0.1)
-    print("" + GR + "                             +------------------------------------+")
+    #print("" + GR + "                             +------------------------------------+")
     time.sleep(0.1)
-    print("                               |" + O + color.BOLD + "  IP: " + str(ipaddr).split("'")[1])
+    print("  |:  " + O  + "IP:" + C + color.TR3 +C + G + ipaddr + C + color.TR2 + C)
     # time.sleep (0.1)
-    print("" + GR + "                             +------------------------------------+")
+    #print("" + GR + "                             +------------------------------------+")
     time.sleep(0.1)
-    print("                               |" + O + color.BOLD + "  Operating System: " + platform.system())
+    print("  |:  " + O + "Operating System:" + C + color.TR3 +C + G + platform.system() + C + color.TR2 + C)
     # time.sleep (0.1)
-    print("" + GR + "                             +------------------------------------+")
+    #print("" + GR + "                             +------------------------------------+")
     time.sleep(0.1)
-    print("                               |" + O + color.BOLD + "  Name: " + platform.node())
+    print("  |:  " + O + "Name:" + C + color.TR3 +C + G + platform.node() + C + color.TR2 + C)
     # time.sleep (0.1)
-    print("" + GR + "                             +------------------------------------+")
+    #print("" + GR + "                             +------------------------------------+")
     time.sleep(0.1)
-    print("                               |" + O + color.BOLD + "  Interface: " + def_gw_device)
+    print("  |:  " + O + "Interface:" + C + color.TR3 +C + G + def_gw_device + C + color.TR2 + C)
     # time.sleep (0.1)
-    print("" + GR + "                             +------------------------------------+" + color.END)
-    print("" + O + "                     +=======================================================+\n")
+    #print("" + GR + "                             +------------------------------------+" + color.END)
+    #print("" + O + "                     +=======================================================+\n")
+    print()

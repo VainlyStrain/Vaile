@@ -180,7 +180,7 @@ def auto0x00(web, parallel):
     print(B+'   [1] '+C+'Cookie Value Based XSS')
     print(B+'   [2] '+C+'User-Agent Value Based XSS')
     print(B+'   [3] '+C+'Referrer Value Based XSS\n')
-    q = input(O+' [#] TID :> ')
+    q = input(O+' [§] TID :> ')
     if q == '3':
         print(GR+' [*] Launching Referrer Based Module...')
         xssref0x00(web, parallel)
@@ -276,7 +276,7 @@ def manual0x00(web, parallel):
     print(R+'    ——·‹›·––·‹›·——·‹›·––·‹\n')
                  
     if properties["PARAM"][1] == " ":
-        bug = input(O+' [#] Injectable Endpoint'+R+' (eg. /xss/search.php?q=drake)'+O+' :> ')
+        bug = input(O+' [§] Injectable Endpoint'+R+' (eg. /xss/search.php?q=drake)'+O+' :> ')
     else:
         bug = properties["PARAM"][1]
     choice = ""
@@ -311,7 +311,7 @@ def manual0x00(web, parallel):
                 print(i)
         else:
             print(R + "\n [-] No payload succeeded."+C)
-            x = input(O+' [#] Test Polyglots? (Y/n) :> ')
+            x = input(O+' [§] Test Polyglots? (Y/n) :> ')
             if x == 'Y' or x == 'y':
                 print(GR+' [*] Proceeding fuzzing with polyglots...')
                 xsspoly0x00(bugs, bug2, parallel)
@@ -371,10 +371,10 @@ def xss(web):
             parallel = pa is not ""
         else:
             parallel = properties["PARALLEL"][1] == "1"
-        print(O+'\n [#] Enter the type you want to proceed:\n')
+        print(O+'\n [§] Enter the type you want to proceed:\n')
         print(B+'   [1] '+C+'Manual Mode')
         print(B+'   [2] '+C+'Automatic Mode\n')
-        p = input(O+' [#] TID :> ')
+        p = input(O+' [§] TID :> ')
         if p == '1':
             print(GR+' [*] Initializing manual mode...')
             manual0x00(web, parallel)

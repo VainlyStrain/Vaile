@@ -34,11 +34,11 @@ def popbrute(web):
         time.sleep(0.5)
         ip = socket.gethostbyname(web)
 
-        m = input(O+' [#] Use IP '+R+str(ip)+O+'? (y/n) :> ')
+        m = input(O+' [§] Use IP '+R+str(ip)+O+'? (y/n) :> ')
         if m == 'y' or m == 'Y':
             pass
         elif m == 'n' or m == 'N':
-            ip = input(O+' [#] Enter IP :> ')
+            ip = input(O+' [§] Enter IP :> ')
 
         print(G+' [+] Target appears online...\n')
         print(O+' Choose the port number :\n')
@@ -47,7 +47,7 @@ def popbrute(web):
         print(B+'   109        POP2')
         print(B+'   110        POP3')
 
-        port = input(GR+'\n [#] Enter the port :> ')
+        port = input(GR+'\n [§] Enter the port :> ')
         pop = poplib.POP3(ip,int(port))
         print(GR+' [*] Using default credentials...')
         time.sleep(0.6)

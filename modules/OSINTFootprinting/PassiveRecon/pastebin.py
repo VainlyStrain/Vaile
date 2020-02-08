@@ -41,7 +41,7 @@ def getposts(web):
             time.sleep(0.5)
 
     try:
-        print(O+" [*] Finding Pastebin posts ...\n")
+        print(C+" [*] Finding Pastebin posts ...\n")
         google_it("site:pastebin.com intext:"+site+"")
 
     except urllib.error.HTTPError as err:

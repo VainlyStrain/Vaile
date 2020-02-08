@@ -33,7 +33,7 @@ properties = {}
 
 def getReq0x00(web):
 
-    print(O+' [!] Making the request...')
+    print(C+' [!] Making the request...')
     req = requests.get(web)
     sleep(0.7)
     return req.headers,req.content
@@ -118,7 +118,7 @@ def waf(web):
             if waftypes[i] != None and waftypes[i] != '':
                 print(GR+'\n [*] Response seems to be matching a WAF signature...')
                 time.sleep(0.6)
-                print(O+' [+] The website seems to be behind a WAF...')
+                print(C+' [+] The website seems to be behind a WAF...')
                 time.sleep(0.6)
                 print(B+' [+] Firewall Detected : ' +C+waftypes[i])
                 check = 0x01
@@ -134,7 +134,7 @@ def waf(web):
     if check == 0x00:
         print(R+' [-] Generic detection failed to fingerprint WAF...')
 
-    print(G+'\n [+] WAF Fingerprinting module completed!\n')
+    print('\n'+G+' [+] WAF Fingerprinting module completed!'+C+color.TR2+C+'\n')
 
 def attack(web):
     waf(web)

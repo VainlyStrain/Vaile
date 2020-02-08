@@ -31,7 +31,7 @@ def hostheader0x00(web):
     pvln("host header Injection") 
                  
 
-    port = input(O+' [#] Enter the port to use (eg. 80) :> ')
+    port = input(O+' [§] Enter the port to use (eg. 80) :> ')
 
     if port == 443:
         print(O+" [!] Using HTTPS <port 443>...")

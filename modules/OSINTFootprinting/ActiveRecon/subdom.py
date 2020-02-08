@@ -68,7 +68,7 @@ def subdombrute(web):
 
             try:
                 ip = socket.gethostbyname(url)
-                print(G+'\n [+] Subdomain Found : '+O+url+P+'\t\t['+str(ip)+']')
+                print('\n'+O+' [+] Subdomain Found :'+C+color.TR3+C+G+url+C+color.TR2+C+P+'\t\t['+str(ip)+']')
                 found.append(url)
             except:
                 sys.stdout.write(B+'\r [*] Checking : '+C+url)
@@ -91,7 +91,7 @@ def outer(web):
     text = requests.get('http://api.hackertarget.com/hostsearch/?q=' + dom).text
     result = str(text)
     if 'error' not in result:
-        print(G + result)
+        print(color.END + result+C)
         mopo = result.splitlines()
         for mo in mopo:
             ro = mo.split(',')[0]
@@ -102,7 +102,7 @@ def report(web, found, final):
     print(R+'\n   R E P O R T')
     print(R+'  =============\n')
     if ((len(found) > 0) or (len(final) > 0)):
-        print(O+' [!] Subdomains found for '+G+web)
+        print(O+' [!] Subdomains found for'+C+color.TR3+C+G+web+C+color.TR2+C)
         print(C+'  |')
         for m in found:
             print(C+ '  +-- ' +GR+ m)
@@ -113,7 +113,7 @@ def report(web, found, final):
                 total.append(p)
 
     else:
-        print(R+' [-] No Subdomains found for ' + O+web)
+        print(R+' [-] No Subdomains found for ' + O+web+C)
     print('\n')
     return total
 
@@ -138,19 +138,19 @@ def subdom(web):
     time.sleep(0.7)
     print(B+' [*] Initializing Step [1]...')
     subdombrute(web)
-    print(G+'\n [+] Module [1] Bruteforce Completed!\n')
+    print(C+'\n [+] Module [1] Bruteforce Completed!\n')
     print(B+' [*] Initializing Step [2]...')
     outer(web)
-    print(G+' [+] Module [2] API Retriever Completed!\n')
+    print(C+' [+] Module [2] API Retriever Completed!\n')
     acc = report(web, found, final)
-    print(O+' [*] Writing found subdomains to a file...')
+    print(C+' [*] Writing found subdomains to a file...')
     if acc:
         for pwn in acc:
             vul = str(pwn) + '\n'
             miv = open(fileo, 'a')
             miv.write(vul)
             miv.close()
-    print(G+' [+] Done!')
+    print(C+' [+] Done!')
 
 def attack(web):
     subdom(web)

@@ -37,23 +37,23 @@ def iphistory(web):
 
         print(web0)
 
-        print(O+' [!] Making the request...')
+        print(C+' [!] Making the request...')
         html = requests.get('http://viewdns.info/iphistory/?domain=' + web0).text
         print(GR+' [*] Parsing raw-data...')
         time.sleep(0.7)
         soup = BeautifulSoup(html,'lxml')
-        print(O+' [!] Setting parameters...')
+        print(C+' [!] Setting parameters...')
         table = soup.findAll('table', attrs={'border':'1'})[0]
         print(C+' [!] Finding IP history instances...')
         trs = table.findAll('tr')
         trs.pop(0)
 
-        print(G+'\n [+] Following instances were found...')
+        print(C+'\n [+] Following instances were found...')
 
         for tr in trs:
             td = tr.findAll('td')
             info = {'ip' : td[0].text, 'owner' : td[2].text.rstrip(), 'last' : td[3].text}
-            print(G+' [+] Instance : ' +C+ info['ip'] +GR+ ' => ' + info['owner'] +B+ ' - (' + info['last'] + ')')
+            print(O+' [+] Instance :' +C+color.TR3+C+G+ info['ip'] + ' => ' + info['owner'] + ' - (' + info['last'] + ')'+C+color.TR2+C)
             time.sleep(0.02)
 
     except:

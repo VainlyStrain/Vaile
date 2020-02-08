@@ -45,7 +45,7 @@ global dlist
 global interface
 
 version = "2.2"
-e_version = "2.2.1-5#pre"
+e_version = "2.2.1-5#pre2"
 r_version = "2.2.1-5"
 module = ""
 targets = []

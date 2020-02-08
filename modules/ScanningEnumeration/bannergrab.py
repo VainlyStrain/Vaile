@@ -29,18 +29,18 @@ def grab(web):
     print(GR+' [*] Resolving hostnames...')
     time.sleep(0.7)
     try:
-        print(O+' [!] Parsing information...')
+        print(C+' [!] Parsing information...')
         hostIP = socket.gethostbyname(web)
 
-        print(O+' [!] Setting query parameters...')
+        print(C+' [!] Setting query parameters...')
         host = api.host(hostIP)
 
         for item in host['data']:
-            print(GR+'\n [+] Port : '+O+ str(item['port']))
-            print(B+' [+] Banner : \n')
+            print(GR+'\n [+] Port : '+C+ str(item['port']))
+            print(G+' [+] Banner :'+C+color.TR2+C+' \n')
             for q in str(item['data']).splitlines():
                 if ':' in q:
-                    print(G+'    '+q.split(':')[0]+' : '+O+q.split(':')[1].strip())
+                    print(O+'    '+q.split(':')[0]+' :'+C+color.TR3+C+G+q.split(':')[1].strip()+C+color.TR2+C)
                 else:
                     print(C+'    '+q)
                     time.sleep(0.02)
@@ -60,7 +60,7 @@ def bannergrab(web):
     web = web.replace('http://','')
     web = web.replace('https://','')
     grab(web)
-    print(G+'\n [+] Banner Grabbing Done!')
+    print(G+'\n [+] Banner Grabbing Done!'+C+color.TR2+C)
 
 def attack(web):
     bannergrab(web)

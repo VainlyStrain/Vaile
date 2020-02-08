@@ -66,8 +66,8 @@ def getFile0x00():
 
     try:
         if properties["DICT"][1] == " ":
-            print(O+' [#] Enter path to file (default: files/payload-db/xpath_payloads.lst)...')
-            w = input(O+' [#] Your input (Press Enter if default) :> '+C)
+            print(O+' [§] Enter path to file (default: files/payload-db/xpath_payloads.lst)...')
+            w = input(O+' [§] Your input (Press Enter if default) :> '+C)
         elif properties["DICT"][1].lower() == "none":
             w = ""
         else:
@@ -121,7 +121,7 @@ def xpathi(web):
 
     print(GR+' [*] Initiating '+R+'Parameter Based Check...')
     if properties["PARAM"][1] == " ":
-        param = input(O+' [#] Parameter Path (eg. /vuln/page.php?q=input) :> ')
+        param = input(O+' [§] Parameter Path (eg. /vuln/page.php?q=input) :> ')
     else:
         param = properties["PARAM"][1]
     if param.startswith('/') == False:

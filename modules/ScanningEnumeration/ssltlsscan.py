@@ -38,9 +38,9 @@ def ssltlsscan(web):
     print(GR+' [*] Testing server SSL status...')
     try:
         req = requests.get('https://'+target)
-        print(G+' [+] SSL Working Properly...')
+        print(G+' [+] SSL Working Properly...'+color.TR2+C)
         time.sleep(0.6)
-        print(O+" [!] Running SSL Enumeration...\n")
+        print(C+" [!] Running SSL Enumeration...\n")
         try:
             server_tester = ServerConnectivityTester(hostname=target)
             server_info = server_tester.perform()
@@ -48,28 +48,28 @@ def ssltlsscan(web):
 
             command = Tlsv10ScanCommand()
             scan_result = scanner.run_scan_command(server_info, command)
-            print(G+" [+] Available TLS v1.0 Ciphers:")
+            print(G+" [+] Available TLS v1.0 Ciphers:"+color.TR2+C)
             for cipher in scan_result.accepted_cipher_list:
                 print(C+'    {}'.format(cipher.name))
             print('')
 
             command = Tlsv11ScanCommand()
             scan_result = scanner.run_scan_command(server_info, command)
-            print(G+" [+] Available TLS v1.1 Ciphers:")
+            print(G+" [+] Available TLS v1.1 Ciphers:"+color.TR2+C)
             for cipher in scan_result.accepted_cipher_list:
                 print(C+'    {}'.format(cipher.name))
             print('')
 
             command = Tlsv12ScanCommand()
             scan_result = scanner.run_scan_command(server_info, command)
-            print(G+" [+] Available TLS v1.2 Ciphers:")
+            print(G+" [+] Available TLS v1.2 Ciphers:"+color.TR2+C)
             for cipher in scan_result.accepted_cipher_list:
                 print(C+'    {}'.format(cipher.name))
             print('')
 
             command = CertificateInfoScanCommand()
             scan_result = scanner.run_scan_command(server_info, command)
-            print(G+' [+] Certificate Information:')
+            print(G+' [+] Certificate Information:'+color.TR2+C)
             for entry in scan_result.as_text():
                 if entry != '':
                     if 'certificate information' in entry.lower():
@@ -77,12 +77,12 @@ def ssltlsscan(web):
                     elif ':' in entry:
                         print(GR+'    [+] '+entry.strip().split(':', 1)[0].strip()+' : '+C+entry.strip().split(':', 1)[1].strip())
                     else:
-                        print(O+'\n  [+] ' +entry.strip())
+                        print(C+'\n  [+] ' +entry.strip())
             print('')
 
             command = HttpHeadersScanCommand()
             scan_result = scanner.run_scan_command(server_info, command)
-            print(G+' [+] HTTP Results:')
+            print(G+' [+] HTTP Results:'+C+color.TR2+C)
             for entry in scan_result.as_text():
                 if 'http security' not in entry.strip().lower() and entry != '':
                     if '-' in entry:
@@ -90,7 +90,7 @@ def ssltlsscan(web):
                     elif ':' in entry:
                         print(GR+'    [+] '+entry.strip().split(':', 1)[0].strip()+' : '+C+entry.strip().split(':', 1)[1].strip())
                     else:
-                        print(O+'\n  [+] ' +entry.strip())
+                        print(C+'\n  [+] ' +entry.strip())
             print('')
 
         except Exception as e:
@@ -100,7 +100,7 @@ def ssltlsscan(web):
     except requests.exceptions.SSLError as e:
         print(R+' [-] Distant Server SSL not working : '+str(e))
 
-    print(G+' [+] SSlScan Module Completed!')
+    print(G+' [+] SSlScan Module Completed!'+C+color.TR2+C)
 
 def attack(web):
     ssltlsscan(web)

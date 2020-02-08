@@ -55,12 +55,12 @@ def crawler20x00(url, count):
             visited_urls.add(u)
             pfx = "{}[{}]".format(i, len(visited_urls))
             if res == 200:
-                print(B+' [+] Crawling : '+GR+pfx+'  '+C+u+G+'  ('+str(res)+')')
+                print(B+' [+] Crawling : '+GR+pfx+'  '+C+u+G+'  ('+str(res)+')'+C+color.TR2+C)
                 actual_uri.append(u)
             elif res == 404:
                 print(B+' [+] Crawling : '+GR+pfx+'  '+C+u+R+'  ('+str(res)+')')
             else:
-                print(B+' [+] Crawling : '+GR+pfx+'  '+C+u+O+'  ('+str(res)+')')
+                print(B+' [+] Crawling : '+GR+pfx+'  '+C+u+O+'  ('+str(res)+')'+C)
 
         if root is None: continue
 
@@ -83,14 +83,14 @@ def out(web, list0):
     print(GR+' [*] Writing found URLs to a file...')
     if os.path.exists('tmp/logs/'+web+'-logs/'+web+'-links.lst'):
         fil = open('tmp/logs/'+web+'-logs/'+web+'-links.lst','w+')
-        print(O+' [!] Sorting only scope urls...')
+        print(C+' [!] Sorting only scope urls...')
         time.sleep(1)
         for lists in list0:
             if str(web) in lists:
                 fil.write("%s\n" % lists)
     else:
         fil = open('tmp/logs/'+web+'-logs/'+web+'-links.lst','a')
-        print(O+' [!] Sorting only scope urls...')
+        print(C+' [!] Sorting only scope urls...')
         time.sleep(1)
         for lists in list0:
             if str(web) in lists:
@@ -108,16 +108,16 @@ def crawler3(web):
         from core.methods.print import pscan
         pscan("crawler (depth 3)")
         time.sleep(0.7)
-        print(O+' [This crawler will recursively crawl')
-        print(O+' all the links of the website as well as all')
-        print(O+'   links within each of the pages]\n')
+        print(C+' [This crawler will recursively crawl')
+        print(C+' all the links of the website as well as all')
+        print(C+'   links within each of the pages]\n')
         time.sleep(0.7)
         print(R+'  WARNING : Use this with CAUTION!\n')
         if properties["LIMIT"][1] == " ":
-            m = input(GR+' [#] No. of links to be crawled (eg 100) :> ')
+            m = input(GR+' [§] No. of links to be crawled (eg 100) :> ')
         else:
             m = properties["LIMIT"][1]
-        print(O+' [!] Crawling limit set to : '+C+str(m))
+        print(O+' [!] Crawling limit set to :'+C+color.TR3+C+G+str(m)+C+color.TR2+C)
         w = int(m)
         crawler20x00(web, w)
         out(web, actual_uri)
@@ -128,7 +128,7 @@ def crawler3(web):
         time.sleep(0.7)
         print(GR+' [*] Saving the links obtained...')
         out(web, actual_uri)
-        print(G+' [+] Saved!')
+        print(G+' [+] Saved!'+C+color.TR2+C)
 
 def attack(web):
     crawler3(web)

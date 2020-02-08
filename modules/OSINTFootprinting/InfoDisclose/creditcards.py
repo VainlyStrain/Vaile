@@ -35,7 +35,7 @@ properties = {}
 
 def credit0x00(url):
     requests = session()
-    print(G+' [+] Importing credit card signatures...')
+    print(C+' [+] Importing credit card signatures...')
     time.sleep(0.5)
     links = [url]
     po = url.split('//')[1]
@@ -59,7 +59,7 @@ def credit0x00(url):
 
     try:
         for uurl in urls:
-            print(G+"\n [+] Scraping Page: "+O+uurl)
+            print("\n"+O+" [+] Scraping Page:"+C+color.TR3+C+G+uurl+C+color.TR2+C)
             req = requests.get(uurl).text
             check0x00(req)
 
@@ -69,7 +69,7 @@ def credit0x00(url):
     if found == 0x00:
         print(R+' [-] No Credit Cards found disclosed in plaintext in source code!')
 
-    print(G+' [+] Scraping Done!')
+    print(G+' [+] Scraping Done!'+C+color.TR2+C)
 
 
 def check0x00(req):
@@ -78,7 +78,7 @@ def check0x00(req):
         append_name = ' '.join(req.encode('utf-8')).strip()
     except UnicodeDecodeError:
         append_name = ' '.join(req.decode('utf-8')).strip()
-    print(O+' [!] Reading response...')
+    print(C+' [!] Reading response...')
     print(GR+' [*] Searching for credit cards...')
     AMEX = re.match(AMEX_CARD_SIGNATURE, append_name)
     VISA = re.match(VISA_SIGNATURE, append_name)
@@ -86,12 +86,12 @@ def check0x00(req):
     DISCOVER = re.match(DISCOVER_CARD_SIGNATURE, append_name)
     EXPRESS = re.match(EXPRESS_CARD_SIGNATURE, append_name)
     VISA_MASTERCARD = re.match(VISA_MASTERCARD_SIGNATURE, append_name)
-    print(O+' [!] Matching signatures...')
+    print(C+' [!] Matching signatures...')
 
     try:
         if EXPRESS.group():
-            print(G+" [+] Website has American Express Cards!")
-            print(O+' [!] Card : ' + GR+EXPRESS.group())
+            print(G+" [+] Website has American Express Cards!"+C+color.TR2+C)
+            print(O+' [!] Card :' + C+color.TR3+C+G+EXPRESS.group()+C+color.TR2+C)
             found = 0x01
 
     except:
@@ -99,8 +99,8 @@ def check0x00(req):
 
     try:
         if VISA_MASTERCARD.group():
-            print(G+" [+] Website has a Visa-Master Card!")
-            print(O+' [!] Card : ' + GR+VISA_MASTERCARD.group())
+            print(G+" [+] Website has a Visa-Master Card!"+C+color.TR2+C)
+            print(O+' [!] Card :' +C+color.TR3+C+G+VISA_MASTERCARD.group()+C+color.TR2+C)
             found = 0x01
 
     except:
@@ -108,8 +108,8 @@ def check0x00(req):
 
     try:
         if MASTERCARD.group():
-            print(G+" [+] Website has a Master Card!")
-            print(O+' [!] Card : ' + GR+MASTERCARD.group())
+            print(G+" [+] Website has a Master Card!"+C+color.TR2+C)
+            print(O+' [!] Card :' + C+color.TR3+C+G+MASTERCARD.group()+C+color.TR2+C)
             found = 0x01
 
     except:
@@ -117,8 +117,8 @@ def check0x00(req):
 
     try:
         if VISA.group():
-            print(G+" [+] Website has a VISA card!")
-            print(O+' [!] Card : ' + GR+VISA.group())
+            print(G+" [+] Website has a VISA card!"+C+color.TR2+C)
+            print(O+' [!] Card :' + C+color.TR3+C+G+VISA.group()+C+color.TR2+C)
             found = 0x01
 
     except:
@@ -126,8 +126,8 @@ def check0x00(req):
 
     try:
         if AMEX.group():
-            print(G+" [+] Website has a AMEX card!")
-            print(O+' [!] Card : ' + GR+AMEX.group())
+            print(G+" [+] Website has a AMEX card!"+C+color.TR2+C)
+            print(O+' [!] Card :' + C+color.TR3+C+G+AMEX.group()+C+color.TR2+C)
             found = 0x01
 
     except:
@@ -135,8 +135,8 @@ def check0x00(req):
 
     try:
         if DISCOVER.group():
-            print(G+" [+] Website has a DISCOVER card!")
-            print(O+' [!] Card : ' + GR+DISCOVER.group())
+            print(G+" [+] Website has a DISCOVER card!"+C+color.TR2+C)
+            print(O+' [!] Card : ' + C+color.TR3+C+G+DISCOVER.group()+C+color.TR2+C)
             found = 0x01
 
     except:

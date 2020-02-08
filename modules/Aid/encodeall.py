@@ -91,7 +91,7 @@ def encodeall():
             print(B+'    [7]'+C+' Binary Encode')
             print(B+'    [8]'+C+' GZip Encode\n')
             print(B+'    [99]'+C+' Back\n')
-            r = input(O+' [#] Enter your option :> ')
+            r = input(O+' [§] Enter your option :> ')
             print(GR+' [*] Encoding string...')
             sleep(0.5)
             if r == '1':

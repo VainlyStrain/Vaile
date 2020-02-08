@@ -31,9 +31,9 @@ def webscan(web):
         #print(R+'    ===========================================')
         from core.methods.print import pscan
         pscan("webserver enumeration")
-        print(O+' [This module will scan the whole CENSYS database for')
-        print(O+'      collecting domain based IP Addresses and ')
-        print(O+'           fingerprint them accordingly]\n')
+        print(C+' [This module will scan the whole CENSYS database for')
+        print(C+'      collecting domain based IP Addresses and ')
+        print(C+'           fingerprint them accordingly]\n')
         time.sleep(0.6)
         print(R+' [-] WARNING: Use this module with caution!')
         print(GR+' [*] Importing API Key...')
@@ -43,15 +43,15 @@ def webscan(web):
             print(R+' [-] Error while importing key...')
 
         web = web.split('//')[1]
-        print(O+' [!] Obtaining reverse DNS lookup...')
+        print(C+' [!] Obtaining reverse DNS lookup...')
         time.sleep(0.7)
         ip = web
-        print(G+' [+] Identified IP : '+O+str(ip))
+        print(O+' [+] Identified IP :'+C+color.TR3+C+G+str(ip)+C+color.TR2+C)
         print(GR+' [*] Starting internet wide server scan...')
         if CENSYS_SECRET != '' and CENSYS_UID != '':
 
-            print(G+' [+] Found Censys UID Key : '+O+CENSYS_UID)
-            print(G+' [+] Found Censys Secret Token : '+O+CENSYS_SECRET)
+            print(O+' [+] Found Censys UID Key :'+C+color.TR3+C+G+CENSYS_UID+C+color.TR2+C)
+            print(O+' [+] Found Censys Secret Token :'+C+color.TR3+C+G+CENSYS_SECRET+C+color.TR2+C)
 
             pages = float('inf')
             page = 1
@@ -72,7 +72,7 @@ def webscan(web):
                     proto.sort(key=float)
                     protoList = ','.join(map(str, proto))
 
-                    print(B+' [+] IP : '+C+str(ip)+O+' - Protocols : '+str(protoList))
+                    print(B+' [+] IP : '+C+str(ip)+C+' - Protocols : '+str(protoList))
 
                     if '80' in protoList:
                         view(ip, base_url, CENSYS_UID, CENSYS_SECRET, requests)
@@ -95,7 +95,7 @@ def view(server, ur, uid, sec, requests):
 
     try:
         if 'title' in payload['80']['http']['get'].keys():
-            print(O+" [+] Title : "+GR+"%s" % payload['80']['http']['get']['title'])
+            print(C+" [+] Title : "+GR+"%s" % payload['80']['http']['get']['title'])
         if 'server' in payload['80']['http']['get']['headers'].keys():
             print(C+" [+] Server : "+GR+"%s" % payload['80']['http']['get']['headers']['server'])
 

@@ -24,67 +24,67 @@ properties = {}
 
 def check0x00(domain):
 
-    print(O+" [+] Domain : "+GR+domain)
+    print(C+" [+] Domain : "+GR+domain)
     print(B+' [*] Fingerprinting web technologies...')
     resp = builtwith.parse(domain)
-    print(O+' [*] Parsing raw-data...')
+    print(C+' [*] Parsing raw-data...')
     time.sleep(0.7)
     res = json.dumps(resp)
     r = json.loads(res)
-    print(G+' [+] Result : \n')
+    print(G+' [+] Result :'+C+color.TR2+C+' \n')
     try:
 
         if "cdn" in r:
-            print(G+' [+] Content Delivery Network:')
+            print(G+' [+] Content Delivery Network:'+C+color.TR2+C)
             for p in r["cdn"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "font-scripts" in r:
-            print(G+' [+] Font-Script Source:')
+            print(G+' [+] Font-Script Source:'+C+color.TR2+C)
             for p in r["font-scripts"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "widgets" in r:
-            print(G+' [+] Widgets:')
+            print(G+' [+] Widgets:'+C+color.TR2+C)
             for p in r["widgets"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "web-frameworks" in r:
-            print(G+' [+] Web Frameworks:')
+            print(G+' [+] Web Frameworks:'+C+color.TR2+C)
             for p in r["web-frameworks"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "programming-languages" in r:
-            print(G+' [+] Front-End Programming Languages:')
+            print(G+' [+] Front-End Programming Languages:'+C+color.TR2+C)
             for p in r["programming-languages"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "marketing-automation" in r:
-            print(G+' [+] Marketing Automation Source:')
+            print(G+' [+] Marketing Automation Source:'+C+color.TR2+C)
             for p in r["marketing-automation"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "mobile-frameworks" in r:
-            print(G+' [+] Mobile Frameworks:')
+            print(G+' [+] Mobile Frameworks:'+C+color.TR2+C)
             for p in r["mobile-frameworks"]:
                 print(C+'      '+p)
             print('')
             time.sleep(0.7)
 
         if "video-players" in r:
-            print(G+' [+] In-Built Video Players:')
+            print(G+' [+] In-Built Video Players:'+C+color.TR2+C)
             for p in r["video-players"]:
                 print(C+'      '+p)
             print('')
@@ -110,7 +110,7 @@ def apircv(web):
             if td[-7:] == 'more...':
                 td = td[:-9]
 
-            print(G+' [+] '+th.text+': ')
+            print(G+' [+] '+th.text+':'+C+color.TR2+C)
             print(C+'      '+td+'\n')
             time.sleep(0.7)
     except:
@@ -127,7 +127,7 @@ def webtech(web):
 
     check0x00(web)
     apircv(web)
-    print(O+' [+] Fingerprinting Done!')
+    print(C+' [+] Fingerprinting Done!')
 
 def attack(web):
     webtech(web)

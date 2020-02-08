@@ -46,7 +46,7 @@ def check0x00(web, dirpath, headers):
 
             resp = str(req.status_code)
             if (resp == '200' or resp == '302' or resp == '304'):
-                print(G+' [*] Found : ' + O + web0x00 +GR+' - '+ size + G + ' ('+resp+')')
+                print(C+' [*] Found : ' + C + web0x00 +GR+' - '+ size + C + ' ('+resp+')')
                 file_paths.append(web0x00)
 
             else:
@@ -84,14 +84,14 @@ def indexmulbrute(web):
     print(R+'\n     M U L T I P L E   I N D I C E S')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›·––·\n')
                  
-    print(O+' [*] Path to file to be used '+R+'(Default: files/fuzz-db/multipleindex_paths.lst)...')
-    fil = input(O+' [#] Your input (Press Enter if default) :> ')
+    print(C+' [*] Path to file to be used '+O+'(Default: files/fuzz-db/multipleindex_paths.lst)...'+C)
+    fil = input(C+' [§] Your input (Press Enter if default) :> ')
     if fil == '':
         fil = 'files/fuzz-db/multipleindex_paths.lst'
     else:
         print(GR+' [*] Checking filepath...')
         if os.path.exists(fil) == True:
-            print(G+' [+] File found!')
+            print(C+' [+] File found!')
         else:
             print(R+' [-] File not found!')
 
@@ -110,12 +110,12 @@ def indexmulbrute(web):
         print(R+' [-] Exception : '+str(e))
 
     if ul:
-        print(G+' [+] The following possible index paths were found!')
+        print(G+' [+] The following possible index paths were found!'+C+color.TR2+C)
         for u in ul:
-            print(G+' [+] Index file : '+O+u)
+            print(O+' [+] Index file :'+C+color.TR3+C+G+u+C+color.TR2+C)
     else:
         print(R+' [-] No multiple index locations were found!')
-    print(G+' [+] Done!')
+    print(C+' [+] Done!')
 
 def attack(web):
     indexmulbrute(web)

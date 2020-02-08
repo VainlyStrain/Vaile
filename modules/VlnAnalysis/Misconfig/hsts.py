@@ -65,7 +65,7 @@ def hsts(web):
         check0x00(getHeaders0x00(web))
     else:
         print(R+' [-] No SSL/TLS detected...')
-        m = input(O+' [#] Force SSL/TLS (y/N) :> ')
+        m = input(O+' [§] Force SSL/TLS (y/N) :> ')
         if m == 'y' or m == 'Y':
             print(GR+' [*] Using revamped SSL...')
             o = 'https://' + web.replace('http://','')

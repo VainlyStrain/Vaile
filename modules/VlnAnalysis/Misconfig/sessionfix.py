@@ -29,7 +29,7 @@ def sessionfix(url):
                 
     print(GR+' [*] Making the request...')
     if properties["COOKIE"][1] == " ":
-        coo = input(O+' [#] Got any cookies? [Just Enter if None] :> ')
+        coo = input(O+' [§] Got any cookies? [Just Enter if None] :> ')
     elif properties["COOKIE"][1].lower() == "none":
         coo = ""
     else:
@@ -41,8 +41,8 @@ def sessionfix(url):
     if req.cookies:
         print(G+' [+] Found cookie reflecting in headers...')
         print(B+' [+] Initial cookie state: '+C, req.cookies, '\n')
-        user = input(O+' [#] Enter authentication username :> '+C)
-        upass = input(O+' [#] Enter password :> '+C)
+        user = input(O+' [§] Enter authentication username :> '+C)
+        upass = input(O+' [§] Enter password :> '+C)
         print(GR+' [*] Trying POST request with authentication...')
         cookie_req = requests.post(url, cookies=req.cookies, auth=(user, upass), timeout=7)
         print(B+' [+] Authenticated cookie state:'+C, cookie_req.cookies)

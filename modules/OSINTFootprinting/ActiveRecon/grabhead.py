@@ -34,7 +34,7 @@ def grabhead(web):
         print('')
         for m in header:
             n = m.split(':')
-            print('  '+C+n[0]+': '+O+n[1])
+            print('  '+C+n[0]+': '+C+n[1])
         print('')
     except urllib.error.HTTPError as e:
         print(R+' [-] '+e.__str__())

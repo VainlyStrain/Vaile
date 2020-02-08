@@ -27,11 +27,11 @@ properties = {}
 
 def getRes0x00():
     requests = session()
-    email = input(O+' [#] Enter the email :> '+R)
+    email = input(C+' [§] Enter the email :> '+R)
     if '@' in email and '.' in email:
         pass
     else:
-        email = input(O+' [#] Enter a valid email :> '+R)
+        email = input(C+' [§] Enter a valid email :> '+R)
 
     print(GR+' [*] Setting headers... (behaving as a browser)...')
     time.sleep(0.7)
@@ -40,7 +40,7 @@ def getRes0x00():
                  'Accept-Encoding': 'gzip, deflate',
                  'Accept': 'text/html,application/xhtml+xml,application/xml;',
                  'Connection':'close'}
-    print(O+' [!] Making the no-verify request...')
+    print(P+' [!] Making the no-verify request...'+C)
     time.sleep(0.5)
     url = "https://whoisology.com/search_ajax/search?action=email&value="+email+"&page=1&section=admin"
     result = ''
@@ -53,9 +53,9 @@ def getRes0x00():
                 for line in stuff:
                     if line.strip() != '':
                         if '.' in line:
-                            print(G+' [+] Received Domain : '+O+line)
+                            print(O+' [+] Received Domain :'+C+color.TR3+C+G+line+C+color.TR2+C)
             else:
-                print(R+ " [-] Empty domain result for email : "+O+email)
+                print(R+ " [-] Empty domain result for email : "+O+email+C)
     except:
         print(R+" [-] Can't reach url...")
         print(R+' [-] Request timed out!')

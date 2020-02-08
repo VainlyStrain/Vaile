@@ -42,13 +42,13 @@ def revip(web):
         res = result.splitlines()
         if 'error' not in result:
             for r in res:
-                print(O+' [+] Site :> '+G+r)
+                print(O+' [+] Site :>'+C+color.TR3+C+G+r+C+color.TR2+C)
                 links.append(r)
                 time.sleep(0.04)
 
             p = 'tmp/logs/'+web+'-logs/'+str(web)+'-reverse-ip.lst'
             open(p,'w+')
-            print(B+' [!] Saving links...')
+            print(P+' [!] Saving links...'+C)
             time.sleep(1)
             for m in links:
                 m = m + '\n'
@@ -56,7 +56,7 @@ def revip(web):
                 ile.write(m)
                 ile.close()
             pa = os.getcwd()
-            print(G+' [+] Links saved under '+pa+'/'+p+'!')
+            print(C+' [+] Links saved under '+pa+'/'+p+'!')
             print('')
 
         elif 'error' in result:

@@ -27,9 +27,9 @@ properties = {}
 def port0x00(web):
 
     time.sleep(0.7)
-    print(O+' [!] Moving on to the second phase...')
+    print(C+' [!] Moving on to the second phase...')
     time.sleep(0.8)
-    print(O+' [*] Initiating port scan (TCP+UDP)...')
+    print(C+' [*] Initiating port scan (TCP+UDP)...')
 
     try:
         getports(web)
@@ -75,14 +75,14 @@ def osdetect(web):
         web = web.replace('https://','')
         print(GR+' [*] Initialising Module [1]...')
         flag = getos0x00(web)
-        print(G+'\n [+] Module [1] Completed!')
+        print(C+'\n [+] Module [1] Completed!')
         if flag == 0x01:
-            q = input(O+' [#] OS Identified!\n [#] Move on to to module [2]? (y/N) :> ')
+            q = input(C+' [!] OS Identified!\n [?] Move on to to module [2]? (y/N) :> ')
             if q == 'Y'or q == 'y':
                 print(GR+'\n [*] Initialising Module [2]...')
                 port0x00(web)
             elif q == 'N' or q == 'n':
-                print(G+' [+] Done!')
+                print(C+' [+] Done!')
         elif flag == 0x00:
             print(GR+' [*] Initialising Module [2]...')
             port0x00(web)
@@ -93,7 +93,7 @@ def osdetect(web):
     except Exception as e:
         print(R+' [-] Unhandled Exception occured...')
         print(R+' [-] Exception : '+str(e))
-    print(G+' [+] OS Fingerprinting Module Completed!\n')
+    print(G+' [+] OS Fingerprinting Module Completed!'+C+color.TR2+C+'\n')
 
 def attack(web):
     osdetect(web)

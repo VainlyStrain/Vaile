@@ -29,11 +29,11 @@ properties = {}
 
 def getRes0x00():
     requests = session()
-    email = input(O+' [#] Enter the email :> '+R)
+    email = input(C+' [§] Enter the email :> '+R)
     if '@' in email and '.' in email:
         pass
     else:
-        email = input(O+' [#] Enter a valid email :> '+R)
+        email = input(C+' [§] Enter a valid email :> '+R)
 
     print(GR+' [*] Setting headers... (behaving as a browser)...')
     time.sleep(0.7)
@@ -42,7 +42,7 @@ def getRes0x00():
                  'Accept-Encoding': 'gzip, deflate',
                  'Accept': 'text/html,application/xhtml+xml,application/xml;',
                  'Connection':'close'}
-    print(O+' [!] Making the no-verify request...')
+    print(P+' [!] Making the no-verify request...'+C)
     time.sleep(0.5)
     url = 'https://hacked-emails.com/api?q='+str(email)
 
@@ -52,10 +52,10 @@ def getRes0x00():
         if content != "":
             content = json.loads(content)
             if content['status'] == "found":
-                print("Result found ("+G+str(content['results']) + " results" + Style.RESET_ALL + ")")
+                print("Result found ("+G+str(content['results']) + " results" + C+ Style.RESET_ALL + ")")
                 for line in content['data']:
                     try:
-                        print(G+" [+] "+O+email+G+" found in : " +C+ str(line['title']) +R+" (" + str(line['date_leaked'])+')')
+                        print(O+" [+] "+email+" found in :" +C+color.TR3+C+G+ str(line['title']) +" (" + str(line['date_leaked'])+')'+C+color.TR2+C)
                     except:
                         print(R+" [-] Can't parse the leak titles via APi...")
             else:

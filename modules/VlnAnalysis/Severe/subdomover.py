@@ -86,11 +86,11 @@ def subdomover(web):
     print(O+' Choose from the following:\n')
     print(B+'  [1] '+C+'Single Subdomain '+W+'(Manual)')
     print(B+'  [2] '+C+'All Subdomains '+W+'(Automated)')
-    v = input(O+'\n [#] Enter type :> '+GR)
+    v = input(O+'\n [§] Enter type :> '+GR)
 
     if v.strip() == '1':
         if properties["SUBDOM"][1] == " ":
-            su = input(C+' [#] Enter the subdomain :> '+GR)
+            su = input(C+' [§] Enter the subdomain :> '+GR)
         else:
             su = properties["SUBDOM"][1]
         if su.startswith('http'):

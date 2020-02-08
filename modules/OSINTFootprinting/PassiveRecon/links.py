@@ -58,9 +58,9 @@ def links(web):
                 if str(web0).lower() in w.lower():
                     final_links.append(w)
 
-            print(O+'\n [!] Receiving links...')
+            print(C+'\n [!] Receiving links...')
             for p in final_links:
-                print(G+' [+] Found link : '+O+p)
+                print(O+' [+] Found link :'+C+color.TR3+C+G+p+C+color.TR2+C)
                 time.sleep(0.06)
 
             if 'http://' in web:

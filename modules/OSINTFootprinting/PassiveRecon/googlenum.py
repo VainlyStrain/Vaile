@@ -34,7 +34,7 @@ def googlenum(web):
         if GOOGLE_API_TOKEN != '':
             maxr = '50'
             print(GR+' [*] Fetching maximum 50 results...')
-            print(O+' [!] Parsing website address...')
+            print(O+' [!] Parsing website address...'+C)
             time.sleep(0.6)
             web = web.replace('http://','')
             web = web.replace('https://','')
@@ -46,7 +46,7 @@ def googlenum(web):
                         +GOOGLE_API_TOKEN+'&maxResults='+maxr).text
             except:
                 print(R+' [-] Access Forbidden (403)...')
-            print(O+' [!] Parsing raw-data...')
+            print(O+' [!] Parsing raw-data...'+C)
             time.sleep(1)
             r = json.loads(resp)
             ctr = 1
@@ -55,27 +55,27 @@ def googlenum(web):
                 for p in r["items"]:
                     ctr+=1
                     time.sleep(0.8)
-                    print(G+'\n [+] Info about Profile '+O+str(ctr)+' ...')
+                    print(C+'\n [+] Info about Profile '+P+str(ctr)+C+' ...')
                     if 'kind' in p:
-                        print(B+' [+] Kind : '+C+p['kind'])
+                        print(O+' [+] Kind :'+C+color.TR3+C+G+p['kind']+C+color.TR2+C)
                     time.sleep(0.05)
                     if 'etag' in p:
-                        print(B+' [+] E-Tag : '+C+p['etag'])
+                        print(O+' [+] E-Tag :'+C+color.TR3+C+G+p['etag']+C+color.TR2+C)
                     time.sleep(0.05)
                     if 'objectType' in p:
-                        print(B+' [+] Object Type : '+C+p['objectType'])
+                        print(O+' [+] Object Type :'+C+color.TR3+C+G+p['objectType']+C+color.TR2+C)
                     time.sleep(0.05)
                     if 'id' in p:
-                        print(B+' [+] ID : '+C+p['id'])
+                        print(O+' [+] ID :'+C+color.TR3+C+G+p['id']+C+color.TR2+C)
                     time.sleep(0.05)
                     if 'displayName' in p:
-                        print(B+' [+] Display Name : '+C+p['displayName'])
+                        print(O+' [+] Display Name :'+C+color.TR3+C+G+p['displayName']+C+color.TR2+C)
                     time.sleep(0.05)
                     if 'url' in p:
-                        print(B+' [+] Link : '+C+p['url'])
+                        print(O+' [+] Link :'+C+color.TR3+C+G+p['url']+C+color.TR2+C)
                     time.sleep(0.05)
 
-            print(O+' [+] Google Enumeration Completed!')
+            print(G+' [+] Google Enumeration Completed!'+C+color.TR2+C)
 
         else:
             print(R+' [-] Google API Token Key not set... This modules cannot be used!')

@@ -30,15 +30,15 @@ def getRes0x00(web):
     requests = session()
     error = 0
     if properties["START"][1] == " ":
-        fdate = input(O+' [#] Year from when results to be fetched (eg. 2010) :> '+C)
+        fdate = input(C+' [§] Year from when results to be fetched (eg. 2010) :> '+C)
     else:
         fdate = properties["START"][1]
     if properties["END"][1] == " ":
-        tdate = input(GR+' [#] Year till when results to be fetched (eg. 2017) :> '+C)
+        tdate = input(GR+' [§] Year till when results to be fetched (eg. 2017) :> '+C)
     else:
         tdate = properties["END"][1]
     if properties["LIMIT"][1] == " ":
-        limit = input(O+' [#] No. of results (eg. 50) :> '+C)
+        limit = input(C+' [§] No. of results (eg. 50) :> '+C)
     else:
         limit = properties["LIMIT"][1]
 
@@ -59,7 +59,7 @@ def getRes0x00(web):
     url = "https://web.archive.org/cdx/search/cdx?url="+web+"&matchType=domain&limit="+limit+"&output=json&from="+fdate+"&to="+tdate
     time.sleep(0.5)
     try:
-        print(O+' [!] Making the no-verify request...')
+        print(P+' [!] Making the no-verify request...'+C)
         req = requests.get(url, headers=headers, timeout=10, verify=False)
         json_data = json.loads(req.text)
         if len(json_data) == 0:
@@ -72,7 +72,7 @@ def getRes0x00(web):
 
     if error == 0:
         try:
-            print(GR+' [*] Found the following backups at '+O+'web.archive.org...\n')
+            print(O+' [*] Found the following backups at'+C+color.TR3+C+G+'web.archive.org...'+C+color.TR2+C+'\n')
             result = [ x for x in json_data if x[2] != 'original']
             result.sort(key=lambda x: x[1])
             for line in result:
@@ -80,7 +80,7 @@ def getRes0x00(web):
                 website   = line[2]
                 tlinks  = "https://web.archive.org/web/" + str(timestamp) + "/" + str(website)
                 sdates = str(timestamp[:4]) + "/" + str(timestamp[4:6]) + "/" + str(timestamp[6:8])
-                print(" {}{}   {}{}  {}({})".format(C, sdates, B, website, O, tlinks))
+                print(" {}{}   {}{}  {}({})".format(C, sdates, B, website, C, tlinks))
                 time.sleep(0.04)
 
         except Exception as e:

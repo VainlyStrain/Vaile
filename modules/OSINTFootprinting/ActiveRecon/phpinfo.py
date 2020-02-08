@@ -40,14 +40,14 @@ def phpinfo(web):
                 path = '/' + path.replace('\n','')
                 pathsinfo.append(path)
 
-        print(O+' [!] Starting bruteforce...')
+        print(C+' [!] Starting bruteforce...')
         for p in pathsinfo:
             web0x00 = web + p
             req = requests.get(web0x00, allow_redirects=False, verify=False)
             if (req.status_code == 200 or req.status_code == 302):
                 if re.search(r'\<title\>phpinfo()\<\/title\>|\<h1 class\=\"p\"\>PHP Version',req.content):
                     found = 0x01
-                    print(G+' [+] Found PHPInfo File At : '+O+web0x00)
+                    print(O+' [+] Found PHPInfo File At :'+C+color.TR3+C+G+web0x00+C+color.TR2+C)
             else:
                 print(B+' [*] Checking : '+C+web0x00+R+' ('+str(req.status_code)+')')
 

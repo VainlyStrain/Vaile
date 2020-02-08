@@ -33,25 +33,25 @@ def dnschk(domain):
     domain = domain.split('//')[1]
     res = DNSDumpsterAPI(False).search(domain)
     try:
-        print(G+'\n [+] DNS Records')
+        print(G+'\n [+] DNS Records'+C+color.TR2+C)
         for entry in res['dns_records']['dns']:
-            print(''+O+("{domain} ({ip}) {as} {provider} {country}".format(**entry)))
+            print(''+O+("{domain} ({ip}) {as} {provider} {country}".format(**entry))+C)
         for entry in res['dns_records']['mx']:
-            print(G+"\n [+] MX Records")
-            print(''+O+("{domain} ({ip}) {as} {provider} {country}".format(**entry)))
-        print(G+"\n [+] Host Records (A)")
+            print(G+"\n [+] MX Records"+C+color.TR2+C)
+            print(''+O+("{domain} ({ip}) {as} {provider} {country}".format(**entry))+C)
+        print(G+"\n [+] Host Records (A)"+C+color.TR2+C)
         for entry in res['dns_records']['host']:
             if entry['reverse_dns']:
-                print((O+"{domain} ({reverse_dns}) ({ip}) {as} {provider} {country}".format(**entry)))
+                print((O+"{domain} ({reverse_dns}) ({ip}) {as} {provider} {country}".format(**entry))+C)
             else:
-                print(O+("{domain} ({ip}) {as} {provider} {country}".format(**entry)))
-        print(G+'\n [+] TXT Records:')
+                print(O+("{domain} ({ip}) {as} {provider} {country}".format(**entry))+C)
+        print(G+'\n [+] TXT Records:'+C+color.TR2+C)
         for entry in res['dns_records']['txt']:
-            print(''+O+entry)
+            print(''+O+entry+C)
         print(GR+'\n [*] Preparing DNS Map...')
         time.sleep(0.5)
         url = 'https://dnsdumpster.com/static/map/' + str(domain) + '.png'
-        print(GR+' [!] Fetching map...')
+        print(P+' [!] Fetching map...'+C)
         try:
             os.system('wget -q ' + url)
         except:
@@ -63,7 +63,7 @@ def dnschk(domain):
         os.system(p)
         mov = 'mv '+ st1 + ' tmp/'
         os.system(mov)
-        print(G+' [+] Map saved under "tmp/' + st1 + '"')
+        print(C+' [+] Map saved under "tmp/' + st1 + '"')
         try:
             print(GR+' [!] Trying to open DNS Map...')
             os.system('xdg-open tmp/'+st1)

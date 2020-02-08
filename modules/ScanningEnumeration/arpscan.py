@@ -60,7 +60,7 @@ def arp():
                 mac = after.split("(")[0]
             else:
                 after = ""
-                mac = "??:??:??:??:??:??"
+                mac = "[§:AT:TA:CK:ER:§]"
             macs.append(mac)
             if "(" in after:
                 manif = after.split("(")[1].split(")")[0]
@@ -77,6 +77,7 @@ def arp():
             t.add_row(row)
         s = t.draw()
         print("\n" + s + "\n")
+        return names
     except SystemExit:
         pass
     except KeyboardInterrupt:
@@ -85,4 +86,4 @@ def arp():
 def attack(web):
     from core.methods.print import pscan
     pscan("arp-scan")
-    arp()
+    return arp()

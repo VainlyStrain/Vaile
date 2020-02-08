@@ -77,7 +77,7 @@ def imgext():
     print(R+'\n     I M A G E   A N A L Y S I S')
     print(R+'    ––·‹›·––·‹›·––·‹›·––·‹›·––·‹›\n')
                  
-    name = input(O+' [#] Enter path to image file :> ')
+    name = input(O+' [§] Enter path to image file :> ')
 
     if os.path.exists(name):
         print(GR+" [+] Metadata for file: %s " %(name))

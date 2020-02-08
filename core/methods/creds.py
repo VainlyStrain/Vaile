@@ -25,8 +25,8 @@ from core.Core.colors import color, C, R, B
 def creds(inp):
     if "add" in inp:
         correct = True
-        user = input(" [#] username :> ")
-        passwd = input(" [#] password :> ")
+        user = input(" [§] username :> ")
+        passwd = input(" [§] password :> ")
         url = inp.split("add")[1].strip()
         if user is not "" and passwd is not "" and "@" not in url:
             if "https" in url:

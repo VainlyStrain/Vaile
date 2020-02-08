@@ -54,12 +54,12 @@ def getcmslook(web):
     web = web.split('//')[1]
     print(GR+' [*] Passive Fingerprinting CMS...')
     time.sleep(1)
-    print(O+' [!] Setting priority to False...')
+    print(C+' [!] Setting priority to False...')
     dtect = False
     print(GR+' [*] Importing token...')
     try:
         from files.API_KEYS import WHATCMS_ACCESS_TOKEN
-        print(B+' [+] Token detected : '+C+WHATCMS_ACCESS_TOKEN)
+        print(O+' [+] Token detected :'+C+color.TR3+C+G+WHATCMS_ACCESS_TOKEN+C+color.TR2+C)
         request = requests.get('https://whatcms.org/APIEndpoint/Detect?url=' + web + '&key=' + WHATCMS_ACCESS_TOKEN, verify=False)
         response = json.loads(request.text)
         status = response['result']['code']
@@ -68,7 +68,7 @@ def getcmslook(web):
         else:
             if status == 200:
                 dtect = True
-                print(G+' [+] CMS Detected: ' +O+ response['result']['name']+'\n')
+                print(O+' [+] CMS Detected:' +C+color.TR3+C+G+ response['result']['name']+C+color.TR2+C+'\n')
             else:
                 dtect = False
     except ImportError:
@@ -79,13 +79,13 @@ def cmsenum(web):
 
     print(GR+' [*] Active Fingerprinting CMS...\n')
     resp = builtwith.parse(web)
-    print(O+' [*] Parsing raw-data...')
+    print(C+' [*] Parsing raw-data...')
     time.sleep(0.7)
     res = json.dumps(resp)
     r = json.loads(res)
     try:
         if "cms" in r:
-            print(G+' [+] CMS Detected :'+O+' %s' % (r['cms']))
+            print(O+' [+] CMS Detected :'+C+color.TR3+C+G+'%s' % (r['cms'])+C+color.TR2+C)
             dtect = True
             time.sleep(0.7)
 
@@ -103,12 +103,12 @@ def cms(web):
     time.sleep(0.4)
     print(GR+' [*] Parsing the web URL... ')
     time.sleep(0.4)
-    print(O+' [!] Initiating Content Management System Detection!')
+    print(C+' [!] Initiating Content Management System Detection!')
     getcmslook(web)
     cmsenum(web)
     if dtect == False:
         print(R+" [-] "+O+web+R + " doesn't seem to use a CMS")
-    print(G+' [+] CMS Detection Module Completed!')
+    print(G+' [+] CMS Detection Module Completed!'+C+color.TR2+C)
 
 def attack(web):
     cms(web)

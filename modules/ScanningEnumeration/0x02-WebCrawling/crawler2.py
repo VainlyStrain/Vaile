@@ -85,11 +85,11 @@ def external(web, toparse, excurl):
                         extlinks.append(lk)
                         res = br.open(lk)
                         if str(res.code) == '200':
-                            print(B+' [+] Crawling : '+C+str(lk)+G+' (200)')
+                            print(B+' [+] Crawling : '+C+str(lk)+G+' (200)'+C+color.TR2+C)
                         elif str(res.code) == '404':
                             print(B+' [+] Crawling : '+C+str(lk)+R+' (404)')
                         else:
-                            print(B+' [+] Crawling : '+C+str(lk)+O+' ('+str(res.code)+')')
+                            print(B+' [+] Crawling : '+C+str(lk)+O+' ('+str(res.code)+')'+C)
     except Exception as e:
         print(R+' [-] Exception : '+str(e))
         pass
@@ -108,11 +108,11 @@ def internal(web, toparse, incurl):
                         intlinks.append(lk)
                         res = br.open(lk)
                         if str(res.code) == '200':
-                            print(B+' [+] Crawling : '+C+str(lk)+G+' (200)')
+                            print(B+' [+] Crawling : '+C+str(lk)+G+' (200)'+C+color.TR2+C)
                         elif str(res.code) == '404':
                             print(B+' [+] Crawling : '+C+str(lk)+R+' (404)')
                         else:
-                            print(B+' [+] Crawling : '+C+str(lk)+O+' ('+str(res.code)+')')
+                            print(B+' [+] Crawling : '+C+str(lk)+O+' ('+str(res.code)+')'+C)
 
     except Exception as e:
         print(R+' [-] Exception : '+str(e))
@@ -131,17 +131,17 @@ def crawler2(web):
     from core.methods.print import pscan
     pscan("crawler (depth 2)")
     time.sleep(0.7)
-    print(O+' [This module will fetch both ext. ')
-    print(O+' and internal links from a website]\n')
+    print(C+' [This module will fetch both ext. ')
+    print(C+' and internal links from a website]\n')
     print(GR+' [*] Initiating the crawling...')
     time.sleep(0.7)
     try:
-        print(O+' [*] Starting internal links gathering...')
+        print(C+' [*] Starting internal links gathering...')
         intlinks = internalcrawl(web)
-        print(G+' [+] Finished internal links crawling...')
-        print(O+'\n [*] Starting external links gathering...')
+        print(G+' [+] Finished internal links crawling...'+C+color.TR2+C)
+        print(C+'\n [*] Starting external links gathering...')
         extlinks = externalcrawl(web)
-        print(G+' [+] Finished external links crawling...')
+        print(G+' [+] Finished external links crawling...'+C+color.TR2+C)
 
     except Exception as e:
         print(R+' [-] Exception : '+str(e))
@@ -149,14 +149,14 @@ def crawler2(web):
 
     print(R+'   EXTERNAL LINKS')
     print(R+'  ================')
-    print(O+'   |')
+    print(R+'   |')
 
     for lenk in extlinks:
         print(GR+'   + '+lenk)
 
     print(R+'\n   INTERNAL LINKS')
     print(R+'  ================')
-    print(O+'   |')
+    print(R+'   |')
 
     for lenk in intlinks:
         print(GR+'   + '+O+lenk)

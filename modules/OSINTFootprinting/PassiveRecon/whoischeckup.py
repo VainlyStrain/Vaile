@@ -38,7 +38,7 @@ def whoischeckup(web):
         text = requests.get('http://api.hackertarget.com/whois/?q=' + dom).text
         nping = str(text)
         if 'error' not in nping:
-            print(G+ nping)
+            print(color.END+ nping+C)
         else:
             print(R+' [-] Outbound Query Exception!')
             time.sleep(0.8)

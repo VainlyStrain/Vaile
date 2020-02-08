@@ -30,13 +30,13 @@ def getemails0x00(domain):
             print(GR+' [*] Setting parameters...')
             time.sleep(0.6)
             results = 'http://www.google.com/search?q='+str(domain)+'&hl=en&lr=&ie=UTF-8&start=' + repr(page_counter) + '&sa=N'
-            print(O+' [!] Making the request...')
+            print(C+' [!] Making the request...')
             response = requests.get(results)
             print(GR+' [*] Extracting reponse...')
             text = response.text
             emails = re.findall('([\w\.\-]+@'+domain+')',tagparse(text))
             for email in emails:
-                print(G+' [+] Received e-mail : '+O+email)
+                print(O+' [+] Received e-mail :'+C+color.TR3+C+G+email+C+color.TR2+C)
                 flag = True
             page_counter = page_counter + 10
     except IOError:
@@ -47,13 +47,13 @@ def getemails0x00(domain):
             print(GR+' [*] Setting parameters...')
             time.sleep(0.6)
             results = 'http://groups.google.com/groups?q='+str(domain)+'&hl=en&lr=&ie=UTF-8&start=' + repr(page_counter) + '&sa=N'
-            print(O+' [!] Making the request...')
+            print(C+' [!] Making the request...')
             response = requests.get(results)
             print(GR+' [*] Extracting reponse...')
             text = response.text
             emails = re.findall('([\w\.\-]+@'+domain+')',tagparse(text))
             for email in emails:
-                print(G+' [+] Received e-mail : '+O+email)
+                print(O+' [+] Received e-mail :'+C+color.TR3+C+G+email+C+color.TR2+C)
                 flag = True
             page_counter = page_counter + 10
     except IOError:
@@ -83,9 +83,9 @@ def googlegroups(web):
     from core.methods.print import posintpas
     posintpas("google groups")
 
-    print(O+' [!] Initiating enumeration via Google Web...')
+    print(C+' [!] Initiating enumeration via Google Web...')
     time.sleep(0.7)
-    print(O+' [!] Parsing url...')
+    print(C+' [!] Parsing url...')
     web = web.replace('https://','')
     web = web.replace('http://','')
     if "@" in web:
@@ -93,7 +93,7 @@ def googlegroups(web):
     getemails0x00(web)
     if flag == False:
         print(R+' [-] No results found via enumeration on Google Groups...')
-    print(G+' [+] Done!')
+    print(C+' [+] Done!')
 
 def attack(web):
     googlegroups(web)

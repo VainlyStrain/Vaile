@@ -30,11 +30,11 @@ def getos0x00(web):
     ip_addr = socket.gethostbyname(web)
     print(C+' [*] Querying Reverse DNS...')
     time.sleep(0.7)
-    print(G+' [+] Website IP : ' +O+ str(ip_addr))
+    print(O+' [+] Website IP :' +C+color.TR3+C+G+ str(ip_addr)+C+color.TR2+C)
     time.sleep(0.5)
     print(GR+' [*] Trying to identify operating system...')
     time.sleep(0.5)
-    print(O+' [!] Configuring requests...')
+    print(C+' [!] Configuring requests...')
     result = requests.get('https://www.censys.io/ipv4/%s/raw' % ip_addr).text
     print(GR+' [*] Getting raw data...')
     time.sleep(0.8)
@@ -45,7 +45,7 @@ def getos0x00(web):
             flag = 0x01
             print(B+' [+] Operating System Identified : ' + C+ match.group().split('n&#34;: &#34;')[1][:-5])
         else:
-            print(R+' [-] No exact Operating System matches for '+O+web+'...')
+            print(R+' [-] No exact Operating System matches for '+O+web+C+'...')
             flag = 0x00
         return flag
     except Exception as e:

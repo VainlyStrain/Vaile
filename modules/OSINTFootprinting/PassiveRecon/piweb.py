@@ -35,7 +35,7 @@ def piweb(web):
     text = requests.get('http://api.hackertarget.com/nping/?q=' + dom).text
     nping = str(text)
     if 'null' not in nping:
-        print(G+ nping)
+        print(color.END+ nping+C)
     else:
         print(R+' [-] Outbound Query Exception!')
         time.sleep(0.8)

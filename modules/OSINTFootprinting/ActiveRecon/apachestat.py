@@ -32,7 +32,7 @@ def apachestat(web):
     from core.methods.print import posintact
     posintact("apache status") 
 
-    print(O+' [*] Importing fuzz parameters...')
+    print(C+' [*] Importing fuzz parameters...')
     time.sleep(0.7)
     print(GR+' [*] Initializing bruteforce...')
     with open('files/fuzz-db/apachestat_paths.lst','r') as paths:
@@ -42,12 +42,12 @@ def apachestat(web):
             print(B+' [+] Trying : '+C+url)
             resp = requests.get(url, allow_redirects=False, verify=False, timeout=7)
             if resp.status_code == 200 or resp.status_code == 302:
-                print(G+' [+] Apache Server Status Enabled at : '+O+url)
+                print(O+' [+] Apache Server Status Enabled at :'+C+color.TR3+C+G+url+C+color.TR2+C)
                 flag = 0x01
 
     if flag == 0x00:
         print(R+' [-] No server status enabled!')
-    print(G+' [+] Apache server status completed!\n')
+    print(C+' [+] Apache server status completed!\n')
 
 def attack(web):
     apachestat(web)

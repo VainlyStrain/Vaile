@@ -43,7 +43,7 @@ def subnet(web):
         if 'error' not in http:
             result = http.splitlines()
             for r in result:
-                print(G+' '+r.split('=')[0]+'='+O+r.split('=')[1])
+                print(O+' '+r.split('=')[0]+C+color.TR3+C+G+'='+r.split('=')[1]+C+color.TR2+C)
 
         elif 'No results found' in http:
             print(R+' [-] No results found!')

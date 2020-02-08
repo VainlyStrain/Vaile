@@ -36,7 +36,7 @@ def sqli(web):
     print(B+'  [1] '+C+'Error Based SQLi'+W+' (Manual + Automated)')
     print(B+'  [2] '+C+'Blind Based SQLi'+W+' (Manual + Automated)\n')
     print(B+'  [99] '+C+'Back to Console\n')
-    v = input(O+' [#] TID :> ')
+    v = input(O+' [§] TID :> ')
 
     if v.strip() == '1':
         errorsqli(web, properties)

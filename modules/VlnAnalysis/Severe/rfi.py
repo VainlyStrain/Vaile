@@ -46,13 +46,13 @@ def clear_cookie():
 
 def cust0x00(web, parallel):
     if properties["PARAM"][1] == " ":
-        web0 = input(GR+' [#] Enter the point scope parameter :> ')
+        web0 = input(GR+' [§] Enter the point scope parameter :> ')
     else:
         web0 = properties["PARAM"][1]
 
     if str(web0).startswith('/'):
         print(GR+' [!] Your input has a "/" in the beginning,..')
-        fof = input(O+' [#] Do you mean root directory? (y/n) :> ')
+        fof = input(O+' [§] Do you mean root directory? (y/n) :> ')
         if fof == 'y' or fof == 'Y':
             pass
         elif ((fof == 'n') or (fof == 'N')):
@@ -61,7 +61,7 @@ def cust0x00(web, parallel):
     test(web0, web)
     print(G+' [+] Done!')
     time.sleep(0.6)
-    i = input(O+' [#] Proceed to Brute Module? (y/n) :> ')
+    i = input(O+' [§] Proceed to Brute Module? (y/n) :> ')
     if i == 'y' or i == 'Y':
         print(G+' [+] Moving on...')
         brute0x00(web, parallel)
@@ -205,7 +205,7 @@ def brute0x00(web, parallel):
     try:
         if properties["DICT"][1] == " ":
             print(O+' [!] Enter path to payload file '+R+'(Default: files/fuzz-db/rfi_paths.lst)')
-            fi = input(O+' [#] Your input (Press Enter if default) :> ')
+            fi = input(O+' [§] Your input (Press Enter if default) :> ')
         elif properties["DICT"][1].lower() == "none":
             fi = ""
         else:
@@ -262,7 +262,7 @@ def auto0x00(web, parallel):
             print(R+' [-] No sites found via Google Dorks...')
             print(G+' [+] Moving on...')
             time.sleep(0.5)
-            i = input(O+' [#] Do you want to use custom module (Y/n) :> '+C)
+            i = input(O+' [§] Do you want to use custom module (Y/n) :> '+C)
             if i == 'y' or i == 'Y':
                 print(G+' [+] Loading the custom module...\n')
                 time.sleep(0.6)
@@ -308,7 +308,7 @@ def rfi(web):
     print(B+'    [1] Custom Targetting')
     print(B+'    [2] Automated Scanning\n')
 
-    m = input(O+' [#] TID :> ')
+    m = input(O+' [§] TID :> ')
 
     if str(web).endswith('/'):
         pass

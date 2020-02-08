@@ -33,13 +33,13 @@ def googleSearch():
         print(R+'\n    G O O G L E   S E A R C H')
         print(R+'   ––·‹›·––·‹›·––·‹›·––·‹›·––·\n')
                     
-        lol = input(O+ " [#] QUERY :> " + color.END)
+        lol = input(O+ " [§] QUERY :> " + color.END)
         time.sleep(0.8)
-        m = input(O+' [#] Search limit (not recommended above 30) :> ')
-        print(G+ " [!] Below are the list of websites with info on '" +lol+ "'")
+        m = input(C+' [§] Search limit (not recommended above 30) :> ')
+        print(C+ " [!] Below are the list of websites with info on '" +lol+ "'")
         x = search(lol, tld='com', lang='es', stop=int(m))
         for url in x:
-            print(O+"   [!] Site Found :> "+W + url)
+            print(O+"   [!] Site Found :>"+C+color.TR3+C+G + url+C+color.TR2+C)
             q = open('.google-cookie','w')
             q.close()
     except urllib.error.HTTPError:

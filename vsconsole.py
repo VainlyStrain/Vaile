@@ -29,7 +29,7 @@ import core.methods.inputin as addtarget
 import core.methods.print as prnt
 import core.methods.select as select
 import core.variables as varis
-from core.Core.colors import R, B, C, color
+from core.Core.colors import R, B, C, color, O, G
 from core.methods.cache import load, save, sessionparse
 from core.methods.creds import creds
 from core.methods.tor import torpipe, initcheck, session
@@ -131,12 +131,12 @@ class VainShell(Cmd):
                         session = session.replace("--val","").strip()
                         #print(session)
                         self.sessionhelper(session)
-                        print(" [+] Restored VAL session: {}".format(session))
+                        print(G+" [+] Restored VAL session: {}".format(session)+C+color.TR2+C)
                         if om is not "":
                             self.do_load(om)
                     else:
                         load(session)
-                        print(" [+] Restored session: {}.".format(session))
+                        print(G+" [+] Restored session: {}.".format(session)+C+color.TR2+C)
                 except FileNotFoundError:
                     print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "{}: no such session file.".format(session))
                     varis.targets = b
@@ -190,7 +190,7 @@ class VainShell(Cmd):
                 if acc or not initv:
                     p = torpipe(True)
                     if p:
-                        print(" [+] Tor > ON")
+                        print(O+" [+] Tor"+C+color.TR3+C+G+"ON"+C+color.TR2+C)
                     else:
                         varis.tor = False
                         if shell:
@@ -200,7 +200,7 @@ class VainShell(Cmd):
                         if start is not "":
                             try:
                                 os.system("systemctl start tor")
-                                print(" [+] Tor service successfully started.")
+                                print(G+" [+] Tor service successfully started."+C+color.TR2+C)
                                 self.do_tor("on")
                             except Exception as e:
                                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Starting Tor service failed:"+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
@@ -215,10 +215,10 @@ class VainShell(Cmd):
                 if stop is not "":
                     try:
                         os.system("systemctl stop tor")
-                        print(" [+] Tor service successfully stopped.")
+                        print(G+" [+] Tor service successfully stopped."+C+color.TR2+C)
                     except Exception as e:
                         print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Stopping Tor service failed:"+"\033[0m"+ color.CURSIVE +"\n{}".format(e) + C)
-                print(" [+] Tor > OFF")
+                print(O+" [+] Tor"+C+color.TR3+C+G+"OFF"+C+color.TR2+C)
             else:
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Syntax: tor on|off")
         except:
@@ -235,17 +235,17 @@ class VainShell(Cmd):
     tor on|off
 """)
 
-    def do_ip(self, inp):
+    def do_netinfo(self, inp):
         try:
             import core.methods.netinfo as netinfo
             netinfo.info()
-        except:
-            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Something went wrong. Try again later.")
+        except Exception as e:
+            print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Something went wrong: {}".format(e))
 
-    def help_ip(self):
+    def help_netinfo(self):
         print("""
-  ip
-  ----
+  netinfo
+  ---------
 
   Provides current network information, such as
 
@@ -324,7 +324,7 @@ class VainShell(Cmd):
             #print(" --------")
             for i in varis.targets:
                 if len(varis.targets) > 1:
-                    print( "\n [i] Target: {}\n".format(i))
+                    print( "\n"+O+" [i] Target:"+C+color.TR3+C+G+i+C+color.TR2+C+"\n")
                 select.attack(i)
 
     def help_attack(self):
@@ -343,6 +343,9 @@ class VainShell(Cmd):
         if "--ip" in inp:
             ip = inp.replace("--ip", "").strip()
             addtarget.inputip(ip)
+        elif "--net" in inp:
+            net = inp.replace("--net", "").strip()
+            addtarget.inputnet(net)
         else:
             addtarget.inputin(inp)
 
@@ -357,7 +360,8 @@ class VainShell(Cmd):
     TARGET: the target added to the list.
     
   Options:
-    --ip: specified target is an IP, rather than an URL
+    --ip:  specified target is an IP, rather than an URL
+    --net: load all hosts in local network as targets
 """)
 
     def do_phpsploit(self, inp):
@@ -365,7 +369,7 @@ class VainShell(Cmd):
             def filecheck():
                 if not os.path.exists(varis.phpsploit):
                     print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "No phpsploit installation under {}".format(varis.phpsploit) + color.END)
-                    phpsplt = input(" [#] Enter path to phpsploit script :> ")
+                    phpsplt = input(" [§] Enter path to phpsploit script :> ")
                     varis.phpsploit = phpsplt
                     filecheck()
             filecheck()
@@ -400,7 +404,7 @@ class VainShell(Cmd):
             varis.targets = list(filter(lambda a: a != inp, varis.targets))
             found = old != varis.targets
             if found:
-                print(" [+] Deleted Target: {}".format(inp))
+                print(O+" [+] Deleted Target:"+C+color.TR3+C+G+inp+C+color.TR2+C)
             else:
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Could not find specified target: {}".format(inp))
 
@@ -538,7 +542,7 @@ class VainShell(Cmd):
         try:
             p = int(inp.strip())
             assert p > 0
-            print(" [+] Processes: {} > {}".format(varis.processes, p))
+            print(O+" [+] Processes:"+C+color.TR3+C+G+"{} > {}".format(varis.processes, p)+C+color.TR2+C)
             varis.processes = p
         except (ValueError, AssertionError):
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Not a valid (positive) integer: {}".format(inp))
@@ -596,7 +600,7 @@ class VainShell(Cmd):
                         os.system("sudo -u {} git pull".format(user))
                     else:
                         os.system("git pull ; cp tmp/Vaile /bin/Vaile ; chmod +x /bin/Vaile")
-                    print(" [+] Update installed successfully.")
+                    print(G+" [+] Update installed successfully."+C+color.TR2+C)
             else:
                 print(" [+] You are running the latest version of Vaile-framework ({}).".format(localver))
         except:
@@ -670,7 +674,7 @@ def main():
         s = VainShell()
         s.do_fetch("")
     elif opt["victim"] and not opt["load"] or opt["load"] and not opt["victim"]:
-        parser.error("'VIC' and 'M' are required for CLI attack.")
+        parser.error("'-v' and '-l' are required for CLI attack.")
     else:
         if not opt["quiet"]:
             prnt.loadstyle()

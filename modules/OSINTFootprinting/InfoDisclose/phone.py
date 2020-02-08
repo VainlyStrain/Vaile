@@ -37,7 +37,7 @@ def phone0x00(url):
     links = [url]
     po = url.split('//')[1]
     for w in links:
-        print(GR+' [*] Scraping Page: '+O+url)
+        print(O+' [*] Scraping Page: '+C+color.TR3+C+G+url+C+color.TR2+C)
         req = requests.get(w).text
         check0x00(req)
 
@@ -56,7 +56,7 @@ def phone0x00(url):
 
     try:
         for uurl in urls:
-            print(G+"\n [+] Scraping Page: "+O+uurl)
+            print("\n"+O+" [+] Scraping Page: "+C+color.TR3+C+G+uurl+C+color.TR2+C)
             req = requests.get(uurl).text
             check0x00(req)
 
@@ -66,16 +66,16 @@ def phone0x00(url):
     if found == 0x00:
         print(R+' [-] No Phone Numbers found disclosed in plaintext in Source Code!\n')
 
-    print(G+' [+] Scraping Done!')
+    print(G+' [+] Scraping Done!'+C+color.TR2+C)
 
 def check0x00(req):
 
     found = 0x00
-    print(O+' [!] Setting parse parameters...')
+    print(C+' [!] Setting parse parameters...')
     comments = re.findall(signature,req)
     print(GR+" [+] Searching for Phone Numbers...")
     if comments:
-        print(G+'\n [+] Found Phone Numbers:')
+        print(G+'\n [+] Found Phone Numbers:'+C+color.TR2+C)
     for comment in comments:
         print(C+'   '+comment)
         time.sleep(0.03)

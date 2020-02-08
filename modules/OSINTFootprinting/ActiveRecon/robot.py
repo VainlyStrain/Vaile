@@ -33,9 +33,9 @@ def robot(web):
     try:
         resp = requests.get(url).text
         m = str(resp)
-        print(O+' [+] Robots.txt found!')
+        print(G+' [+] Robots.txt found!'+C+color.TR2+C)
         print(GR+' [*] Displaying contents of robots.txt...')
-        print(G+m)
+        print(color.END+m+C)
     except:
         print(R+' [-] Robots.txt not found')
 
@@ -44,9 +44,9 @@ def robot(web):
     try:
         resp = requests.get(url0).text
         m = str(resp)
-        print(O+' [+] Sitemap.xml found!')
+        print(G+' [+] Sitemap.xml found!'+C+color.TR2+C)
         print(GR+' [*] Displaying contents of sitemap.xml')
-        print(G+m)
+        print(color.END+m+C)
     except:
         print(R+' [-] Sitemap.xml not found')
 
