@@ -14,9 +14,6 @@
   Pentest framework based on TIDoS.
 </p>
 
-> __IMPORTANT__:
->
-> The new Qt5 interface is WIP and preview only ; there are still unimplemented features, making it impossible to attack. Use vsconsole for serious use.
 
 ### Highlights :-
 Here is some light on what the framework is all about:
@@ -39,7 +36,7 @@ The main differences between Vaile and TIDoS are:
 - [x] the interface: Vaile presents a new, Metasploit-like console interface
 - [x] Parallelisation: Vaile uses multiprocessing to speed up attacks
 - [x] An alternative CLI interface for faster interaction with one specific module
-- [x] Anonymity: Attacking through Tor is possible (not yet everywhere)
+- [x] Anonymity: Attacking through Tor is possible (95% done)
 - [x] Module Completion: Some modules have been feature-extended (e.g. more evasion, supporting more than 1 query parameter)
 - [x] Some new modules: arpscan
 - [x] A Graphical User Interface for easier interaction with the toolkit
@@ -68,12 +65,13 @@ pip3 install -r requirements.txt
 ```
 Thats it. You now have Vaile at your service. Fire it up using:
 ```
-python3 Vaile.py
+python3 Vaile              #Qt5 interface
+sudo python3 vsconsole.py  #console interface
 ```
 
 #### Updating Vaile :
 
-To get the current version of Vaile, move into the installation folder and perform `(sudo) git pull  #sudo if installed by srcinstall.py`.
+To get the current version of Vaile, move into the installation folder and perform `(sudo) git pull  #sudo if installed by install.py`. Alternatively, you can run the `fetch` command in vsconsole.
 
 ### Getting Started :-
 
@@ -95,10 +93,10 @@ __                                                    __
     help      Show help message.                      :
     info      Show description of current module.     M
  :  intro     Display Intro.                          :
- :  ip        Show network information.               :
-    leave     Leave module.                           M
- :  list      List all modules of a category.         :
+ :  leave     Leave module.                           M
+    list      List all modules of a category.         :
  :  load      Load module.                            :
+ :  netinfo   Show network information.               :
  :  opts      Show options of current module.         M
     phpsploit Load the phpsploit framework.           :
               (needs to be downloaded externally)
