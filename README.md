@@ -14,6 +14,9 @@
   Pentest framework based on TIDoS.
 </p>
 
+> __IMPORTANT__:
+>
+> The new Qt5 interface is WIP and preview only ; there are still unimplemented features, making it impossible to attack. Use vsconsole for serious use.
 
 ### Highlights :-
 Here is some light on what the framework is all about:
