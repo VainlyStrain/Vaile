@@ -623,15 +623,16 @@ class VainShell(Cmd):
                     uptodate = False
             if not uptodate:
                 print(" [!] An update is available! Last version is: {}, installed version is: {}.".format(onver, localver))
-                d = input(" [?] Do you want to update the framework? (enter if not) :> ")
-                if d is not "":
-                    path = os.path.dirname(os.path.realpath(__file__))
-                    if "/home/" in path:
-                        user = path.split("/")[2]
-                        os.system("sudo -u {} git pull".format(user))
-                    else:
-                        os.system("git pull ; cp tmp/Vaile /bin/Vaile ; chmod +x /bin/Vaile")
-                    print(G+" [+] Update installed successfully."+C+color.TR2+C)
+                if not gui:
+                    d = input(" [?] Do you want to update the framework? (enter if not) :> ")
+                    if d is not "":
+                        path = os.path.dirname(os.path.realpath(__file__))
+                        if "/home/" in path:
+                            user = path.split("/")[2]
+                            os.system("sudo -u {} git pull".format(user))
+                        else:
+                            os.system("git pull ; cp tmp/Vaile /bin/Vaile ; chmod +x /bin/Vaile")
+                        print(G+" [+] Update installed successfully."+C+color.TR2+C)
             else:
                 print(" [+] You are running the latest version of Vaile-framework ({}).".format(localver))
             if gui:
