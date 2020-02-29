@@ -29,8 +29,8 @@ class VaileParser(argparse.ArgumentParser):
         self.exit(2, '{}[-]\033[0m\033[1m Invalid/missing params\033[0m\n{}[HINT]\033[0m\033[0m {}\n'.format(R, R, message))
     def print_help(self):
         print('''{}Vsynta.:{} {}Vaile{} [-v VIC] [-p] [-a CA] [-s] 
-          [-f] [-l M] [-h] [-q] 
-        [--app]
+          [-f] [-l M] [-h] [-c VAL]
+        [--app] [-q]
 
   -v VIC, --victim VIC  {}Target to attack per cli{}
   -l M, --load M        {}Module to load per cli{}
@@ -39,13 +39,14 @@ class VaileParser(argparse.ArgumentParser):
   -s, --session         {}Is VIC a session file?{}
   -q, --quiet           {}Start Console quietly{}
   -f, --fetch           {}Check for & install updates{}
-  --app                 {}Run Vaile graphical interface{}'''.format(RC, color.END, RB, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END))
+  -c, --file            {}Automation using VAL file{}
+  --app                 {}Run Vaile graphical interface{}'''.format(RC, color.END, RB, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END, RC, color.END))
 
 class VaileFormatter(argparse.RawDescriptionHelpFormatter):
     def add_usage(self, usage, actions, groups, prefix=None):
         if prefix is None:
             prefix = RD + 'Vsynta ' + color.END
-            return super(VaileFormatter, self).add_usage("{}Vaile{} [-v VIC] [-p] [-a CA] [-s]\n          [-f] [-l M] [-h] [-q]\n        [--app]".format(RB,color.END), actions, groups, prefix)
+            return super(VaileFormatter, self).add_usage("{}Vaile{} [-v VIC] [-p] [-a CA] [-s]\n          [-f] [-l M] [-h] [-c VAL]\n        [--app] [-q]".format(RB,color.END), actions, groups, prefix)
 
 def build_parser():
     p = VaileParser(formatter_class=VaileFormatter, add_help=False)
@@ -80,6 +81,10 @@ def build_parser():
     p.add_argument('-f', '--fetch',
                    help='Check for and install updates.',
                    action='store_true'
+                   )
+    p.add_argument('-c', '--file',
+                   help='Automation using VAL file',
+                   metavar='VAL'
                    )
     #p.epilog = "Beware, my friend. These are dark times."
     return p

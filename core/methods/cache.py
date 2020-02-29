@@ -19,6 +19,8 @@ _____, ___
 
 
 import core.variables as vars
+import importlib
+from core.methods.select import bareimport
 
 def load(i):
     targets = []
@@ -34,7 +36,7 @@ def save(i):
             f.write(vic)
             f.write("\n")
 
-def sessionparse(i):
+def sessionparse(i, load=True):
     victims = []
     modules = {}
     oneline = ""
@@ -46,7 +48,8 @@ def sessionparse(i):
         block = block.split("</victim>")[0]
         victim = block.split(">")[0].strip()
         victims.append(victim)
-        vars.targets.append(victim)
+        if load:
+            vars.targets.append(victim)
         inter = block.replace(victim+">","")
         modblocks = inter.split("<module ")[1:]
         for modblock in modblocks:
@@ -63,3 +66,22 @@ def sessionparse(i):
                     properties.update({prop : val})
             modules.update({module : properties})
     return (victims, modules)
+
+def createVal(victims, modules, name):
+    with open ("core/sessioncache/{}".format(name), "w") as file:
+        for victim in victims:
+            file.write("<victim "+victim+">\n")
+            for module in modules:
+                file.write("  <module "+module+">\n")
+                if "modules" in module:
+                    j = importlib.import_module(module)
+                else:
+                    p = bareimport(module)
+                    md = p[1]
+                    j = importlib.import_module(md)
+                properties = j.properties
+                for key, value in properties.items():
+                    if value[1].strip() != "":
+                        file.write("    {}:{};\n".format(key, value[1]))
+                file.write("  </module>\n")
+            file.write("</victim>\n")

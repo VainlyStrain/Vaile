@@ -4,16 +4,18 @@ import os
 import platform
 import socket
 import time
-import requests
 
 from core.Core.colors import *
+from core.methods.tor import session
 from core.variables import interface
 
+
+request = session()
 mac_address = os.popen("cat /sys/class/net/{}/address".format(interface)).read().strip()
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(('google.com', 0))
 localaddr = s.getsockname()[0].strip()  # local subnet
-ipaddr = requests.get('http://ip.42.pl/raw').text.strip()
+ipaddr = request.get('http://ip.42.pl/raw').text.strip()
 def_gw_device = os.popen("route | grep '^default' | grep -o '[^ ]*$'").read().strip()
 
 

@@ -45,14 +45,19 @@ global dlist
 global interface
 
 version = "2.2"
-e_version = "2.2.1-5#pre2"
-r_version = "2.2.1-5"
+e_version = "2.2.5-1#lsp"
+r_version = "2.2.5-1"
 module = ""
 targets = []
 processes = 8
 interface = "wlp4s0"
 tor = False
 initip = ""
+
+#to avoid permission denied with gui, set to your unprivileged account
+username=""
+with open("core/doc/local", "r") as localfile:
+    username = localfile.read().strip()
 
 modir = os.path.dirname(os.path.realpath(__file__)) + "/../modules/"
 sploidir = os.path.dirname(os.path.realpath(__file__)) + "/../modules/SploitLoot/"

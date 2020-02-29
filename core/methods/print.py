@@ -17,11 +17,12 @@ _____, ___
 └──╼ VainlyStrain
 """
 
-import os
+import os, re
 import time
 import random
 from time import sleep
 from datetime import datetime
+from random import uniform as rflt
 
 from core import variables as vars
 from core.Core.colors import *
@@ -136,7 +137,7 @@ ____, __             .|
     ;.           /,       
    {}  ;          /;' ;    
      ;         /;{}|{}  : ^  
-     ’      / {}:{}  ;..  °   
+     ’      / {}:{}  ;.’  °   
           '/; \\           
          ./ '. \\      {}|{}
           '.  ’·    __\\,_
@@ -215,39 +216,12 @@ def randomsg():
 
 def bannerbelownew():
     #print("   Vaile {}{}{}".format(color.END, RB, vars.e_version) + C)
-    print("   Vaile{}{}{}{}{}{}{}{}{}{}".format(color.END, color.TR6, color.END, RB, vars.e_version.split("#")[0],C,color.TR3,G,vars.e_version.split("#")[1],color.TR2) + C)
+    print("   {}Vaile{}{}{}{}{}{}{}{}{}{}".format(color.END, color.END, color.TR6, color.END, RB, vars.e_version.split("#")[0],C,color.TR3,G,vars.e_version.split("#")[1],color.TR2) + C)
     print("  {}{}{}".format(RC, randomsg(), color.END))
-
-def bannerbelow():
-    print("\n")
-    # print(B+'  [       '+C+'The Vaile Framework  \033[36m|  \033[1;37mVersion '+open('doc/Version_Num').read().strip()+'       \033[1;34m]  ')
-    # sleep(0.2)
-    # print(B+'  [                                                  ]  ')
-    print(B + '  [           ~   Vaile Attack : saarsec   ~         ]  ')
-    sleep(0.1)
-    print(B + '  [           ' + O + '\033[1;31m~  fork from\033[0m\033[1m Infected Drake  ~         ]  ')
-    sleep(0.1)
-    print(B + '  [                                                  ]  ')
-    sleep(0.1)
-    print(B + '  [    5 Phases  |  \033[1;31m14 Sub-Phases  |  \033[0m\033[1m108 Modules    ]  ')
-    sleep(0.1)
-    print('')
-    sleep(0.1)
-    print(B + '         Vaile Attack Framework Console ({})'.format(vars.version))
-    sleep(0.1)
-    print(B + '      Vaile Attack is a fork of TIDoS by ' + R + 'Vainly(saarsec)\n\033[0m\033[1m')
-
-
-def printLegal():
-    print("[!] Legal disclaimer: Usage of Vaile for "
-          "attacking targets without prior mutual consent is illegal. It is the end "
-          "user's responsibility to obey all applicable local, state and federal "
-          "laws. Developers assume no liability and are not responsible for any "
-          "misuse or damage caused by this program.\n")
 
 
 def info():
-  print('''\033[4m  \033[0m\033[1m                                                    \033[4m  \033[0m\033[1m
+  print('''{}  {}                                                    {}  {}
  !  attack    Attack specified target(s)              M
  :  clear     Clear terminal.                         :
  V  creds     Handle target credentials.              
@@ -272,10 +246,10 @@ def info():
     vicdel    Delete Target from list.                :
     viclist   List all targets.                       :
 
-  \033[4mAvail. Cmds\033[0m\033[1m
-    M needs loaded modvle
-    V [! potentially] need loaded target(s)
-''')
+  {}Avail. Cmds{}
+    {}M{} needs loaded modvle
+    {}V [! potentially]{} need loaded target(s)
+'''.format(color.UNDERLINE, color.END, color.UNDERLINE, color.END, color.UNDERLINE, color.END, color.BOLD, color.END, color.BOLD, color.END,))
 
 
 def disclaimer():
@@ -397,8 +371,9 @@ def progressbar (iteration, total, prefix = '', suffix = '', decimals = 1, lengt
     """
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print('\r%s [%s] %s%% %s' % (prefix, bar, percent, suffix), end = printEnd)
+    bar = fill * filledLength + "{}༛{}".format(RD, color.END) * (length - filledLength)
+    #print('\r%s [%s] %s%% %s' % (prefix, bar, percent, suffix), end = printEnd)
+    print('\r%s ———·›%s»·——— %s%% %s' % (prefix, bar, C+percent+color.END, suffix), end = printEnd)
     # Print New Line on Complete
     if iteration == total: 
         print()
@@ -422,3 +397,49 @@ def summary(module, msg):
      ’   
     """.format(color.END, R, color.END, RB, title(module), color.END, R, C, color.CURSIVE, msg, color.END)
     print(display)
+
+def loadstyle2():
+    for i in range(0, 31):
+        rnd = rflt(0.08, 0.15)
+        time.sleep(rnd) #0.055
+        #base = "Vaile {}".format(vars.r_version)
+        base = "vailyn"
+        if i%4 == 0:
+            splitted = re.findall(".", base)
+            for j in range(0, len(splitted)):
+                #if j%4 == 0:
+                if j == i%len(splitted):
+                    splitted[j] = splitted[j].swapcase()
+            disp = "".join(c for c in splitted)
+            #progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix=" {} \\".format(disp))
+            progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix="\\", prefix=disp+" ୰")
+        elif i%4 == 1:
+            splitted = re.findall(".", base)
+            for j in range(0, len(splitted)):
+                #if j%4 == 1:
+                if j == i%len(splitted):
+                    splitted[j] = splitted[j].swapcase()
+            disp = "".join(c for c in splitted)
+            #progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix=" {} |".format(disp))
+            progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix="|", prefix=disp+" ୰")
+        elif i%4 == 2:
+            splitted = re.findall(".", base)
+            for j in range(0, len(splitted)):
+                #if j%4 == 2:
+                if j == i%len(splitted):
+                    splitted[j] = splitted[j].swapcase()
+            disp = "".join(c for c in splitted)
+            #progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix=" {} /".format(disp))
+            progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix="/", prefix=disp+" ୰")
+        else:
+            splitted = re.findall(".", base)
+            for j in range(0, len(splitted)):
+                #if j%4 == 3:
+                if j == i%len(splitted):
+                    splitted[j] = splitted[j].swapcase()
+            disp = "".join(c for c in splitted)
+            #progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix=" {} -".format(disp))
+            progressbar(i, 30, fill="{}༛{}".format(color.END, color.END), length=20, suffix="-", prefix=disp+" ୰")
+    time.sleep(0.75)
+    os.system("clear")
+    """୰ง༒༛ለ៖៱៴▯ヾ"""

@@ -16,7 +16,7 @@
 
 > __IMPORTANT__:
 >
-> The new Qt5 interface is WIP and preview only ; there are still unimplemented features, making it impossible to attack. Use vsconsole for serious use.
+> The new Qt5 interface is complete, but has additional dependencies. Take a look at the updated installation instructions.
 
 ### Highlights :-
 Here is some light on what the framework is all about:
@@ -32,6 +32,7 @@ Here is some light on what the framework is all about:
 - [x] Piping Attacks through Tor (not implemented everywhere yet)
 - [x] You just need the domain, and leave everything is to this tool.
 - [x] Vaile has full verbose out support, so you'll know whats going on.
+- [x] Since 2.2.5: Attacking now even easier with a new GUI
 
 ### Main new features
 The main differences between Vaile and TIDoS are:
@@ -60,7 +61,7 @@ cd Vaile
 
 Vaile needs some libraries to run, which can be installed via `aptitude` or `dnf` Package Managers.
 ```
-sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev tor
+sudo apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev tor konsole
 ```
 Now after these dependencies are finished installing, we need to install the remaining Python Package dependencies, hence run:
 ```
@@ -296,7 +297,7 @@ Vaile Attack presently supports the following: `and more modules are under activ
 	+ ShellShock
 	
 ### Other Tools:
-- `net_info.py` - Displays information about your network. Accessible from 'ip' command.
+- `net_info.py` - Displays information about your network. Accessible from 'netinfo' command.
 
 ### Vaile In Action:
 
@@ -312,7 +313,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.2.1-5 [latest release] [#stable]
+v2.2.5-1 [latest release] [#stable]
 ```
 
 ### Disclaimer:

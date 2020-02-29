@@ -21,12 +21,14 @@ import sys, platform
 import os, socket
 import requests
 from vsconsole import VainShell
+from core.methods.cache import createVal
 from PyQt5.QtCore import Qt
 import core.variables as variables
-from core.variables import interface
-from PyQt5.QtWidgets import QTreeWidgetItem
+from subprocess import Popen, PIPE
+from core.variables import interface, username
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
 from core.methods.select import mlist as modulelist
+from PyQt5.QtWidgets import QTreeWidgetItem, QTableWidgetItem
 
 shell = VainShell()
 
@@ -34,6 +36,10 @@ class VaileApp(QtWidgets.QDialog):
     def __init__(self):
         super(VaileApp, self).__init__() # Call the inherited classes __init__ method
         uic.loadUi("core/qt5/Main.ui", self) # Load the .ui file
+        #menu = self.menuBar() 
+        #vaile_menu = bar.addMenu('Vaile')
+        #info_action = QtWidgets.QAction('Info', self)
+        #menu.addAction(info_action)
         self.sessionType.addItem("normal")
         self.sessionType.addItem("parametrised")
         self.versionNumber.setText(variables.r_version)
@@ -89,6 +95,7 @@ class VaileApp(QtWidgets.QDialog):
         aid.setFlags(aid.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
         self.genTree(aid, modules[10])
         self.treeView.header().hide()
+        self.processNumberLabel.setText(str(variables.processes))
         self.show() # Show the GUI
         self.addTargetButton.clicked.connect(self.addTargetInput)
         self.editTargetButton.clicked.connect(self.editTargetInput)
@@ -96,7 +103,14 @@ class VaileApp(QtWidgets.QDialog):
         self.loadSessionButton.clicked.connect(self.chooseSession)
         self.fetchButton.clicked.connect(self.fetchNetInfo)
         self.optsButton.clicked.connect(self.displayInfo)
-        self.torBox.stateChanged.connect(self.tor)
+        self.attackButton.clicked.connect(self.attack)
+        self.checkUpdatesButton.clicked.connect(self.checkUpdate)
+        self.processUpdateButton.clicked.connect(self.setProcessNumber)
+
+    def setProcessNumber(self):
+        new = self.processNumberEdit.text()
+        shell.do_processes(new)
+        self.processNumberLabel.setText(str(variables.processes))
 
     def genTree(self, parent, modulist):
         for i in range(len(modulist)):
@@ -213,8 +227,7 @@ class VaileApp(QtWidgets.QDialog):
 
     def chooseSession(self):
         if ".val" in self.sessionFileEdit.text() or self.sessionType.currentText() != "normal":
-            #TODO
-            print()
+            self.loadValSession()
         else:
             self.loadNormalSession()
 
@@ -231,7 +244,19 @@ class VaileApp(QtWidgets.QDialog):
                 self.targetsListWidget.addItem(vic)
             self.targetsListWidget.show()
         except AssertionError:
-            os.system("konsole -x 'echo AssertionError'")
+            print("AssertionError")
+
+    def loadValSession(self):
+        try:
+            filepath = self.sessionFileEdit.text()
+            assert os.path.isfile("core/sessioncache/{}".format(filepath)) and filepath != ""
+            targets = shell.do_sessions("load --val {}".format(filepath), gui=True)
+            self.targetsListWidget.clear()
+            for vic in targets:
+                self.targetsListWidget.addItem(vic)
+            self.targetsListWidget.show()
+        except AssertionError:
+            print("AssertionError")
 
     def fetchNetInfo(self):
         try:
@@ -261,19 +286,71 @@ class VaileApp(QtWidgets.QDialog):
                 info = shell.do_info("", gui=True)
                 self.infoOptDialog.titleLabel.setText(item.data())
                 self.infoOptDialog.infoPanel.setText(info[0])
+                for key, value in info[1].items():
+                    rowPosition = self.infoOptDialog.optionTable.rowCount()
+                    self.infoOptDialog.optionTable.insertRow(rowPosition)
+                    self.infoOptDialog.optionTable.setItem(rowPosition , 0, QTableWidgetItem(key))
+                    self.infoOptDialog.optionTable.setItem(rowPosition , 1, QTableWidgetItem(value[0]))
+                    self.infoOptDialog.optionTable.setItem(rowPosition , 2, QTableWidgetItem(value[1]))
         except:
             pass
         self.infoOptDialog.show()
         self.infoOptDialog.cancelButton.clicked.connect(self.closeOpts)
+        self.infoOptDialog.saveButton.clicked.connect(self.saveOpts)
+
+    def saveOpts(self):
+        try:
+            for item in self.treeView.selectedIndexes():
+                shell.do_load(item.data())
+                for i in range(0, self.infoOptDialog.optionTable.rowCount()):
+                    prop = self.infoOptDialog.optionTable.item(i, 0).text()
+                    val = self.infoOptDialog.optionTable.item(i, 2).text()
+                    shell.do_set("{} {}".format(prop, val))
+        except:
+            pass
+        self.infoOptDialog.close()
 
     def closeOpts(self):
         self.infoOptDialog.close()
 
-    def tor(self):
-        if self.torBox.isChecked():
-            shell.do_tor("on", shell=False)
+    def iterItems(self, root):
+        def recurse(parent):
+            for i in range(parent.childCount()):
+                child = parent.child(i)
+                yield child
+                if child.childCount() > 0:
+                    yield from recurse(child)
+        if root is not None:
+            yield from recurse(root)
+
+    def attack(self):
+        tor = self.torBox.isChecked()
+        viclist =  [str(self.targetsListWidget.item(i).text()) for i in range(self.targetsListWidget.count())]
+        modlist = []
+        root = self.treeView.invisibleRootItem()
+        for item in self.iterItems(root):
+            if item.checkState(0) == QtCore.Qt.Checked:
+                modlist.append(item.text(0))
+        print(modlist)
+        if not os.path.isfile("core/sessioncache/syn.val"):
+            path = os.path.dirname(os.path.realpath(__file__))
+            if "/home/" not in path:
+                os.system("pkexec /opt/Vaile/core/methods/create.py OPT {}".format(username))
+            else:
+                os.system("pkexec /home/{0}/Vaile/core/methods/create.py HOME {0}".format(username))
+        createVal(viclist, modlist, "syn.val")   
+        if tor:
+            os.system("konsole --hold -e 'sudo ./vsconsole.py -p -c syn.val'")
         else:
-            shell.do_tor("off", shell=False)
+            os.system("konsole --hold -e 'sudo ./vsconsole.py -c syn.val'")
+
+    def checkUpdate(self):
+        result = shell.do_fetch("", gui=True)
+        if result[0]:
+            self.fetchOutput.setText("Vaile latest version is installed: {}".format(result[1]))
+        else:
+            self.fetchOutput.setText("An update is available!\n\nCurrent version:   {}\nAvailable version: {}".format(variables.r_version, result[1]))
+        self.show()
 
 
 app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication

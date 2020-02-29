@@ -156,10 +156,29 @@
         </property>
         <item>
          <widget class="QTabWidget" name="tabWidget">
+          <property name="tabPosition">
+           <enum>QTabWidget::West</enum>
+          </property>
+          <property name="tabShape">
+           <enum>QTabWidget::Rounded</enum>
+          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
+          <property name="elideMode">
+           <enum>Qt::ElideNone</enum>
+          </property>
+          <property name="documentMode">
+           <bool>true</bool>
+          </property>
+          <property name="tabBarAutoHide" stdset="0">
+           <bool>false</bool>
+          </property>
           <widget class="QWidget" name="victimsTab">
+           <attribute name="icon">
+            <iconset>
+             <normaloff>icons/targets.png</normaloff>icons/targets.png</iconset>
+           </attribute>
            <attribute name="title">
             <string notr="true">Victims</string>
            </attribute>
@@ -358,6 +377,10 @@
            </layout>
           </widget>
           <widget class="QWidget" name="moduleTab">
+           <attribute name="icon">
+            <iconset>
+             <normaloff>icons/attacks.png</normaloff>icons/attacks.png</iconset>
+           </attribute>
            <attribute name="title">
             <string>Attacks</string>
            </attribute>
@@ -439,6 +462,10 @@
            </layout>
           </widget>
           <widget class="QWidget" name="networkTab">
+           <attribute name="icon">
+            <iconset>
+             <normaloff>icons/netinfo.png</normaloff>icons/netinfo.png</iconset>
+           </attribute>
            <attribute name="title">
             <string>NetInfo</string>
            </attribute>
@@ -615,6 +642,10 @@
            </layout>
           </widget>
           <widget class="QWidget" name="settingsTab">
+           <attribute name="icon">
+            <iconset>
+             <normaloff>icons/settings.png</normaloff>icons/settings.png</iconset>
+           </attribute>
            <attribute name="title">
             <string>Preferences</string>
            </attribute>
@@ -727,17 +758,17 @@
                 </layout>
                </item>
                <item>
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                <widget class="QTextBrowser" name="fetchOutput">
+                 <property name="font">
+                  <font>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
                  </property>
-                </spacer>
+                </widget>
                </item>
               </layout>
              </widget>

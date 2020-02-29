@@ -13,7 +13,7 @@ _____, ___
       ,   
        
 
-┌─[Vaile]─[]
+┌─[Vaile]─[%
 └──╼ VainlyStrain
 """
 
@@ -29,8 +29,8 @@ import core.methods.inputin as addtarget
 import core.methods.print as prnt
 import core.methods.select as select
 import core.variables as varis
-from core.Core.colors import R, B, C, color, O, G
-from core.methods.cache import load, save, sessionparse
+from core.Core.colors import R, B, C, color, O, G, RD
+from core.methods.cache import load, save, sessionparse, createVal
 from core.methods.creds import creds
 from core.methods.tor import torpipe, initcheck, session
 from core.methods.parser import build_parser
@@ -40,7 +40,8 @@ class VainShell(Cmd):
     # prompt = "\033[1;31m──·»\033[0m\033[4mVaile\033[0m\033[1;31m]─[\033[0m{}\033[1;31m]\033[0m\033[1m –› \033[
     # 0m".format(varis.module)
     intro = ""
-    prompt = '\033[0m\033[1m vaile > '
+    prompt = '{} vaile > {}'.format(C, color.END)
+    #prompt = '{}`└─[{}vaile@{}{}{}]─[{}չ {}'.format(RD, C, color.END, varis.username, RD, C, color.END)
     ruler = "—-"
     doc_header = "Docvmented:"
     misc_header = "Misc.:"
@@ -103,22 +104,42 @@ class VainShell(Cmd):
   [!] The session is not cached, use command 'sessions' for this.
 """)
 
-    def sessionhelper(self, inp):
+    def sessionhelper(self, inp, gui):
         print()
-        options = sessionparse(inp)[1]
+        if gui:
+            victims, options = sessionparse(inp, load=False)
+        else:
+            victims, options = sessionparse(inp)
         for module, props in options.items():
             self.do_load(module)
-            print("{}{}{}\n".format(color.UNDERLINE, module, C))
+            print("{}{}{}{}\n".format(C, color.UNDERLINE, module, C))
             for opt, val in props.items():
                 self.do_set("{} {}".format(opt, val))
             self.do_leave("")
             print()
+        if gui:
+            return victims
 
-    def do_sessions(self, inp):
+    def automator(self, inp):
+        print()
+        victims, options = sessionparse(inp, load=False)
+        for victim in victims:
+            varis.targets.append(victim)
+            for module, props in options.items():
+                self.do_load(module)
+                print("{}{}{}{}\n".format(C, color.UNDERLINE, module, C))
+                for opt, val in props.items():
+                    self.do_set("{} {}".format(opt, val))
+                self.do_attack("")
+                self.do_leave("")
+                print()
+
+    def do_sessions(self, inp, gui=False):
         if "load" in inp:
             b = varis.targets
             om = varis.module
             varis.targets = []
+            victims = []
             #for i in varis.targets:
             #    varis.targets.remove(i)
             session = inp.split("load")[1].strip()
@@ -130,7 +151,7 @@ class VainShell(Cmd):
                     if ".val" in session or "--val" in session:
                         session = session.replace("--val","").strip()
                         #print(session)
-                        self.sessionhelper(session)
+                        victims = self.sessionhelper(session, gui)
                         print(G+" [+] Restored VAL session: {}".format(session)+C+color.TR2+C)
                         if om is not "":
                             self.do_load(om)
@@ -145,11 +166,18 @@ class VainShell(Cmd):
             if session == "":
                 print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Syntax: sessions [load|save <SESS_ID>] [list]")
             else:
-                save(session)
+                if ".val" in session or "--val" in inp:
+                    session = session.replace("--val","").strip()
+                    modlist = select.list("all", False)
+                    createVal(varis.targets, modlist, session)
+                else:
+                    save(session)
         elif "list" in inp:
             os.system("\\ls core/sessioncache")
         else:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Syntax: sessions [load|save <SESS_ID>] [list]")
+        if gui:
+            return victims
 
 
     def help_sessions(self):
@@ -194,7 +222,7 @@ class VainShell(Cmd):
                     else:
                         varis.tor = False
                         if shell:
-                            start = input(" [?] Do you want to start the Tor service? (enter if not) :> ")
+                            start = input(color.END+" [?] Do you want to start the Tor service? (enter if not) :> ")
                         else:
                             start = "yes"
                         if start is not "":
@@ -209,7 +237,7 @@ class VainShell(Cmd):
             elif "off" in inp.lower():
                 torpipe(False)
                 if shell:
-                    stop = input(" [?] Do you want to stop the Tor service? (enter if not) :> ")
+                    stop = input(color.END+" [?] Do you want to stop the Tor service? (enter if not) :> ")
                 else:
                     stop = "yes"
                 if stop is not "":
@@ -355,13 +383,14 @@ class VainShell(Cmd):
   --------
 
   Add the specified target to the target list.
-  Syntax: viacdd [--ip] TARGET
+  Syntax: viacdd [--ip] [--net] TARGET
 
     TARGET: the target added to the list.
     
   Options:
     --ip:  specified target is an IP, rather than an URL
     --net: load all hosts in local network as targets
+           Syntax: vicadd --net NRANGE/NMASK
 """)
 
     def do_phpsploit(self, inp):
@@ -519,7 +548,8 @@ class VainShell(Cmd):
                 imp.import_module(impmod)
             if success:
                 varis.module = impmod
-                self.prompt = '\033[0m\033[1m vaile({}{}\033[0m\033[1m) > '.format(R, varis.module.split(".")[-1])
+                self.prompt = '{} vaile({}{}{}) > {}'.format(C, R, varis.module.split(".")[-1], C, color.END)
+                #self.prompt = '{}`└─[{}vaile#{}{}{}]─[{}չ {}'.format(RD, C, color.END, varis.module.split(".")[-1], RD, C, color.END)
         except ImportError:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Not a valid module: {}".format(inp))
         except ValueError:
@@ -560,7 +590,8 @@ class VainShell(Cmd):
 
     def do_leave(self, inp):
         varis.module = ""
-        self.prompt = '\033[0m\033[1m vaile > '
+        self.prompt = '{} vaile > {}'.format(C, color.END)
+        #self.prompt = '{}`└─[{}vaile@{}{}{}]─[{}չ {}'.format(RD, C, color.END, varis.username, RD, C, color.END)
 
     def help_leave(self):
         print("""
@@ -572,7 +603,7 @@ class VainShell(Cmd):
 
     do_EOF = do_q
 
-    def do_fetch(self, inp):
+    def do_fetch(self, inp, gui=False):
         try:
             localver = varis.e_version.split("#")[0]
             s = session()
@@ -603,6 +634,8 @@ class VainShell(Cmd):
                     print(G+" [+] Update installed successfully."+C+color.TR2+C)
             else:
                 print(" [+] You are running the latest version of Vaile-framework ({}).".format(localver))
+            if gui:
+                return (uptodate, onver)
         except:
             print(R + " [-] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "An error occurred fetching...")
 
@@ -643,6 +676,10 @@ def main():
             time.sleep(1)
             sys.exit(0)
 
+    if varis.username == "":
+        user = input("Enter your (unprivileged) user name [necessary for GUI] :> ")
+        with open("core/doc/local","w") as localfile:
+            localfile.write(user)
 
     if opt["load"] and opt["victim"] and not opt["help"] and not opt["list"]:
         s = VainShell()
@@ -658,8 +695,21 @@ def main():
             s.do_tor("on")
             if varis.tor:
                s.do_attack("")
+               s.do_tor("off")
         else:
             s.do_attack("")
+    elif opt["file"]:
+        if not opt["quiet"]:
+            prnt.banner()
+            prnt.bannerbelownew()
+        s = VainShell()
+        if opt["tor"]:
+            s.do_tor("on")
+            if varis.tor:
+               s.automator(args.file)
+               s.do_tor("off")
+        else:
+            s.automator(args.file)
     elif opt["help"]:
         if not opt["quiet"]:
             prnt.banner()
@@ -677,7 +727,7 @@ def main():
         parser.error("'-v' and '-l' are required for CLI attack.")
     else:
         if not opt["quiet"]:
-            prnt.loadstyle()
+            prnt.loadstyle2()
             prnt.banner()
             prnt.bannerbelownew()
         VainShell().cmdloop()

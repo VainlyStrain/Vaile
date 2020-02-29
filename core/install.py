@@ -30,7 +30,7 @@ _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|
 
 
 print(" [+] Installing dependencies (1/2): Package Manager")
-os.system("apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev tor")
+os.system("apt-get install libncurses5 libxml2 nmap tcpdump libexiv2-dev build-essential python3-pip libmariadbclient18 libmysqlclient-dev tor konsole")
 
 print(" [+] Installing dependencies (2/2): pip3")
 os.system("pip3 install -r requirements.txt")
