@@ -325,12 +325,17 @@ class VaileApp(QtWidgets.QDialog):
 
     def attack(self):
         tor = self.torBox.isChecked()
+        blacklist = ["OSINT/Fingerprinting", "Active Reconnaissance", "Information Disclosure",
+                     "Port Scanners", "Web Crawlers",
+                     "Misconfigurations", "Severe Vulnerabilities", "Password Attacks"]
         viclist =  [str(self.targetsListWidget.item(i).text()) for i in range(self.targetsListWidget.count())]
         modlist = []
         root = self.treeView.invisibleRootItem()
         for item in self.iterItems(root):
             if item.checkState(0) == QtCore.Qt.Checked:
-                modlist.append(item.text(0))
+                if "Phase " not in item.text(0) and "Additional" not in item.text(0):
+                    if item.text(0) not in blacklist:
+                        modlist.append(item.text(0))
         print(modlist)
         if not os.path.isfile("core/sessioncache/syn.val"):
             path = os.path.dirname(os.path.realpath(__file__))
