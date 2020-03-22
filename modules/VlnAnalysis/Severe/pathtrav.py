@@ -43,7 +43,7 @@ info = "This module tries to find path traversal vulnerabilities on the target w
 searchinfo = "Path Traversal Finder"
 properties = {"DIRECTORY":["Sensitive directory. Attack target will be http://site.com/sensitive", " "], "PARALLEL":["Parallelise Attack? [1/0]", " "], "COOKIE":["Cookie to be used for the attack", " "], "QUERY":["Query-parameter based attack? [1/0]", " "], "PARAM":["Parameter to be used with QUERY", " "], "EVASION":["Try to evade sanitisations (specific file lookup) [1/0]", " "], "FILE":["File to be searched by EVASION (default: /etc/shadow)", " "], "DICT":["Path to dictionary to be used in normal attacks (default: files/fuzz-db/pathtrav_paths.lst)", " "]}
 
-def atckpre(evasion, filepath, owebsite, plist):
+def atckpre(evasion, filepath, owebsite, plist, requests):
     go = []
     ge = []
     lo = []
@@ -51,7 +51,7 @@ def atckpre(evasion, filepath, owebsite, plist):
     fu = []
     cn = []
     for i in plist:
-        paths = atck(evasion, filepath, owebsite, i)
+        paths = atck(evasion, filepath, owebsite, i, requests)
         go += paths[0]
         ge += paths[1]
         lo += paths[2]
@@ -61,14 +61,13 @@ def atckpre(evasion, filepath, owebsite, plist):
     return (go, ge, lo, en, fu, cn)
 
 
-def atck(evasion, filepath, owebsite, line):
+def atck(evasion, filepath, owebsite, line, requests):
     got = []
     gen = []
     log = []
     env = []
     fu2 = []
     cnf = []
-    requests = session()
     c = line.strip('\n')
     if evasion and filepath != "":
         c = c.replace("etc/shadow", filepath)
@@ -212,9 +211,10 @@ def check0x00(website0, gen_headers, parallel):
         owebsite = website0
 
     print("")
+    requests = session()
     if not parallel:
         for line in open(fi):
-            paths = atck(evasion, filepath, owebsite, line)
+            paths = atck(evasion, filepath, owebsite, line, requests)
             gotcha += paths[0]
             generic += paths[1]
             loggy += paths[2]
@@ -225,7 +225,7 @@ def check0x00(website0, gen_headers, parallel):
         pathlist = file2list(fi)
         pthlst = listsplit(pathlist, round(len(pathlist)/processes))
         with Pool(processes=processes) as pool:
-            res = [pool.apply_async(atckpre, args=(evasion,filepath,owebsite,l,)) for l in pthlst]
+            res = [pool.apply_async(atckpre, args=(evasion,filepath,owebsite,l,requests,)) for l in pthlst]
             #res1 = pool.apply_async(portloop, )
             for i in res:
                 paths = i.get()

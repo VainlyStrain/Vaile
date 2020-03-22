@@ -47,7 +47,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>Title</string>
+      <string>Nothing selected</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

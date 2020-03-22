@@ -32,7 +32,7 @@ Here is some light on what the framework is all about:
 - [x] Piping Attacks through Tor (not implemented everywhere yet)
 - [x] You just need the domain, and leave everything is to this tool.
 - [x] Vaile has full verbose out support, so you'll know whats going on.
-- [x] Since 2.2.5: Attacking now even easier with a new GUI
+- [x] Since 2.2: Attacking now even easier with a new GUI
 
 ### Main new features
 The main differences between Vaile and TIDoS are:
@@ -303,13 +303,24 @@ Vaile Attack presently supports the following: `and more modules are under activ
 
 Lets see some screenshots of Vaile in action:
 
-<img src='files/screenshots/VaileAt1.png'></img>
-<img src='files/screenshots/VaileAt2.png' width='32.9%'>  </img><img src='files/screenshots/VaileAt5.png' width='32.9%'>  </img><img src='files/screenshots/VaileLoad.png' width='32.9%'></img>
+- The core framework:
 
-<img src='files/screenshots/VaileAt3.png'></img>
-<img src='files/screenshots/VaileAt4.png' width='49.5%'>  </img>
-<img src='files/screenshots/VaileModule.png' width='49.5%'>  </img>
+<img src='files/screenshots/2251intro.png'></img>
 
+<img src='files/screenshots/2251help.png' width='49.5%'>  </img>
+<img src='files/screenshots/2251list.png' width='49.5%'>  </img>
+
+<img src='files/screenshots/2251moduleinfo.png' width='32.9%'>  </img>
+<img src='files/screenshots/2251pathtrav.png' width='32.9%'>  </img>
+<img src='files/screenshots/2251parser.png' width='32.9%'></img>
+
+- The Graphical interface:
+
+<img src='files/screenshots/2251guitargets.png' width='49.5%'>  </img>
+<img src='files/screenshots/2251guimodules.png' width='49.5%'>  </img>
+<img src='files/screenshots/2251guiopts.png' width='49.5%'>  </img>
+<img src='files/screenshots/2251guisettings.png' width='49.5%'>  </img>
+<img src='files/screenshots/2251guiedittarget.png' width='49.5%'>  </img>
 
 ### Version:
 ```

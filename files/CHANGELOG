@@ -104,3 +104,11 @@ INTERMEDIATE
 
   fixed: import error in automation modules
   added: Tor for almost all modules
+
+2.2.5-1
+---------
+
+  added: GUI
+  added: full automation support (see the --file argument)
+  several fixes
+  improved: coloring, asciiart
