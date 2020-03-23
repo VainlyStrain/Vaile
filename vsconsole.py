@@ -728,11 +728,10 @@ def main():
         parser.error("'-v' and '-l' are required for CLI attack.")
     else:
         if not opt["quiet"]:
-            prnt.loadstyle2()
+            prnt.loadstyle()
             prnt.banner()
             prnt.bannerbelownew()
         VainShell().cmdloop()
-        #print(R + "[Vaile] " + "\033[0m" + color.UNDERLINE + "\033[1m" + "Alvida, my friend!" + color.END)
         print(R + "[Vaile] " + "\033[0m" + color.END + "Alvida, my chosen")
 
 if __name__ == '__main__':

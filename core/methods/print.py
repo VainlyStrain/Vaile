@@ -91,7 +91,7 @@ ____, __{}
 
 
 
-vaile = '''{}                      |
+vaile = '''{0}                      |
                       :   
                       |   
                       .   
@@ -99,51 +99,20 @@ vaile = '''{}                      |
                       .   
 ____, __             .|   
    + ;               .|   
-   .{}:,                       
+   .{1}:,                       
      ’                      
     .              /      
     + ;           :,      
     ;.           /,       
-   {}  ;          /;' ;    
-     ;         /;{}|{}  : ^  
-     ’      /  . ;..  °   
-          '/; '           
-         ./ '.        
-          '.  ’
-         {}   '.
-              \\
-              .\\.    
-                \\.               
-                 .,.      
-                   .'.    
-                  ''.;:     
-                    .|.   
-                     | .  
-                     .    
-'''.format(color.END, color.BOLD, color.END, color.CURSIVE, color.END, color.BOLD)
-
-vaile = '''{}                      |
-                      :   
-                      |   
-                      .   
-                      .   
-                      .   
-____, __             .|   
-   + ;               .|   
-   .{}:,                       
-     ’                      
-    .              /      
-    + ;           :,      
-    ;.           /,       
-   {}  ;          /;' ;    
-     ;         /;{}|{}  : ^  
-     ’      / {}:{}  ;.’  °   
+   {0}  ;          /;' ;    
+     ;         /;{2}|{0}  : ^  
+     ’      / {2}:{0}  ;.’  °   
           '/; \\           
-         ./ '. \\      {}|{}
+         ./ '. \\      {2}|{0}
           '.  ’·    __\\,_
-         {}   '.      {}\\{}`{};{}{} 
-              \\      {}\\ {}
-              .\\.     {}V{}   
+         {1}   '.      {0}\\{1}`{2};{0}{1} 
+              \\      {0}\\ {1}
+              .\\.     {0}V{1}   
                 \\.               
                  .,.      
                    .'.    
@@ -151,7 +120,7 @@ ____, __             .|
                     .|.   
                      | .  
                      .    
-'''.format(color.END, color.BOLD, color.END, color.CURSIVE, color.END, color.CURSIVE, color.END, color.CURSIVE, color.END, color.BOLD, color.END, color.BOLD, color.CURSIVE, color.END, color.BOLD, color.END, color.BOLD, color.END, color.BOLD)
+'''.format(color.END, color.BOLD, color.CURSIVE)
 
 sp00k70b3r = """
       ___
@@ -197,14 +166,154 @@ currentMonth = datetime.now().month
 currentDay = datetime.now().day
 
 def f00l():
-    return
+    import signal
+    def handler(signum, frame):
+        pass
+    signal.signal(signal.SIGINT, handler) 
+    #add some stuff here when time has come ;)
+    time.sleep(1.5)
+    print("Initialising...")
+    time.sleep(3)
+    print("\n [*] Checking for problems...")
+    time.sleep(1.7)
+    print(" [+] All problems fixed. Initialising fetch phase...")
+    time.sleep(1.7)
+    print("\n [*] Downloading VA1NLy Rootkit:")
+    time.sleep(0.1)
+    items = list(range(0, 35))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.075)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+    
+    time.sleep(0.3)
+    print("\n [*] Fetching payloads (1/3):")
+    time.sleep(0.1)
+    items = list(range(0, 20))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.05)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+    
+    time.sleep(0.3)
+    print("\n [*] Fetching payloads (2/3):")
+    time.sleep(0.1)
+    items = list(range(0, 30))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.03)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+
+    time.sleep(0.3)
+    print("\n [*] Fetching payloads (3/3):")
+    time.sleep(0.1)
+    items = list(range(0, 15))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.05)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+
+    time.sleep(0.8)
+    print("\n [*] Unpacking payloads...")
+    time.sleep(1.2)
+    print(" [+] Done!")
+    time.sleep(0.4)
+    print("\n [*] Infecting /bin/bash...")
+    items = list(range(0, 25))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.025)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+    
+    print("\n [*] Infecting package managers...")
+    items = list(range(0, 45))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.05)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+    print("\n [*] Infecting security measures...")
+    items = list(range(0, 25))
+    l = len(items)
+    progressbar(0, l, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for i, item in enumerate(items):
+        time.sleep(0.05)
+        progressbar(i + 1, l, prefix = 'Progress:', suffix = 'Complete', length = 50, fill="=")
+
+    time.sleep(0.5)
+    print("\n [!] Congratulations! You have been pwnd. There is nothing you can do, just cry. Enjoy your stay on my new computer.\n")
+    time.sleep(0.3)
+    loop = True
+    
+    def handler(signum, frame):
+        print()
+        raise KeyboardInterrupt
+    signal.signal(signal.SIGINT, handler)
+    
+    while loop:
+        try:
+            inp = input("ur fucked $")
+        except KeyboardInterrupt:
+            continue
+        if inp == "exit":
+            loop = False
+        elif "apt" in inp or "pacman" in inp or "yum" in inp or "dnf" in inp:
+            print("I fear that this won't be very useful...")
+        elif "rkhunter" in inp or "rootkit" in inp or "clamav" in inp or "tripwire" in inp or "aide" in inp:
+            print("{}: Error: you can't do anything, just cry.".format(inp.split(" ")[0]))
+        elif "sudo" in inp or "su " in inp or inp == "su":
+            print("{}: Permission denied.".format(inp.split(" ")[0]))
+        else:
+            os.system(inp)
+            
+    time.sleep(2)
+    troll = """
+                         lOkxxxxdddddxOO00OOkxxxxxxxxxdl:;..                         
+                      .x0;      .......................;;:cokOd,                     
+                     ;N;     ..'...';'.....  ................ .c0x.                  
+                    cX.   .....;...       ..       ..........    .Ko                 
+                   lN.      ..'   ...'..   .       ..       ..    ;W                 
+                 .00.         .xXMMMMMlokOl.         .;clll;       OO.               
+               'O0xc,.    .,..N0O0OO0Kkx:.lM:    ,:dNMMMWKK0d ......,O0.             
+              k0c. 'kOxxxOx:'    .l0.  .;dO:     .oMo..        ....,,,cN             
+             kd , dK.  co .,ldxdxo,                M;    ,o;oXx::ok ; :M.            
+             K. '.M. ,dMk0kc.          ''od;       .d0l.  .',. 0    ; lM.            
+             Od ; Xl',:W:  'oX0d:....   Nl coo:      OWN:..   :MX  '.;0O             
+             .Xo.'';   oM0l. .M;,lxOOdc,cx .     l:oKc     .,xWXW: . OO              
+               oXd..    'NKo00MN:.    oMxkkkxdlc;:ol,,;:lxKOdM'NMd  cX               
+                 xK.      kO..W00WWKd:0O     .Nx.';xW:,..xX  Mo0Mx  xd               
+                  ;W'      ,KxN.  .:dXMMWKOxooNKoooOMxddxKM0NMMMMd  xo               
+                   ,N;       ;0x'    x0 .;okXMMMMMMMMMMMMMMMMMMXM:  xd               
+                    .kO'       .oKd,lN.      M'..',WOcc0WlcMoxXO0   xd               
+                      .k0;....... .ckKxl;'. .M.   .M. .Nc KK:xXl    dx               
+                        .c0k:'...'...  .';codxxoodkOddxxdoc;'       oO               
+                            ;x0d;'...',....                 .'.  .  :K               
+                               .;dOkc. ....';;;,'...........   ''.  'W               
+                                    'lOOl'       ..............     0x               
+                                        .ckOOxo:,.               .lXc                
+                                              .';lxkxxdoollllloxOd,     
+    """
+    print(troll)
+    time.sleep(0.3)
+    print("Happy April Fools Day! And thank you for using Vaile. ~Vainly")
 
 def banner():
     os.system("clear")
     if currentMonth == 10:
         print(sp00k70b3r)
     elif currentDay == 1 and currentMonth == 4:
-        f00l()
+        if 'no' in open('core/doc/mystery').read():
+            FILE = open("core/doc/mystery", "w")
+            FILE.write('yes')
+            FILE.close()
+            f00l()
+        else:
+            print(vaile)
     elif currentDay in [24,25,26] and currentMonth == 12:
         print(christmas)
     else:
