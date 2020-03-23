@@ -45,8 +45,8 @@ global dlist
 global interface
 
 version = "2.2"
-e_version = "2.2.5-1#lsp"
-r_version = "2.2.5-1"
+e_version = "2.2.5-10#lsp"
+r_version = "2.2.5-10"
 module = ""
 targets = []
 processes = 8
