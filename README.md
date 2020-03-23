@@ -324,7 +324,7 @@ Lets see some screenshots of Vaile in action:
 
 ### Version:
 ```
-v2.2.5-1 [latest release] [#stable]
+v2.2.5-10 [latest release] [#stable]
 ```
 
 ### Disclaimer:
