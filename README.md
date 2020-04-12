@@ -1,3 +1,7 @@
+> __IMPORTANT__:
+>
+> Vaile Framework will soon be merged into the original TIDoS Framework. You can find the latest progress here: https://github.com/VainlyStrain/TIDoS-Framework/tree/dev
+
 <h1 align="center">
   <img src='files/logo.png' height='500'></img><br>
   Vaile
